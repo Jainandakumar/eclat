@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  airway_bill_number: MyString
+  description: MyText
+  received_status: false
+  buyer_comments: MyText
+  buyer_id: 1
+
+two:
+  airway_bill_number: MyString
+  description: MyText
+  received_status: false
+  buyer_comments: MyText
+  buyer_id: 1

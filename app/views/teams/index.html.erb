@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-7">
+      <h1 style="display: inline-block;"><%= @buyer.name%> - Teams</h1>
+    </div>
+    <div class="col-lg-5 text-right" style="margin-top: 7px;">
+      <%= link_to 'New Team', new_buyer_team_path(@buyer), class: "btn btn-black" %>
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>Name</th>
+        <th>Members</th>
+        <th colspan="3">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @teams.present? %>
+        <% @teams.each do |team| %>
+          <tr>
+            <td><%= team.name %></td>
+            <td><%= team.buyer_id %></td>
+            <td><%= link_to 'Show', team %></td>
+            <td><%= link_to 'Edit', edit_team_path(team) %></td>
+            <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="3" class="text-center">No teams yet</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

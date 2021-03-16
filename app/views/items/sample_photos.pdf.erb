@@ -1,0 +1,71 @@
+<h1 style="text-align: center;">ITEMS LIST</h1>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<h2>Airway Bill Number: <%= @courier.airway_bill_number %></h2>
+<p><%= image_tag url_for(@courier.airway_bill_image.variant(resize: "400x400")) if @courier.airway_bill_image.attached?%></p>
+<br/>
+<div class="new-page"></div>
+<h2><u>Items</u></h2>
+<% @items.order(:serial_number).each_with_index do |item, index| %>
+	<div class="<%= index != 0 ? 'new-page' : ''%>">
+    <table class="table table-striped">
+		<thead class="thead-dark">
+		  <tr>
+		    <th>S.no</th>
+		    <th>Sample Type</th>
+		    <th>Description</th>
+		    <th>No Of samples</th>
+		  </tr>
+		</thead>
+		<tbody>
+      <tr>
+        <td><%= item.serial_number %></td>
+        <td><%= item.sample_type.name %></td>
+        <td><%= item.description %></td>
+        <td><%= item.number_of_samples %></td>
+      </tr>
+		</tbody>
+	</table>
+	<p><%= image_tag url_for(item.item_image.variant(resize: "800x800")) if item.item_image.attached?%></p>
+</div>
+<% end %>
+
+<style type="text/css">
+.new-page{
+        page-break-before: always;
+    }
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+.table td, .table th {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+th, td {
+    text-align: center;
+}
+th {
+    display: table-cell;
+    /*vertical-align: inherit;*/
+    font-weight: bold;
+    /*text-align: -internal-center;*/
+}
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+</style>

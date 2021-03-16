@@ -1,0 +1,31 @@
+<%= form_for([@buyer, @courier, @item], remote: true) do |f| %>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLongTitle"><%= @item.serial_number.present? ? 'Edit' : 'Add'%> Item</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div id="error_explanation"></div>
+    <%= hidden_field_tag 'item[courier_id]', @courier.id%>
+    <div class="form-group row">
+      <label for="serial_number" class="col-sm-4 col-form-label">S.no</label>
+      <%= f.text_field :serial_number, disabled: true %>
+    </div>
+    <%= hidden_field_tag 'item[serial_number]', @item.serial_number%>
+    <div class="form-group row">
+      <label for="description" class="col-sm-4 col-form-label">Description</label>
+      <%= f.text_area :description, class: 'text-box-width' %>
+    </div>
+    <div class="form-group row">
+      <label for="number_of_samples" class="col-sm-4 col-form-label">No of samples</label>
+      <%= f.text_field :number_of_samples %>
+    </div>
+  </div>
+  <%= hidden_field_tag 'item[sample_type_id]', @item.sample_type_id.present? ? @item.sample_type_id : @sample_type_id%>
+  <%= hidden_field_tag 'courier_show_page', @courier_show_page%>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <%= f.submit 'Save', class: "btn btn-success"%>
+  </div>
+<% end %>

@@ -1,0 +1,23 @@
+<table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>Name</th>
+        <th colspan="2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @sample_types.present? %>
+        <% @sample_types.each do |sample_type| %>
+          <tr>
+            <td><%= sample_type.name %></td>
+            <td><%= link_to '', edit_sample_type_path(sample_type), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fa fa-edit'} %></td>
+            <td><%= link_to '', sample_type, method: :delete, data: { confirm: 'Are you sure?' }, class: 'fa fa-trash' %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="3" class="text-center">No sample types yet</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

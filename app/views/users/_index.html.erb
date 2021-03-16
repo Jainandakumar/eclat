@@ -1,0 +1,33 @@
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Role</th>
+      <th scope="col">Status</th>
+      <th scope="col" colspan="2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.phone %></td>
+        <td><%= user.is_admin ? 'Admin' : user.role %></td>
+        <td><%= user.is_active ? 'Active' : 'Inactive' %></td>
+        <% if is_admin? || current_user == user%>
+          <td><%= link_to '', edit_user_path(user), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fa fa-edit'} %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+        <% if is_admin? %>
+          <td><%= user.is_admin ? '' : (link_to '', user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'fa fa-trash') %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,83 @@
+<div class="form-border">
+  <h2>Enter Courier Details</h2>
+
+  <%= form_for(@courier, url: save_courier_path, method: :post, multipart: true) do |f| %>
+    <div>
+      <% if @courier.errors.any? %>
+        <% @courier.errors.full_messages.each do |message| %>
+          <div class='alert alert-danger alert-dismissible fade show' role='alert' style='margin-top: 10px;'>
+            <%= message %><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="form-group row">
+      <label for="buyer" class="col-sm-4 col-form-label">Vendor</label>
+      <%= f.select(:buyer_id, @buyers.collect {|p| [p.name, p.id]}, {prompt: "Select a vendor"}, {class: 'text-box-width'}) %>
+    </div>
+    <div class="form-group row">
+      <label for="team" class="col-sm-4 col-form-label">Team</label>
+      <%= f.select(:team_id, Team.order(:name).collect {|p| [p.name, p.id]}, {}, {class: 'text-box-width'}) %>
+    </div>
+    <div class="form-group row">
+      <label for="airway_bill_number" class="col-sm-4 col-form-label">Airway Bill No</label>
+      <span style="display: inline-flex;">
+        <%= f.text_field :airway_bill_number %>
+        <%= f.file_field :airway_bill_image, class: 'form-control form-control-sm' %>
+      </span>
+    </div>
+    <div class="form-group row">
+      <label for="description" class="col-sm-4 col-form-label">Description</label>
+      <%= f.text_area :description, class: 'text-box-width' %>
+    </div>
+    <div class="form-group row">
+      <label for="courier_date" class="col-sm-4 col-form-label">Courier Date</label>
+      <%= f.date_select :courier_date %>
+    </div>
+    <div class="form-group row">
+      <label for="number_of_items" class="col-sm-4 col-form-label">No of items</label>
+      <%= f.text_field :number_of_items %>
+    </div>
+    <div class="actions">
+      <%= link_to 'Back to Couriers', all_couriers_path, class: 'btn btn-black' %>
+      <%= f.submit "Save and add Samples", class: "btn btn-success" %>
+    </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  $("#courier_team_id").prop("disabled", true); // second dropdown is disable while first dropdown is empty
+  $("#courier_team_id").empty();
+
+  $("#courier_team_id").append('<option>Select a team</option>');
+$("#courier_buyer_id").change(function(){
+  var buyer_id = $(this).val();
+  if(buyer_id == ''){
+    $("#courier_team_id").prop("disabled", true);
+    $("#courier_team_id").empty();
+
+    $("#courier_team_id").append('<option>Select a team</option>');
+  }else{
+    $("#courier_team_id").prop("disabled", false);
+    $.ajax({
+      url: "/buyers/"+buyer_id+"/get_teams",
+      method: "GET",  
+      dataType: "json",
+      data: {buyer_id: buyer_id},
+      error: function (xhr, status, error) {
+        console.error('AJAX Error: ' + status + error);
+      },
+      success: function (response) {
+        console.log(response);
+        var teams = response["teams"];
+        $("#courier_team_id").empty();
+
+        $("#courier_team_id").append('<option>Select a team</option>');
+        for(var i = 0; i < teams.length; i++){
+          $("#courier_team_id").append('<option value="' + teams[i]["id"] + '">' +teams[i]["name"] + '</option>');
+        }
+      }
+    });
+  }
+});
+</script>

@@ -1,0 +1,76 @@
+<div class="container-fluid">
+	<div class="row" style="margin-top: 10px;">
+		<div class="col-lg-6">
+			<% if is_admin? %>
+				<h1><b>Vendor -</b> <%= link_to @buyer.name, buyer_path(@buyer) %></h1>
+			<% else %>
+				<h1><b>Vendor -</b> <%= @buyer.name %></h1>
+			<% end %>
+		</div>
+		<div class="col-lg-6" style="margin-top: 10px;display: contents;">
+			<h5 class="text-right" style="margin-right: 5px;">
+				<% if is_admin? %>
+					<%= link_to 'Couriers', buyer_couriers_path(@buyer), class: 'btn btn-black' %>
+				<% else %>
+					<%= link_to 'Couriers', all_couriers_path, class: 'btn btn-black' %>
+				<% end %>
+			</h5>
+			<% unless @courier.approved %>
+				<h5 class="text-right" style="margin-right: 5px;"><%= link_to 'Add / Edit items', sample_type_items_buyer_courier_path(@buyer, @courier), class: 'btn btn-black' %></h5>
+			<% end %>
+			<% if @courier.approved %>
+				<h5 class="text-right"><%= link_to 'Add / Edit Buyer Comments', edit_delivery_items_buyer_courier_items_path(@buyer, @courier), class: 'btn btn-black' %></h5>
+			<% end %>
+		</div>
+	</div>
+	<div>
+		<div class="row">
+			<div class="col-lg-6">
+				<span class='col-lg-3'><b>Team </b></span> : <%= @courier.team.name%>
+			</div>
+			<div class="col-lg-6">
+				<% if @courier.items.present? %>
+					<span class='col-lg-3'><b>Approval Status </b></span>
+					<% if @approved %> 
+						: <span style="color: green;"> Approved</span> 
+					<% elsif is_staff?%>
+						: <span style="color: #ffc107;"> Waiting Approval</span> 
+					<% else %>
+						: <%= (link_to 'Approve', approve_status_buyer_courier_path(@buyer, @courier), class: 'btn btn-success btn-sm')%>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+		<div class="row" style="margin-top: 10px;">
+			<div class="col-lg-6">
+				<span class='col-lg-3'><b> Airway Bill No </b></span> : <%= @courier.airway_bill_number%>
+				<div>
+					<% if @courier.airway_bill_image.attached?%>
+						<%= image_tag @courier.airway_bill_image.variant(resize: "100x100")%>
+					<% end %>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<% if @courier.items.present? %>
+					<span class='col-lg-3'><b>Delivery Status </b></span> 
+					<% if @courier.delivery_date.present? %> 
+						: <span style="color: green;"> Delivered on <%= @courier.delivery_date.strftime("%d-%m-%Y")%></span> 
+					<% else %>
+						: <span style="color: #fcd273;"> Pending</span> 
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	<div style="overflow-y: scroll;max-height: 650px;">
+		<% if @courier.items.present?%>
+			<div id="courier_items_table">
+			  <%= render partial: 'courier_items'%>
+			</div>
+		<% else %>
+			<h4 class="text-center" style="margin-top: 30px;">No items added yet</h4>
+		<% end %>
+	</div>
+</div>
+
+<%= render partial: 'layouts/modal'%>

@@ -1,0 +1,32 @@
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Vendor</th>
+      <th scope="col">Airway Bill No</th>
+      <th scope="col">Team</th>
+      <th scope="col">Delivered On</th>
+      <th scope="col">No of items pending</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @buyers_couriers.present? %>
+      <% @buyers_couriers.each do |buyer, couriers| %>
+        <tr>
+          <td rowspan="<%= couriers.length+1%>" style='text-align: center;vertical-align: middle'><%= link_to buyer.name, pending_buyer_comments_buyer_path(buyer) %></td>
+          <% couriers.each do |courier| %>
+            <tr>
+            <td><%= courier.airway_bill_number %></td>
+            <td><%= courier.team.name %></td>
+            <td><%= courier.delivery_date.present? ? courier.delivery_date.strftime("%d-%m-%Y") : ''%></td>
+            <td><%= courier.items.where(buyer_comments: [nil, '']).length %></td>
+          </tr>
+          <% end %>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="4" class="text-center">No pending comments</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

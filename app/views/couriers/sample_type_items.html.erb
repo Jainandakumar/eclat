@@ -1,0 +1,40 @@
+<div class="form-border">
+  <h2>Add Sample and Items</h2>
+  <%= form_tag save_items_buyer_courier_items_path(@buyer, @courier), method: :post, multipart: true do %>
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col" style="width: 10%">S.no</th>
+          <th scope="col" style="width: 20%">Sample Type</th>
+          <th scope="col" style="width: 30%">Description</th>
+          <th scope="col" style="width: 10%">No of samples</th>
+          <th scope="col" style="width: 30%">Photo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% 1.upto(@courier.number_of_items) do |number|%>
+          <% item = @courier.items.find_by(serial_number: number)%>
+          <tr>
+            <%= hidden_field_tag "items[#{number}][courier_id]", @courier.id%>
+            <%= hidden_field_tag "courier_id", @courier.id%>
+            <td>
+              <%= text_field_tag "items[#{number}][serial_number_display]", number, class: 'text-box-width', disabled: true %>
+              <%= hidden_field_tag "items[#{number}][serial_number]", number%>
+            </td>
+            <td> 
+              <%= select_tag("items[#{number}][sample_type_id]", options_from_collection_for_select(@sample_types, "id", "name", item.try(:sample_type_id)),  {prompt: "Select a sample type", style: 'width: 100%'}) %>
+            </td>
+            <td><%= text_area_tag "items[#{number}][description]", item.try(:description), style: 'width: 100%' %></td>
+            <td><%= text_field_tag "items[#{number}][number_of_samples]", item.try(:number_of_samples), class: 'text-box-width' %></td>
+            <td><%= file_field_tag "items[#{number}][item_image]", value: (rails_blob_path(item.item_image) if item && item.item_image.attached?), class: 'form-control form-control-sm' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="actions">
+      <%= submit_tag "Save", class: "btn btn-success" %>
+      <%= link_to "Back", buyer_courier_path(@buyer, @courier), class: "btn btn-black" %>
+      <%= link_to "Back to couriers", (is_admin? ? buyer_couriers_path(@buyer) : all_couriers_path), class: "btn btn-black" %>
+    </div>
+  <% end %>
+</div>

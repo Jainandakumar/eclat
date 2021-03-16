@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  serial_number: MyString
+  description: MyText
+  sample_type_id: 1
+  courier_id: 1
+
+two:
+  serial_number: MyString
+  description: MyText
+  sample_type_id: 1
+  courier_id: 1

@@ -1,0 +1,52 @@
+<table class="table table-striped" id="table_id" style="font-size: 12px;">
+	<thead class="thead-dark">
+	  <tr>
+	    <th scope="col">Vendor</th>
+	    <th scope="col">Team</th>
+	    <th scope="col">Airway bill</th>
+			<th scope="col">Delivery Status</th>
+	    <th scope="col">Description</th>
+	    <th scope="col">No of samples</th>
+	    <th scope="col">Buyer Comments</th>
+	  </tr>
+	</thead>
+	<tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.courier.buyer.name %></td>
+        <td><%= item.courier.team.name %></td>
+        <td><%= item.courier.airway_bill_number %></td>
+        <td><%= item.courier.delivery_date.present? ? item.courier.delivery_date.strftime("%d-%m-%Y") : 'Not delivered' %></td>
+        <td><%= item.description %></td>
+        <td><%= item.number_of_samples %></td>
+        <td><%= item.buyer_comments.present? ? item.buyer_comments : 'Not commented' %></td>
+      </tr>
+    <% end %>
+	</tbody>
+</table>
+
+<script type="text/javascript">
+
+	$('#table_id thead tr').clone(true).appendTo( '#table_id thead' );
+  $('#table_id thead tr:eq(1) th').each( function (i) {
+    var title = $(this).text();
+    $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+
+    $( 'input', this ).on( 'keyup change', function () {
+      if ( table.column(i).search() !== this.value ) {
+        table
+        .column(i)
+        .search( this.value )
+        .draw();
+      }
+    } );
+  } );
+	var table = $('#table_id').DataTable( {
+    scrollY: 450,
+    orderCellsTop: true,
+    fixedColumns: true,
+		fixedHeader: true,
+		scrollX: true,
+		width: 100
+	} );
+</script>

@@ -1,0 +1,37 @@
+<div class="form-border">
+  <h2>Add / Edit Buyer Comments</h2>
+  <%= form_tag update_delivery_items_buyer_courier_items_path(@buyer, @courier), method: :post do %>
+    <div class="form-group row">
+      <label for="delivery_date" class="col-sm-4 col-form-label">Courier Delivery Date</label>
+      <%= date_select('courier', 'delivery_date', selected: @courier.delivery_date) %>
+    </div>
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">S.no</th>
+          <th scope="col">Sample Type</th>
+          <th scope="col">Buyer Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @items.each do |item|%>
+          <tr>
+            <%= hidden_field_tag "courier_id", @courier.id%>
+            <td>
+              <%= item.serial_number %>
+            </td>
+            <td> 
+              <%= item.sample_type.name %>             
+            </td>
+            <td><%= text_area_tag "items[#{item.id}][buyer_comments]", item.try(:buyer_comments), class: 'text-box-width' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="actions">
+      <%= submit_tag "Save", class: "btn btn-success" %>
+      <%= link_to "Back", buyer_courier_path(@buyer, @courier), class: "btn btn-black" %>
+      <%= link_to "Back to couriers", (is_admin? ? buyer_couriers_path(@buyer) : all_couriers_path), class: "btn btn-black" %>
+    </div>
+  <% end %>
+</div>

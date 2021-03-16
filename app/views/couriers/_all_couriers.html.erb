@@ -1,0 +1,50 @@
+<table class="table table-striped" id="all_couriers_table_id" style="font-size: 13px;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Airway bill</th>
+      <th scope="col">Team</th>    
+      <th scope="col">Courier Date</th>
+      <th scope="col">Approved</th>
+      <th scope="col">Delivery Status</th>
+      <th scope="col">No of items</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @couriers.each do |courier| %>
+      <tr>
+        <td><%= link_to courier.airway_bill_number, buyer_courier_path(courier.buyer, courier) %></td>
+        <td><%= courier.team.name %></td>
+        <td><%= courier.courier_date.present? ? courier.courier_date.strftime("%d-%m-%Y") : '' %></td>
+        <td><%= courier.approved ? 'Yes' : (is_staff? ? 'No' : (link_to 'Approve', buyer_courier_path(courier.buyer, courier))) %></td>
+        <td><%= courier.delivery_date.present? ? courier.delivery_date.strftime("%d-%m-%Y") : 'Not delivered' %></td>
+        <td><%= courier.items.length%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+
+  $('#all_couriers_table_id thead tr').clone(true).appendTo( '#all_couriers_table_id thead' );
+  $('#all_couriers_table_id thead tr:eq(1) th').each( function (i) {
+    var title = $(this).text();
+    $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+
+    $( 'input', this ).on( 'keyup change', function () {
+      if ( table.column(i).search() !== this.value ) {
+        table
+        .column(i)
+        .search( this.value )
+        .draw();
+      }
+    } );
+  } );
+  var table = $('#all_couriers_table_id').DataTable( {
+    scrollY: 450,
+    orderCellsTop: true,
+    fixedColumns: true,
+    fixedHeader: true,
+    scrollX: true,
+    width: 100
+  } );
+</script>

@@ -1,0 +1,14 @@
+test:
+ service: Disk
+ root: <%= Rails.root.join("tmp/storage") %>
+
+local:
+ service: Disk
+ root: <%= Rails.root.join("storage") %>
+
+amazon:
+  service: S3
+  access_key_id: AKIAJWIRRXBZF46FE5BA
+  secret_access_key: 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
+  region: us-east-1
+  bucket: tup-test

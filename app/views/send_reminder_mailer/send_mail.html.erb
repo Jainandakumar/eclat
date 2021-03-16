@@ -1,0 +1,56 @@
+<html>
+   
+  <head>
+    <meta content = 'text/html; charset = UTF-8' http-equiv = 'Content-Type' />
+  </head>
+
+  <body>
+    <h4>Dear Sir/Madam, </h4>
+    
+    <p>
+      Your comments are pending for following items,<br>
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Serial No</th>
+          <th>Airway Bill No</th>
+          <th>Sample Type</th>
+          <th>Description</th>
+          <th>Delivered On</th>
+          <th>No of samples</th>
+          <th>Pending from days</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @items.each do |item|%>
+          <tr>
+            <td><%= item.serial_number%></td>
+            <td><%= item.courier.airway_bill_number %></td>
+            <td><%= item.sample_type.name %></td>
+            <td><%= item.description %></td>
+            <td><%= item.courier.delivery_date.present? ? item.courier.delivery_date.strftime("%d-%m-%Y") : ''%></td>
+            <td><%= item.number_of_samples %></td>
+            <td><%= (Date.today - item.courier.delivery_date).to_i rescue 0%></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <p>Thanks & regards,</p>
+    <p>
+      <%= image_tag attachments['logo.png'].url, width:"75", height:"75" %>
+    </p>
+    <br/>
+    <br/>
+    <h5>*** This is an auto generated reminder mail ***</h5>
+   </body>
+</html>
+
+<style type="text/css">
+   table, th, td {
+      border: 1px solid black;
+   }
+   table {
+      width: 100%;
+   }
+</style>

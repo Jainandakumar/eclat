@@ -1,0 +1,42 @@
+buyer - Change to vendor
+ name - max
+ address
+ teams
+ 	name
+ 	members
+ 		email
+ 		phone
+ sample_type
+ 	name
+ courier
+ 	airway_bill_number with photo
+ 	description
+ 	photo
+ 	received_status
+ 	comments_from_buyer
+ 	NEW - delivery_date
+ 	items
+ 		serial number - increment for each item
+ 		description
+ 		sample_type_id
+ 		photo
+ 		NEW - buyer comments
+ 		NEW - received
+
+
+----Add reports
+1. Couriers( Buyer wise Date wise with team wise)
+	mainly show the items received/not received and items buyer comments received and not received.
+2. delivery status
+
+----DOWNLOAD option for report
+
+---- Change items creation page
+
+need approval and send mail to arjun and team
+
+
+
+
+-------------
+1. add photo to airway bill in form

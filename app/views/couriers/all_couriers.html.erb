@@ -1,0 +1,15 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6">
+      <h1>Couriers</h1>
+    </div>
+    <div class="col-lg-6" style="margin-top: 10px;">
+			<h5 class="text-right" style="margin-right: 5px;">
+				<%= link_to 'New Courier', new_courier_path, class: 'btn btn-black' %>
+			</h5>
+		</div>
+  </div>
+  <div id="all_couriers_table">
+    <%= render partial: 'all_couriers'%>
+  </div>
+</div>

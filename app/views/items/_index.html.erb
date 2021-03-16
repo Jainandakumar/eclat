@@ -1,0 +1,27 @@
+<table class="table table-striped">
+<thead class="thead-dark">
+  <tr>
+    <th scope="col">S.no</th>
+    <th scope="col">Description</th>
+    <!-- <th scope="col">Photo</th> -->
+    <th scope="col" colspan="2">Actions</th>
+  </tr>
+</thead>
+<tbody>
+  <% if @items.present? %>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.serial_number %></td>
+        <td><%= item.description %></td>
+        <!-- <td>Photo</td> -->
+        <td><%= link_to 'Edit', edit_buyer_courier_item_path(@buyer, @courier, item, sample_type_id: item.sample_type_id), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'} %></td>
+        <td><%= link_to 'Destroy', buyer_courier_item_path(@buyer, @courier, item), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  <% else %>
+    <tr>
+      <td colspan="4" class="text-center">No items yet</td>
+    </tr>
+  <% end %>
+</tbody>
+</table>

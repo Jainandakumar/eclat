@@ -1,0 +1,40 @@
+<% @buyer.teams.includes(:team_members).order(:id).each_with_index do |team, index| %>
+	<div style="margin-top: 20px;">
+		<div class="container-fluid row">
+      <h5 style="display: inline-block;"><b>Team <%= index+1%> - </b><%= team.name %></h5>
+    </div>
+    <div class="container-fluid btn-toolbar" style="margin-bottom: 10px;">
+      <%= link_to 'Edit Team', edit_buyer_team_path(@buyer, team), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-black btn-sm', style: 'margin-right: inherit;'} %>
+      <%= link_to 'Delete Team', buyer_team_path(@buyer, team), method: :delete, data: { confirm: 'This will delete all team members too. Are you sure?' }, class: 'btn btn-black btn-sm' %>
+      <%= link_to 'Add Team Member', new_buyer_team_team_member_path(@buyer, team), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-black btn-sm', style: 'margin-left: inherit;'} %>
+    </div>
+	<table class="table table-striped">
+	    <thead class="thead-dark">
+	      <tr>
+	        <th scope="col">Name</th>
+	        <th scope="col">Email</th>
+	        <th scope="col">Phone</th>
+	        <th scope="col" colspan="2">Actions</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <% if team.team_members.present? %>
+	        <% team.team_members.each do |member| %>
+	          <tr>
+	            <td><%= member.name%></td>
+	            <td><%= member.email %></td>
+	            <td><%= member.phone %></td>
+	            <td><%= link_to '', edit_buyer_team_team_member_path(@buyer, team, member), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fa fa-edit'} %></td>
+	            <td><%= link_to '', buyer_team_team_member_path(@buyer, team, member), method: :delete, data: { confirm: 'Are you sure?' }, class: 'fa fa-trash' %></td>
+	          </tr>
+	        <% end %>
+	      <% else %>
+	        <tr>
+	          <td colspan="5" class="text-center">No team members yet</td>
+	        </tr>
+	      <% end %>
+	    </tbody>
+	  </table>
+	  <hr>
+	</div>
+<% end %>

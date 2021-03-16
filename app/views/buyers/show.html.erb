@@ -1,0 +1,21 @@
+<div class="container-fluid">
+	<div class="row">
+		<h1 class="text-left"><b>Vendor -</b> <%= @buyer.name %></h1>
+	</div>
+	<div class="row">
+		<h5 class="text-left"><b>Address -</b> <%= @buyer.address%></h5>
+	</div>
+	<div class="row">
+		<h5><%= link_to 'Add Team', new_buyer_team_path(@buyer), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-black'} %></h5>
+		<% if @buyer.teams.present? %>
+			<h5 style="margin-left: 10px;"><%= link_to 'Couriers', buyer_couriers_path(@buyer), class: 'btn btn-black' %></h5>
+		<% end %>
+	</div>
+	<div style="overflow-y: scroll;max-height: 650px;">
+		<div id="teams_table">
+		  <%= render partial: 'teams/index'%>
+		</div>
+	</div>
+</div>
+
+<%= render partial: 'layouts/modal'%>

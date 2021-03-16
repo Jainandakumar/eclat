@@ -1,0 +1,21 @@
+<div class="sidenav">
+   <div class="login-main-text">
+      <h2>Application<br> Forgot password Page</h2>
+      <p>Reset your password from here with your email address.</p>
+   </div>
+</div>
+<div class="main">
+  <div class="col-md-12 col-sm-12">
+    <div class="login-form">
+			<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+			  <%= render "devise/shared/error_messages", resource: resource %>
+			  <div class="form-group">
+			    <%= f.label :email %><br />
+			    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+			  </div>
+		    <%= f.submit "Send me reset password instructions", class: "btn btn-black" %>
+	  	<% end %>
+	  </div>
+	  <%= render "devise/shared/links" %>
+	</div>
+</div>

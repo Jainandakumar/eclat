@@ -1,0 +1,8 @@
+$('#error_explanation').html("");
+<% if !item.valid? %>
+  <% item.errors.full_messages.each do |message| %>
+    $('#error_explanation').append("<div class='alert alert-danger alert-dismissible fade show' role='alert' style='margin-top: 10px;'><%= escape_javascript(message) %><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+  <% end %>
+<% else %>
+	$("#exampleModalCenter").modal('toggle');
+<% end %>

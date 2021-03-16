@@ -1,0 +1,93 @@
+@import "bootstrap";
+@import "font-awesome";
+html {
+    height: 100%;
+}
+body {
+    font-family: "Lato", sans-serif;
+    height: 100%;
+    background: #f2f2f2;
+}
+
+.tableFixHead          { overflow-y: auto; height: 400px; }
+.tableFixHead thead th { position: sticky; top: 0; }
+
+.main-head{
+    height: 150px;
+    background: #FFF;
+   
+}
+
+.sidenav {
+    height: 100%;
+    background-color: #000;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+
+.main {
+    padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+}
+
+@media screen and (max-width: 450px) {
+    .login-form{
+        margin-top: 20%;
+    }
+
+    .register-form{
+        margin-top: 10%;
+    }
+}
+
+@media screen and (min-width: 768px){
+    .main{
+        margin-left: 40%; 
+    }
+
+    .sidenav{
+        width: 40%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+    }
+
+    .login-form{
+        margin-top: 50%;
+    }
+
+    .register-form{
+        margin-top: 20%;
+    }
+}
+
+
+.login-main-text{
+    margin-top: 50%;
+    padding: 60px;
+    color: #fff;
+}
+
+.login-main-text h2{
+    font-weight: 300;
+}
+
+.btn-black{
+    background-color: #000 !important;
+    color: #fff;
+}
+
+.form-border {
+    border: 1px solid #999d9f;
+    padding: 50px;
+    margin: 20px;
+    box-shadow: 0 8px 10px -4px #646a6d;
+}
+.text-box-width{
+    width: 60%;
+}

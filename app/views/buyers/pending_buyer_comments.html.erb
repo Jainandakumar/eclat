@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-8">
+      <h2 style="display: inline-block;"><%= @buyer.name%> - Pending Item Comments</h2>
+    </div>
+    <div class="col-lg-4" style="margin-top: 10px;">
+			<h5 class="text-right">
+        <%= link_to 'Send reminder mail', send_reminder_mail_path(from: 'pending_buyer_comments_buyer', id: @buyer.id), class: 'btn btn-black sm' %>
+          <%= link_to 'Back', pending_buyer_comments_path, class: 'btn btn-black sm' %>
+        </h5>
+		</div>
+  </div>
+  <div id="couriers_table">
+    <%= render partial: 'pending_buyer_comments'%>
+  </div>
+</div>
