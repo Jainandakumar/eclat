@@ -40,3 +40,15 @@ need approval and send mail to arjun and team
 
 -------------
 1. add photo to airway bill in form
+
+
+
+
+
+
+
+
+
+
+NEW ECLAT:
+1. Move mails to background jobs

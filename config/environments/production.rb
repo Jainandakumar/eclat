@@ -59,7 +59,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "tup_app_#{Rails.env}"
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.asset_host = 'http://tup-test.s3.amazonaws.com'
+  config.action_mailer.asset_host = 'http://eclat-couriers.s3.amazonaws.com'
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -85,7 +85,7 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  config.action_mailer.default_url_options = { host: 'https://tup-test.herokuapp.com/'}
+  config.action_mailer.default_url_options = { host: 'https://eclat-couriers.herokuapp.com/'}
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
