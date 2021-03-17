@@ -111,13 +111,13 @@ class ItemsController < ApplicationController
     end
     mail_hash = {}
     sent_couriers.joins(:items).where(items: {buyer_comments: [nil, '']}).uniq.group_by(&:team). each do |team, couriers|
-      mail_hash[team.team_members.pluck(:email)] = []
+      mail_hash[team] = []
       couriers.each do |courier|
-        mail_hash[courier.team.team_members.pluck(:email)] << courier.items.where(buyer_comments: [nil, ''])
+        mail_hash[courier.team] << courier.items.where(buyer_comments: [nil, ''])
       end
     end
-    mail_hash.each do |mail_ids, items|
-      SendReminderMailer.send_mail(mail_ids, items.flatten).deliver!
+    mail_hash.each do |team, items|
+      SendReminderMailer.send_mail(team, items.flatten).deliver!
     end
 	end
 

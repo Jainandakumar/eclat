@@ -1,56 +1,47 @@
 <html>
    
-   <head>
-      <meta content = 'text/html; charset = UTF-8' http-equiv = 'Content-Type' />
-   </head>
+  <head>
+    <meta content = 'text/html; charset = UTF-8' http-equiv = 'Content-Type' />
+  </head>
    
-   <body>
-      <h4>Dear Sir/Madam, </h4>
+  <body>
+    <h4>Dear Sir/Madam, </h4>
+    
+    <p>
+      Courier has been dispatched on <b><%= @courier.courier_date.strftime("%d-%m-%Y")%></b>.<br>
+    </p>
+    
+    <p>
+      The following are the details of the courier and items, <br>
+    </p>
       
-      <p>
-        Courier has been dispatched on <b><%= @courier.courier_date.strftime("%d-%m-%Y")%></b>.<br>
-      </p>
-      
-      <p>
-        The following are the details of the courier and items, <br>
-      </p>
-      
-      <p>AirwayBill Number: <%= @courier.airway_bill_number%></p>
-      <table>
+    <p>AirwayBill Number: <%= @courier.airway_bill_number%></p>
+    <table style="border: 1px solid black;width: 100%;">
       <thead>
         <tr>
-          <th>S.no</th>
-          <th>Sample Type</th>
-          <th>Description</th>
-          <th>No of samples</th>
+          <th style="border: 1px solid black;">S.no</th>
+          <th style="border: 1px solid black;">Sample Type</th>
+          <th style="border: 1px solid black;">Description</th>
+          <th style="border: 1px solid black;">No of samples</th>
         </tr>
       </thead>
       <tbody>
         <% @items.order(:serial_number).each do |item|%>
           <tr>
-            <td><%= item.serial_number %></td>
-            <td><%= item.sample_type.name %></td>
-            <td><%= item.description %></td>
-            <td><%= item.number_of_samples %></td>
+            <td style="text-align: center;border: 1px solid black;"><%= item.serial_number %></td>
+            <td style="text-align: center;border: 1px solid black;"><%= item.sample_type.name %></td>
+            <td style="text-align: center;border: 1px solid black;"><%= item.description %></td>
+            <td style="text-align: center;border: 1px solid black;"><%= item.number_of_samples %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
+    <br/>
     <p>Thanks & regards,</p>
     <p>
       <%= image_tag attachments['logo.png'].url, width:"75", height:"75" %>
     </p>
-    <br/>
-    <br/>
+    <p><b>Eclat International</b></p>
     <h5>*** This is an auto generated mail ***</h5>
-   </body>
+  </body>
 </html>
-
-<style type="text/css">
-   table, th, td {
-      border: 1px solid black;
-   }
-   table {
-      width: 100%;
-   }
-</style>
