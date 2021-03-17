@@ -8,7 +8,7 @@ local:
 
 amazon:
   service: S3
-  access_key_id: AKIAJWIRRXBZF46FE5BA
-  secret_access_key: 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
-  region: us-east-1
-  bucket: tup-test
+  access_key_id: AKIATKTT3P2GYRTBXWF6
+  secret_access_key: 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
+  region: ap-south-1
+  bucket: eclat-couriers
