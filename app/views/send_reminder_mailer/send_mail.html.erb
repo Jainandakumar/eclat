@@ -8,7 +8,7 @@
     <h4>Dear Sir/Madam, </h4>
     
     <p>
-      Your comments are pending for following items,<br>
+      Kindly advice us with comments for the following items,<br>
     </p>
     <table style="border: 1px solid black;width: 100%;">
       <thead>
@@ -23,9 +23,9 @@
         </tr>
       </thead>
       <tbody>
-        <% @items.each do |item|%>
+        <% @items.each_with_index do |item, index|%>
           <tr>
-            <td style="text-align: center;border: 1px solid black;"><%= item.serial_number%></td>
+            <td style="text-align: center;border: 1px solid black;"><%= index+1%></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.courier.airway_bill_number %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.sample_type.name %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.description %></td>

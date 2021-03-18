@@ -81,7 +81,7 @@ class ItemsController < ApplicationController
 			item.received_status = true
 			item.save
 		end
-		redirect_to buyer_courier_path(@buyer, @courier), notice: "Buyer comments were created successfully."
+		redirect_to buyer_courier_path(@buyer, @courier), notice: "Vendor comments were created successfully."
 	end
 
 	def delete_multiple_items
@@ -117,7 +117,7 @@ class ItemsController < ApplicationController
       end
     end
     mail_hash.each do |team, items|
-      SendReminderMailer.send_mail(team, items.flatten).deliver!
+      SendReminderMailer.send_mail(team, items.flatten).deliver_later
     end
 	end
 

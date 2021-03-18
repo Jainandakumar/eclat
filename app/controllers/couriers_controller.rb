@@ -65,7 +65,7 @@ class CouriersController < ApplicationController
 	def approve_status
 		@courier.update_attributes(approved: true)
 		redirect_to buyer_courier_path(@buyer, @courier), notice: "Courier was successfully approved and mail was sent to the team members."
-		CourierMailer.send_mail(@courier).deliver!
+		CourierMailer.send_mail(@courier).deliver_later
 	end
 
 	def destroy

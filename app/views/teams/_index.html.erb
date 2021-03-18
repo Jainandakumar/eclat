@@ -8,13 +8,13 @@
       <%= link_to 'Delete Team', buyer_team_path(@buyer, team), method: :delete, data: { confirm: 'This will delete all team members too. Are you sure?' }, class: 'btn btn-black btn-sm' %>
       <%= link_to 'Add Team Member', new_buyer_team_team_member_path(@buyer, team), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-black btn-sm', style: 'margin-left: inherit;'} %>
     </div>
-	<table class="table table-striped">
+		<table class="table table-striped team_members">
 	    <thead class="thead-dark">
 	      <tr>
 	        <th scope="col">Name</th>
 	        <th scope="col">Email</th>
 	        <th scope="col">Phone</th>
-	        <th scope="col" colspan="2">Actions</th>
+	        <th scope="col">Actions</th>
 	      </tr>
 	    </thead>
 	    <tbody>
@@ -24,13 +24,13 @@
 	            <td><%= member.name%></td>
 	            <td><%= member.email %></td>
 	            <td><%= member.phone %></td>
-	            <td><%= link_to '', edit_buyer_team_team_member_path(@buyer, team, member), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fa fa-edit'} %></td>
-	            <td><%= link_to '', buyer_team_team_member_path(@buyer, team, member), method: :delete, data: { confirm: 'Are you sure?' }, class: 'fa fa-trash' %></td>
+	            <td><%= link_to '', edit_buyer_team_team_member_path(@buyer, team, member), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fa fa-edit'} %>
+	            	<%= link_to '', buyer_team_team_member_path(@buyer, team, member), method: :delete, data: { confirm: 'Are you sure?' }, class: 'fa fa-trash' %></td>
 	          </tr>
 	        <% end %>
 	      <% else %>
 	        <tr>
-	          <td colspan="5" class="text-center">No team members yet</td>
+	          <td colspan="4" class="text-center">No team members yet</td>
 	        </tr>
 	      <% end %>
 	    </tbody>
@@ -38,3 +38,14 @@
 	  <hr>
 	</div>
 <% end %>
+
+<script type="text/javascript">
+
+  var table = $('.team_members').DataTable( {
+    scrollY: 200,
+    orderCellsTop: true,
+    fixedColumns: true,
+    fixedHeader: true,
+    width: 100
+  } );
+</script>

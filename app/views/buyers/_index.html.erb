@@ -1,27 +1,40 @@
-<table class="table table-striped">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Teams</th>
-        <th scope="col">Couriers</th>
-        <th scope="col" colspan="2">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if @buyers.present? %>
-        <% @buyers.each do |buyer| %>
-          <tr>
-            <td><%= link_to buyer.name, buyer %></td>
-            <td><%= buyer.teams.length %></td>
-            <td><%= buyer.couriers.length %></td>
-            <td><%= link_to '', edit_buyer_path(buyer), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fa fa-edit'} %></td>
-            <td><%= link_to '', buyer, method: :delete, data: { confirm: 'Are you sure?' }, class: 'fa fa-trash' %></td>
-          </tr>
-        <% end %>
-      <% else %>
+<table class="table table-striped" id="buyers">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Teams</th>
+      <th scope="col">Couriers</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @buyers.present? %>
+      <% @buyers.each do |buyer| %>
         <tr>
-          <td colspan="5" class="text-center">No vendors yet</td>
+          <td><%= link_to buyer.name, buyer %></td>
+          <td><%= buyer.teams.length %></td>
+          <td><%= buyer.couriers.length %></td>
+          <td>
+            <%= link_to '', edit_buyer_path(buyer), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fa fa-edit'} %>
+            <%= link_to '', buyer, method: :delete, data: { confirm: 'Are you sure?' }, class: 'fa fa-trash' %>
+          </td>
         </tr>
       <% end %>
-    </tbody>
-  </table>
+    <% else %>
+      <tr>
+        <td colspan="4" class="text-center">No vendors yet</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+
+  var table = $('#buyers').DataTable( {
+    scrollY: 450,
+    orderCellsTop: true,
+    fixedColumns: true,
+    fixedHeader: true,
+    width: 100
+  } );
+</script>

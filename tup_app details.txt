@@ -23,7 +23,6 @@ buyer - Change to vendor
  		NEW - buyer comments
  		NEW - received
 
-
 ----Add reports
 1. Couriers( Buyer wise Date wise with team wise)
 	mainly show the items received/not received and items buyer comments received and not received.
@@ -35,20 +34,11 @@ buyer - Change to vendor
 
 need approval and send mail to arjun and team
 
-
-
-
 -------------
 1. add photo to airway bill in form
 
-
-
-
-
-
-
-
-
-
 NEW ECLAT:
 1. Move mails to background jobs
+2. Add scroll and datatable for all tables
+3. add sorting for team members
+4.

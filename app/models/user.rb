@@ -23,4 +23,12 @@ class User < ApplicationRecord
     end
   end
 
+  def active_for_authentication?
+    super && self.is_active # i.e. super && self.is_active
+  end
+
+  def inactive_message
+    "Sorry, this account has been deactivated."
+  end
+
 end

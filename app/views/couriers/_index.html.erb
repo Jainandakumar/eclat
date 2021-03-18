@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table class="table table-striped" id="couriers">
   <thead class="thead-dark">
     <tr>
       <th scope="col">Airway Bill No</th>
@@ -6,7 +6,7 @@
       <th scope="col">Team</th>
       <th scope="col">Approved</th>
       <th scope="col">Delivered</th>
-      <th scope="col" colspan="2">Actions</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -21,22 +21,32 @@
           <% if courier.approved%>
             <td>
               <% unless courier.delivery_date.present?%>
-                <%= link_to 'Add buyer comments', edit_delivery_items_buyer_courier_items_path(@buyer, courier) %>
+                <%= link_to 'Add vendor comments', edit_delivery_items_buyer_courier_items_path(@buyer, courier) %>
                 <% end %>
-            </td>
-            <td>
               <button class="fa fa-edit" disabled></button>
             </td>
           <% else %>
-            <td><%= link_to '', edit_buyer_courier_path(@buyer, courier), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fa fa-edit'} %></td>
-            <td><%= link_to '', buyer_courier_path(@buyer, courier), method: :delete, data: { confirm: 'Are you sure?' }, class: 'fa fa-trash' %></td>
+            <td>
+              <%= link_to '', edit_buyer_courier_path(@buyer, courier), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fa fa-edit'} %><%= link_to '', buyer_courier_path(@buyer, courier), method: :delete, data: { confirm: 'Are you sure?' }, class: 'fa fa-trash' %>
+            </td>
           <% end %>
         </tr>
       <% end %>
     <% else %>
       <tr>
-        <td colspan="7" class="text-center">No couriers yet</td>
+        <td colspan="6" class="text-center">No couriers yet</td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<script type="text/javascript">
+
+  var table = $('#couriers').DataTable( {
+    scrollY: 450,
+    orderCellsTop: true,
+    fixedColumns: true,
+    fixedHeader: true,
+    width: 100
+  } );
+</script>
