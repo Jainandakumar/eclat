@@ -5,7 +5,7 @@
   </head>
    
   <body>
-    <h4>Dear Sir/Madam, </h4>
+    <p>Dear Sir/Madam, </p>
     
     <p>
       Courier has been dispatched on <b><%= @courier.courier_date.strftime("%d-%m-%Y")%></b>.<br>
@@ -37,11 +37,15 @@
       </tbody>
     </table>
     <br/>
-    <p>Thanks & regards,</p>
+    <p>
+      Please open the attached PDF for details of the items sent.
+    </p>
+    <br/>
+    <p><b>Thanks & regards,</b></p>
     <p>
       <%= image_tag attachments['logo.png'].url, width:"75", height:"75" %>
     </p>
-    <p><b>Eclat International</b></p>
+    <h4><b>ECLAT INTERNATIONAL</b></h4>
     <h5>*** This is an auto generated mail ***</h5>
   </body>
 </html>
