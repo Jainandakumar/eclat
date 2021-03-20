@@ -5,27 +5,27 @@
       <th scope="col">Airway Bill No</th>
       <th scope="col">Team</th>
       <th scope="col">Delivered On</th>
-      <th scope="col">Pending items</th>
+      <th scope="col">Approved items</th>
     </tr>
   </thead>
   <tbody>
     <% if @buyers_couriers.present? %>
       <% @buyers_couriers.each do |buyer, couriers| %>
         <tr>
-          <td rowspan="<%= couriers.length+1%>" style='text-align: center;vertical-align: middle'><%= link_to buyer.name, pending_buyer_approval_buyer_path(buyer) %></td>
+          <td rowspan="<%= couriers.length+1%>" style='text-align: center;vertical-align: middle'><%= link_to buyer.name, buyer_approved_items_buyer_path(buyer) %></td>
           <% couriers.each do |courier| %>
             <tr>
             <td><%= courier.airway_bill_number %></td>
             <td><%= courier.team.name %></td>
             <td><%= courier.delivery_date.present? ? courier.delivery_date.strftime("%d-%m-%Y") : ''%></td>
-            <td><%= courier.items.where(buyer_approved: 'Pending').length %></td>
+            <td><%= courier.items.where(buyer_approved: 'Approved').length %></td>
           </tr>
           <% end %>
         </tr>
       <% end %>
     <% else %>
       <tr>
-        <td colspan="5" class="text-center">No pending items</td>
+        <td colspan="5" class="text-center">No approved items</td>
       </tr>
     <% end %>
   </tbody>

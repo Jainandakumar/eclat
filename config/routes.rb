@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 			post :update_pending_buyer_comments
 			get :pending_buyer_approval
 			post :update_pending_buyer_approval
+			get :buyer_approved_items
+			post :update_buyer_approved_items
 		end
 		resources :couriers do 
    		member do
@@ -42,5 +44,6 @@ Rails.application.routes.draw do
 	post 'update_courier_delivery_dates', to: 'couriers#update_courier_delivery_dates'
 	get 'pending_buyer_comments', to: 'items#pending_buyer_comments'
 	get 'pending_buyer_approval', to: 'items#pending_buyer_approval'
+	get 'buyer_approved_items', to: 'items#buyer_approved_items'
   	
 end

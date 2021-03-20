@@ -1,41 +1,39 @@
-<%= form_tag update_pending_buyer_comments_buyer_path do %>
+<%= form_tag update_buyer_approved_items_buyer_path do %>
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
       <th scope="col" style="width: 5%">Select</th>
       <th scope="col" style="width: 10%">Airway Bill No</th>
       <th scope="col" style="width: 10%">Delivered On</th>
-      <th scope="col" style="width: 15%">Description</th>
+      <th scope="col" style="width: 20%">Description</th>
       <th scope="col" style="width: 15%">Sample Type</th>
       <th scope="col" style="width: 10%">No of items</th>
-      <th scope="col" style="width: 15%">Approval</th>
-      <th scope="col" style="width: 20%">Vendor Comments</th>
+      <th scope="col" style="width: 30%">Vendor Comments</th>
     </tr>
   </thead>
   <tbody>
     <% if @items.present? %>
       <% @items.includes(:courier, :sample_type).each do |item| %>
         <tr>
-          <td><%= check_box_tag "items[id][#{item.id}]", '', false, class: 'checkbox'%></td>
+          <td><%= check_box_tag "items[id][#{item.id}", '', false, class: 'checkbox'%></td>
           <td><%= item.courier.airway_bill_number %></td>
           <td><%= item.courier.delivery_date.present? ? item.courier.delivery_date.strftime("%d-%m-%Y") : ''%></td>
           <td><%= item.description%></td>
           <td><%= item.sample_type.name %></td>
           <td><%= item.number_of_samples %></td>
-          <td><%= select_tag "items[buyer_approved][#{item.id}]", options_for_select(['Select', 'Approved', 'Pending'])%></td>
-          <td><%= text_field_tag "items[buyer_comments][#{item.id}]", '', style: 'width: 100%'%></td>
+          <td><%= item.buyer_comments %></td>
         </tr>
       <% end %>
     <% else %>
       <tr>
-        <td colspan="8" class="text-center">No pending comments</td>
+        <td colspan="7" class="text-center">No approved items</td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <%= hidden_field_tag 'buyer_id', @buyer.id%>
 <div id="submit_div" style="display: none;">
-  <%= submit_tag 'Save', id: 'submit', class: 'btn btn-success'%>
+  <%= submit_tag 'Reject', id: 'submit', class: 'btn btn-success'%>
 </div>
 <% end %>
 <script type="text/javascript">
@@ -48,16 +46,5 @@
     {
       $('#submit_div').hide();
     }
-  })
-
-  $('#submit').on('click', function (e) {
-    $("input:checked").each(function () {
-        var id = $(this).attr("id").split('_')[2];
-        if($('#items_buyer_approved_'+id).val() == 'Select'){
-          alert('Select the approval status for all checked items');
-          e.preventDefault();
-          return false;
-        }
-    });
   })
 </script>

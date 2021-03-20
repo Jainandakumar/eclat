@@ -1,5 +1,5 @@
 class BuyersController < ApplicationController
-  before_action :set_buyer, only: %i[ show edit update destroy get_teams pending_buyer_comments update_pending_buyer_comments pending_buyer_approval update_pending_buyer_approval]
+  before_action :set_buyer, only: %i[ show edit update destroy get_teams pending_buyer_comments update_pending_buyer_comments pending_buyer_approval update_pending_buyer_approval buyer_approved_items update_buyer_approved_items]
 
   def index
     @buyers = Buyer.all
@@ -81,7 +81,7 @@ class BuyersController < ApplicationController
     ids.each do |id|
       item = Item.find(id)
       comment = params[:items][:buyer_comments][id].present? ? params[:items][:buyer_comments][id] : 'Comments given'
-      item.update(buyer_comments: comment, buyer_approved: params[:buyer_approved])
+      item.update(buyer_comments: comment, buyer_approved: params[:items][:buyer_approved][id])
     end
     redirect_to pending_buyer_comments_buyer_path(@buyer.id), notice: 'Vendor Comments updated successfully.'
   end
@@ -92,15 +92,25 @@ class BuyersController < ApplicationController
 
   def update_pending_buyer_approval
     ids = params[:items][:id].keys
-    Rails.logger.info("@@@@@@@@@@@@@@@@@ids - #{ids}@@@@@@@@@@@@@@@@")
     ids.each do |id|
       item = Item.find(id)
-      Rails.logger.info("@@@@@@@@@@@@@@@@@#{item}@@@@@@@@@@@@@@@@")
       remarks = params[:items][:remarks][id].present? ? params[:items][:remarks][id] : ''
-      Rails.logger.info("@@@@@@@@@@@@@@@@@remarks - #{remarks}@@@@@@@@@@@@@@@@")
       item.update(remarks: remarks, buyer_approved: 'Approved')
     end
     redirect_to pending_buyer_approval_buyer_path(@buyer.id), notice: 'Vendor Approval updated successfully.'
+  end
+
+  def buyer_approved_items
+    @items = Item.where(buyer_approved: 'Approved', courier_id: Courier.where(buyer_id: @buyer.id).where.not(delivery_date: nil).ids)
+  end
+
+  def update_buyer_approved_items
+    ids = params[:items][:id].keys
+    ids.each do |id|
+      item = Item.find(id)
+      item.update(buyer_approved: 'Pending')
+    end
+    redirect_to buyer_approved_items_buyer_path(@buyer.id), notice: 'Items made to Pending successfully.'
   end
 
   private

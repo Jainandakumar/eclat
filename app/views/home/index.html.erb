@@ -84,12 +84,14 @@
 </div>
 <div class="row" style="margin-top: 20px;">
 	<div class="col-lg-4">
-		<div class="card" style="width: 18rem;">
-		  <div class="card-body">
-		    <h5 class="card-title text-center">Total items approved</h5>
-		    <h1 class="card-text text-center"><%= Item.where(buyer_approved: 'Approved').count%></h1>
-		  </div>
-		</div>
+		<%= link_to buyer_approved_items_path do %>	
+			<div class="card" style="width: 18rem;">
+			  <div class="card-body">
+			    <h5 class="card-title text-center">Total items approved</h5>
+			    <h1 class="card-text text-center"><%= Item.where(buyer_approved: 'Approved').count%></h1>
+			  </div>
+			</div>
+		<% end %>
 	</div>
 	<div class="col-lg-4">
 		<%= link_to pending_buyer_approval_path do %>		

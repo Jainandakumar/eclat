@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
 
-	before_action :set_courier, except: [:send_reminder_mail, :pending_buyer_comments, :pending_buyer_approval, :update_pending_buyer_approval]
-	before_action :set_item, except: [:new, :create, :save_items, :delete_multiple_items, :edit_delivery_items, :update_delivery_items, :send_reminder_mail, :pending_buyer_comments, :pending_buyer_approval, :update_pending_buyer_approval]
+	before_action :set_courier, except: [:send_reminder_mail, :pending_buyer_comments, :pending_buyer_approval, :buyer_approved_items]
+	before_action :set_item, except: [:new, :create, :save_items, :delete_multiple_items, :edit_delivery_items, :update_delivery_items, :send_reminder_mail, :pending_buyer_comments, :pending_buyer_approval, :buyer_approved_items]
 
 	def new
 		@item = Item.new
@@ -131,10 +131,9 @@ class ItemsController < ApplicationController
 		@buyers_couriers = Courier.where(id: courier_ids).group_by(&:buyer)
 	end
 
-	def update_pending_buyer_approval
-		items = Item.where(id: params[:item_ids].keys)
-		items.update(buyer_comments: 'Comments given')
-		redirect_to pending_buyer_comments_path, notice: 'Vendor Comments updated successfully.'
+	def buyer_approved_items
+		courier_ids = Courier.where.not(delivery_date: nil).joins(:items).where(items: {buyer_approved: 'Approved'}).uniq.pluck(:id)
+		@buyers_couriers = Courier.where(id: courier_ids).group_by(&:buyer)
 	end
 
 	private

@@ -1,0 +1,15 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-8">
+      <h2 style="display: inline-block;"><%= @buyer.name%> - Approved items</h2>
+    </div>
+    <div class="col-lg-4" style="margin-top: 10px;">
+			<h5 class="text-right">
+        <%= link_to 'Back', buyer_approved_items_path, class: 'btn btn-black sm' %>
+      </h5>
+		</div>
+  </div>
+  <div id="couriers_table">
+    <%= render partial: 'buyer_approved_items'%>
+  </div>
+</div>
