@@ -1,5 +1,5 @@
 class BuyersController < ApplicationController
-  before_action :set_buyer, only: %i[ show edit update destroy get_teams pending_buyer_comments update_pending_buyer_comments]
+  before_action :set_buyer, only: %i[ show edit update destroy get_teams pending_buyer_comments update_pending_buyer_comments pending_buyer_approval update_pending_buyer_approval]
 
   def index
     @buyers = Buyer.all
@@ -77,9 +77,27 @@ class BuyersController < ApplicationController
   end
 
   def update_pending_buyer_comments
-    items = Item.where(id: params[:item_ids].keys)
-    items.update(buyer_comments: 'Comments given')
+    ids = params[:items][:id].keys
+    ids.each do |id|
+      item = Item.find(id)
+      comment = params[:items][:buyer_comments][id].present? ? params[:items][:buyer_comments][id] : 'Comments given'
+      item.update(buyer_comments: comment, buyer_approved: params[:buyer_approved])
+    end
     redirect_to pending_buyer_comments_buyer_path(@buyer.id), notice: 'Vendor Comments updated successfully.'
+  end
+
+  def pending_buyer_approval
+    @items = Item.where(buyer_approved: 'Pending', courier_id: Courier.where(buyer_id: @buyer.id).where.not(delivery_date: nil).ids)
+  end
+
+  def update_pending_buyer_approval
+    ids = params[:items][:id].keys
+    ids.each do |id|
+      item = Item.find(id)
+      remarks = params[:items][:remarks][id].present? ? params[:items][:remarks][id] : ''
+      item.update(remarks: remarks, buyer_approved: 'Approved')
+    end
+    redirect_to pending_buyer_approval_buyer_path(@buyer.id), notice: 'Vendor Approval updated successfully.'
   end
 
   private

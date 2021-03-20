@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_03_182631) do
+ActiveRecord::Schema.define(version: 2021_03_20_095417) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -65,6 +65,8 @@ ActiveRecord::Schema.define(version: 2021_03_03_182631) do
     t.boolean "received_status", default: false
     t.text "buyer_comments"
     t.integer "number_of_samples", default: 0
+    t.string "buyer_approved", default: "Pending"
+    t.text "remarks"
   end
 
   create_table "sample_types", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

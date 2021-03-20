@@ -30,6 +30,36 @@
 	<div class="col-lg-4">
 		<div class="card" style="width: 18rem;">
 		  <div class="card-body">
+		    <h5 class="card-title text-center">Total items</h5>
+		    <h1 class="card-text text-center"><%= Item.count%></h1>
+		  </div>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<%= link_to undelivered_couriers_path do %>	
+			<div class="card" style="width: 18rem;">
+			  <div class="card-body">
+			    <h5 class="card-title text-center">Pending delivery</h5>
+			    <h1 class="card-text text-center"><%= Courier.where(approved: true, delivery_date: nil).count%></h1>
+			  </div>
+			</div>
+		<% end %>
+	</div>
+	<div class="col-lg-4">
+		<%= link_to pending_buyer_comments_path do %>		
+			<div class="card" style="width: 18rem;">
+			  <div class="card-body">
+			    <h5 class="card-title text-center">Pending vendor comments</h5>
+			    <h1 class="card-text text-center"><%= Item.where(buyer_comments: [nil, ''], courier_id: Courier.where.not(delivery_date: nil).ids).count%></h1>
+			  </div>
+			</div>
+		<% end %>
+	</div>
+</div>
+<div class="row" style="margin-top: 20px;">
+	<div class="col-lg-4">
+		<div class="card" style="width: 18rem;">
+		  <div class="card-body">
 		    <h5 class="card-title text-center">Couriers sent this week</h5>
 		    <h1 class="card-text text-center"><%= Courier.where(courier_date: (Date.today-1.week..Date.today)).count%></h1>
 		  </div>
@@ -54,21 +84,19 @@
 </div>
 <div class="row" style="margin-top: 20px;">
 	<div class="col-lg-4">
-		<%= link_to undelivered_couriers_path do %>	
-			<div class="card" style="width: 18rem;">
-			  <div class="card-body">
-			    <h5 class="card-title text-center">Pending delivery</h5>
-			    <h1 class="card-text text-center"><%= Courier.where(approved: true, delivery_date: nil).count%></h1>
-			  </div>
-			</div>
-		<% end %>
+		<div class="card" style="width: 18rem;">
+		  <div class="card-body">
+		    <h5 class="card-title text-center">Total items approved</h5>
+		    <h1 class="card-text text-center"><%= Item.where(buyer_approved: 'Approved').count%></h1>
+		  </div>
+		</div>
 	</div>
 	<div class="col-lg-4">
-		<%= link_to pending_buyer_comments_path do %>		
+		<%= link_to pending_buyer_approval_path do %>		
 			<div class="card" style="width: 18rem;">
 			  <div class="card-body">
-			    <h5 class="card-title text-center">Pending vendor comments</h5>
-			    <h1 class="card-text text-center"><%= Item.where(buyer_comments: [nil, ''], courier_id: Courier.where.not(delivery_date: nil).ids).count%></h1>
+			    <h5 class="card-title text-center">Total approval clarification pending</h5>
+			    <h1 class="card-text text-center"><%= Item.where(buyer_approved: 'Pending', courier_id: Courier.where.not(delivery_date: nil)).count%></h1>
 			  </div>
 			</div>
 		<% end %>

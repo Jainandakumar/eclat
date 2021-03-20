@@ -14,7 +14,7 @@ default: &default
 
 development:
   <<: *default
-  database: tup_app
+  database: eclat
 
 production:
   <<: *default
@@ -25,4 +25,4 @@ production:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: tup_app_test
+  database: eclat_test

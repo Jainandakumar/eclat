@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 		member do
 			get :pending_buyer_comments
 			post :update_pending_buyer_comments
+			get :pending_buyer_approval
+			post :update_pending_buyer_approval
 		end
 		resources :couriers do 
    		member do
@@ -39,6 +41,6 @@ Rails.application.routes.draw do
 	get 'undelivered_couriers', to: 'couriers#undelivered_couriers'
 	post 'update_courier_delivery_dates', to: 'couriers#update_courier_delivery_dates'
 	get 'pending_buyer_comments', to: 'items#pending_buyer_comments'
-	post 'update_pending_buyer_comments', to: 'items#update_pending_buyer_comments'
+	get 'pending_buyer_approval', to: 'items#pending_buyer_approval'
   	
 end

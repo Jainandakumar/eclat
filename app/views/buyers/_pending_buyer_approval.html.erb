@@ -1,14 +1,15 @@
-<%= form_tag update_pending_buyer_comments_buyer_path do %>
+<%= form_tag update_pending_buyer_approval_buyer_path do %>
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
       <th scope="col" style="width: 5%">Select</th>
       <th scope="col" style="width: 10%">Airway Bill No</th>
       <th scope="col" style="width: 10%">Delivered On</th>
-      <th scope="col" style="width: 20%">Description</th>
-      <th scope="col" style="width: 15%">Sample Type</th>
+      <th scope="col" style="width: 10%">Description</th>
+      <th scope="col" style="width: 10%">Sample Type</th>
       <th scope="col" style="width: 10%">No of items</th>
-      <th scope="col" style="width: 30%">Vendor Comments</th>
+      <th scope="col" style="width: 20%">Vendor Comments</th>
+      <th scope="col" style="width: 30%">Remarks</th>
     </tr>
   </thead>
   <tbody>
@@ -21,23 +22,20 @@
           <td><%= item.description%></td>
           <td><%= item.sample_type.name %></td>
           <td><%= item.number_of_samples %></td>
-          <td><%= text_field_tag "items[buyer_comments][#{item.id}]", '', style: 'width: 100%'%></td>
+          <td><%= item.buyer_comments %></td>
+          <td><%= text_field_tag "items[remarks][#{item.id}]", '', style: 'width: 100%'%></td>
         </tr>
       <% end %>
     <% else %>
       <tr>
-        <td colspan="7" class="text-center">No pending comments</td>
+        <td colspan="8" class="text-center">No pending comments</td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <%= hidden_field_tag 'buyer_id', @buyer.id%>
 <div id="submit_div" style="display: none;">
-  <div class="form-group">
-    <label>Vendor approval clarification</label>
-    <%= select_tag 'buyer_approved', options_for_select(['Approved', 'Pending'])%>
-  </div>
-  <%= submit_tag 'Save', id: 'submit', class: 'btn btn-success'%>
+  <%= submit_tag 'Approve', id: 'submit', class: 'btn btn-success'%>
 </div>
 <% end %>
 <script type="text/javascript">
