@@ -92,9 +92,12 @@ class BuyersController < ApplicationController
 
   def update_pending_buyer_approval
     ids = params[:items][:id].keys
+    Rails.logger.info("@@@@@@@@@@@@@@@@@ids - #{ids}@@@@@@@@@@@@@@@@")
     ids.each do |id|
       item = Item.find(id)
+      Rails.logger.info("@@@@@@@@@@@@@@@@@#{item}@@@@@@@@@@@@@@@@")
       remarks = params[:items][:remarks][id].present? ? params[:items][:remarks][id] : ''
+      Rails.logger.info("@@@@@@@@@@@@@@@@@remarks - #{remarks}@@@@@@@@@@@@@@@@")
       item.update(remarks: remarks, buyer_approved: 'Approved')
     end
     redirect_to pending_buyer_approval_buyer_path(@buyer.id), notice: 'Vendor Approval updated successfully.'
