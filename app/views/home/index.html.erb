@@ -1,36 +1,36 @@
 <div class="row" style="margin-top: 20px;">
 	<div class="col-lg-4">
 		<%= link_to all_couriers_path do %>	
-			<div class="card" style="width: 18rem;">
+			<div class="card custom-card shadow-sm" style="width: 18rem;">
 			  <div class="card-body">
 			    <h5 class="card-title text-center">Total couriers sent</h5>
-			    <h1 class="card-text text-center"><%= Courier.where.not(courier_date: nil).count%></h1>
+			    <h1 class="card-text text-center"><%= Courier.sent.count%></h1>
 			  </div>
 			</div>
 		<% end %>
 	</div>
 	<div class="col-lg-4">
 		<%= link_to undelivered_couriers_path do %>	
-			<div class="card" style="width: 18rem;">
+			<div class="card custom-card shadow-sm" style="width: 18rem;">
 			  <div class="card-body">
 			    <h5 class="card-title text-center">Total pending delivery</h5>
-			    <h1 class="card-text text-center"><%= Courier.where(approved: true, delivery_date: nil).count%></h1>
+			    <h1 class="card-text text-center"><%= Courier.pending_delivery.count%></h1>
 			  </div>
 			</div>
 		<% end %>
 	</div>
 	<div class="col-lg-4">
-		<div class="card" style="width: 18rem;">
+		<div class="card custom-card shadow-sm" style="width: 18rem;">
 		  <div class="card-body">
 		    <h5 class="card-title text-center">Total couriers delivered</h5>
-		    <h1 class="card-text text-center"><%= Courier.where.not(delivery_date: nil).count%></h1>
+		    <h1 class="card-text text-center"><%= Courier.delivered.count%></h1>
 		  </div>
 		</div>
 	</div>
 </div>
 <div class="row" style="margin-top: 20px;">
 	<div class="col-lg-4">
-		<div class="card" style="width: 18rem;">
+		<div class="card custom-card shadow-sm" style="width: 18rem;">
 		  <div class="card-body">
 		    <h5 class="card-title text-center">Total items sent</h5>
 		    <h1 class="card-text text-center"><%= Item.count%></h1>
@@ -38,19 +38,19 @@
 		</div>
 	</div>
 	<div class="col-lg-4">
-		<div class="card" style="width: 18rem;">
+		<div class="card custom-card shadow-sm" style="width: 18rem;">
 		  <div class="card-body">
 		    <h5 class="card-title text-center">Total items delivered</h5>
-		    <h1 class="card-text text-center"><%= (Item.count - Item.where(buyer_comments: [nil, ''], courier_id: Courier.where.not(delivery_date: nil).ids).count) rescue 0%></h1>
+		    <h1 class="card-text text-center"><%= Item.delivered.count%></h1>
 		  </div>
 		</div>
 	</div>
 	<div class="col-lg-4">
 		<%= link_to pending_buyer_comments_path do %>		
-			<div class="card" style="width: 18rem;">
+			<div class="card custom-card shadow-sm" style="width: 18rem;">
 			  <div class="card-body">
 			    <h5 class="card-title text-center">Pending vendor comments</h5>
-			    <h1 class="card-text text-center"><%= Item.where(buyer_comments: [nil, ''], courier_id: Courier.where.not(delivery_date: nil).ids).count%></h1>
+			    <h1 class="card-text text-center"><%= Item.pending_buyer_comments.count%></h1>
 			  </div>
 			</div>
 		<% end %>
@@ -59,20 +59,20 @@
 <div class="row" style="margin-top: 20px;">
 	<div class="col-lg-4">
 		<%= link_to buyer_approved_items_path do %>	
-			<div class="card" style="width: 18rem;">
+			<div class="card custom-card shadow-sm" style="width: 18rem;">
 			  <div class="card-body">
 			    <h5 class="card-title text-center">Total items approved</h5>
-			    <h1 class="card-text text-center"><%= Item.where(buyer_approved: 'Approved').count%></h1>
+			    <h1 class="card-text text-center"><%= Item.approved.count%></h1>
 			  </div>
 			</div>
 		<% end %>
 	</div>
 	<div class="col-lg-4">
 		<%= link_to pending_buyer_approval_path do %>		
-			<div class="card" style="width: 18rem;">
+			<div class="card custom-card shadow-sm" style="width: 18rem;">
 			  <div class="card-body">
 			    <h5 class="card-title text-center">Total approval clarification pending</h5>
-			    <h1 class="card-text text-center"><%= Item.where(buyer_approved: 'Pending', courier_id: Courier.where.not(delivery_date: nil)).count%></h1>
+			    <h1 class="card-text text-center"><%= Item.pending.count%></h1>
 			  </div>
 			</div>
 		<% end %>

@@ -15,8 +15,8 @@
         <td><%= user.name %></td>
         <td><%= user.email %></td>
         <td><%= user.phone %></td>
-        <td><%= user.is_admin ? 'Admin' : user.role %></td>
-        <td><%= user.is_active ? 'Active' : 'Inactive' %></td>
+        <td><%= role_display(user) %></td>
+        <td><%= status(user) %></td>
         <% if is_admin? %>
           <td>
             <%= link_to '', edit_user_path(user), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fa fa-edit'} %>

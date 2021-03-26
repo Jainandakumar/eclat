@@ -7,28 +7,30 @@
       <th scope="col" style="width: 10%">Delivered On</th>
       <th scope="col" style="width: 15%">Description</th>
       <th scope="col" style="width: 15%">Sample Type</th>
-      <th scope="col" style="width: 10%">No of items</th>
+      <th scope="col" style="width: 5%">No of items</th>
+      <th scope="col" style="width: 10%">Photo</th>
       <th scope="col" style="width: 15%">Approval</th>
       <th scope="col" style="width: 20%">Vendor Comments</th>
     </tr>
   </thead>
   <tbody>
     <% if @items.present? %>
-      <% @items.includes(:courier, :sample_type).each do |item| %>
+      <% @items.each do |item| %>
         <tr>
           <td><%= check_box_tag "items[id][#{item.id}]", '', false, class: 'checkbox'%></td>
           <td><%= item.courier.airway_bill_number %></td>
-          <td><%= item.courier.delivery_date.present? ? item.courier.delivery_date.strftime("%d-%m-%Y") : ''%></td>
+          <td><%= delivery_date_display(item.courier) %></td>
           <td><%= item.description%></td>
-          <td><%= item.sample_type.name %></td>
+          <td><%= item.sample_type_name %></td>
           <td><%= item.number_of_samples %></td>
+          <td><%= image_tag item.item_image.variant(resize: "100x100") if item.item_image.attached? %></td>
           <td><%= select_tag "items[buyer_approved][#{item.id}]", options_for_select(['Select', 'Approved', 'Pending'])%></td>
           <td><%= text_field_tag "items[buyer_comments][#{item.id}]", '', style: 'width: 100%'%></td>
         </tr>
       <% end %>
     <% else %>
       <tr>
-        <td colspan="8" class="text-center">No pending comments</td>
+        <td colspan="9" class="text-center">No items with pending comments</td>
       </tr>
     <% end %>
   </tbody>

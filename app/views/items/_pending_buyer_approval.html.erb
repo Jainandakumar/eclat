@@ -16,8 +16,8 @@
           <% couriers.each do |courier| %>
             <tr>
             <td><%= courier.airway_bill_number %></td>
-            <td><%= courier.team.name %></td>
-            <td><%= courier.delivery_date.present? ? courier.delivery_date.strftime("%d-%m-%Y") : ''%></td>
+            <td><%= courier.team_name %></td>
+            <td><%= delivery_date_display(courier)%></td>
             <td><%= courier.items.where(buyer_approved: 'Pending').length %></td>
           </tr>
           <% end %>

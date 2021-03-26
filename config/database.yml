@@ -14,7 +14,7 @@ default: &default
 
 development:
   <<: *default
-  database: eclat
+  database: tup_app
 
 production:
   <<: *default

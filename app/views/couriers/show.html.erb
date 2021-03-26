@@ -26,15 +26,15 @@
 	<div>
 		<div class="row">
 			<div class="col-lg-6">
-				<span class='col-lg-3'><b>Team </b></span> : <%= @courier.team.name%>
+				<span class='col-lg-3'><b>Team </b></span> : <%= @courier.team_name%>
 			</div>
 			<div class="col-lg-6">
-				<% if @courier.items.present? %>
+				<% if @has_items %>
 					<span class='col-lg-3'><b>Approval Status </b></span>
 					<% if @approved %> 
-						: <span style="color: green;"> Approved</span> 
+						: <%= fa_approved %>
 					<% elsif is_staff?%>
-						: <span style="color: #ffc107;"> Waiting Approval</span> 
+						: <%= fa_pending %> 
 					<% else %>
 						: <%= (link_to 'Approve', approve_status_buyer_courier_path(@buyer, @courier), class: 'btn btn-success btn-sm')%>
 					<% end %>
@@ -51,19 +51,19 @@
 				</div>
 			</div>
 			<div class="col-lg-6">
-				<% if @courier.items.present? %>
+				<% if @has_items %>
 					<span class='col-lg-3'><b>Delivery Status </b></span> 
 					<% if @courier.delivery_date.present? %> 
-						: <span style="color: green;"> Delivered on <%= @courier.delivery_date.strftime("%d-%m-%Y")%></span> 
+						: <span style="color: green;"> Delivered on <%= delivery_date_display(@courier)%></span> 
 					<% else %>
-						: <span style="color: #fcd273;"> Pending</span> 
+						: <%= fa_pending%>
 					<% end %>
 				<% end %>
 			</div>
 		</div>
 	</div>
 	<div>
-		<% if @courier.items.present?%>
+		<% if @has_items%>
 			<div id="courier_items_table">
 			  <%= render partial: 'courier_items'%>
 			</div>

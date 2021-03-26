@@ -8,25 +8,27 @@
       <th scope="col" style="width: 20%">Description</th>
       <th scope="col" style="width: 15%">Sample Type</th>
       <th scope="col" style="width: 10%">No of items</th>
+      <th scope="col" style="width: 10%">Photo</th>
       <th scope="col" style="width: 30%">Vendor Comments</th>
     </tr>
   </thead>
   <tbody>
     <% if @items.present? %>
-      <% @items.includes(:courier, :sample_type).each do |item| %>
+      <% @items.each do |item| %>
         <tr>
           <td><%= check_box_tag "items[id][#{item.id}", '', false, class: 'checkbox'%></td>
           <td><%= item.courier.airway_bill_number %></td>
-          <td><%= item.courier.delivery_date.present? ? item.courier.delivery_date.strftime("%d-%m-%Y") : ''%></td>
+          <td><%= delivery_date_display(item.courier)%></td>
           <td><%= item.description%></td>
-          <td><%= item.sample_type.name %></td>
+          <td><%= item.sample_type_name %></td>
           <td><%= item.number_of_samples %></td>
+          <td><%= image_tag item.item_image.variant(resize: "100x100") if item.item_image.attached? %></td>
           <td><%= item.buyer_comments %></td>
         </tr>
       <% end %>
     <% else %>
       <tr>
-        <td colspan="7" class="text-center">No approved items</td>
+        <td colspan="8" class="text-center">No approved items</td>
       </tr>
     <% end %>
   </tbody>

@@ -122,18 +122,18 @@ class ItemsController < ApplicationController
 	end
 
 	def pending_buyer_comments
-		courier_ids = Courier.where.not(delivery_date: nil).joins(:items).where(items: {buyer_comments: [nil, '']}).uniq.pluck(:id)
-		@buyers_couriers = Courier.where(id: courier_ids).group_by(&:buyer)
+		courier_ids = Item.pending_buyer_comments.pluck(:courier_id)
+		@buyers_couriers = Courier.where(id: courier_ids).includes(:team, :items).group_by(&:buyer)
 	end
 
 	def pending_buyer_approval
-		courier_ids = Courier.where.not(delivery_date: nil).joins(:items).where(items: {buyer_approved: 'Pending'}).uniq.pluck(:id)
-		@buyers_couriers = Courier.where(id: courier_ids).group_by(&:buyer)
+		courier_ids = Item.pending.pluck(:courier_id)
+		@buyers_couriers = Courier.where(id: courier_ids).includes(:team, :items).group_by(&:buyer)
 	end
 
 	def buyer_approved_items
-		courier_ids = Courier.where.not(delivery_date: nil).joins(:items).where(items: {buyer_approved: 'Approved'}).uniq.pluck(:id)
-		@buyers_couriers = Courier.where(id: courier_ids).group_by(&:buyer)
+		courier_ids = Item.approved.pluck(:courier_id)
+		@buyers_couriers = Courier.where(id: courier_ids).includes(:team, :items).group_by(&:buyer)
 	end
 
 	private

@@ -2,7 +2,7 @@ class BuyersController < ApplicationController
   before_action :set_buyer, only: %i[ show edit update destroy get_teams pending_buyer_comments update_pending_buyer_comments pending_buyer_approval update_pending_buyer_approval buyer_approved_items update_buyer_approved_items]
 
   def index
-    @buyers = Buyer.all
+    @buyers = Buyer.all.includes(:teams, :couriers)
     respond_to do |format|
       format.js {render file: "buyers/index.js.erb"}
       format.html { }
@@ -73,7 +73,7 @@ class BuyersController < ApplicationController
   end
 
   def pending_buyer_comments
-    @items = Item.where(buyer_comments: [nil, ''], courier_id: Courier.where(buyer_id: @buyer.id).where.not(delivery_date: nil).ids)
+    @items = Item.where(buyer_approved: '', courier_id: Courier.buyer_delivered(@buyer).ids).includes(:courier, :sample_type)
   end
 
   def update_pending_buyer_comments
@@ -87,7 +87,7 @@ class BuyersController < ApplicationController
   end
 
   def pending_buyer_approval
-    @items = Item.where(buyer_approved: 'Pending', courier_id: Courier.where(buyer_id: @buyer.id).where.not(delivery_date: nil).ids)
+    @items = Item.where(buyer_approved: 'Pending', courier_id: Courier.buyer_delivered(@buyer).ids)
   end
 
   def update_pending_buyer_approval
@@ -101,7 +101,7 @@ class BuyersController < ApplicationController
   end
 
   def buyer_approved_items
-    @items = Item.where(buyer_approved: 'Approved', courier_id: Courier.where(buyer_id: @buyer.id).where.not(delivery_date: nil).ids)
+    @items = Item.where(buyer_approved: 'Approved', courier_id: Courier.buyer_delivered(@buyer).ids)
   end
 
   def update_buyer_approved_items

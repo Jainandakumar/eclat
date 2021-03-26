@@ -11,12 +11,12 @@
   </thead>
   <tbody>
     <% if @undelivered_couriers.present? %>
-      <% @undelivered_couriers.includes(:team).each do |courier| %>
+      <% @undelivered_couriers.each do |courier| %>
         <tr>
           <td><%= check_box_tag "courier_ids[#{courier.id}]", '', false, class: 'checkbox'%></td>
           <td><%= courier.airway_bill_number %></td>
           <td><%= courier.courier_date.present? ? courier.courier_date.strftime("%d-%m-%Y") : ''%></td>
-          <td><%= courier.team.name %></td>
+          <td><%= courier.team_name %></td>
           <td><%= courier.items.length %></td>
         </tr>
       <% end %>

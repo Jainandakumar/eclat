@@ -4,7 +4,7 @@ class CouriersController < ApplicationController
 	before_action :set_courier, except: [:index, :new, :create, :all_couriers, :new_courier, :save_courier, :undelivered_couriers, :update_courier_delivery_dates]
 
 	def index
-		@couriers = @buyer.couriers.order(:courier_date)
+		@couriers = @buyer.couriers.order(:courier_date).includes(:team)
 		respond_to do |format|
   		format.js {render file: "couriers/index.js.erb"}
   		format.html{}
@@ -46,6 +46,7 @@ class CouriersController < ApplicationController
 
 	def show
 		@approved = @courier.approved
+		@has_items = @courier.items.present?
 		respond_to do |format|
 	      format.js {render file: "items/index.js.erb"}
 	      format.html { }
@@ -93,7 +94,7 @@ class CouriersController < ApplicationController
 	end
 
 	def undelivered_couriers
-		@undelivered_couriers = Courier.where(approved: true, delivery_date: nil)
+		@undelivered_couriers = Courier.pending_delivery.includes(:team)
 	end
 
 	def update_courier_delivery_dates

@@ -18,9 +18,9 @@
         <tr>
           <td><%= check_box_tag "items[id][#{item.id}", '', false, class: 'checkbox'%></td>
           <td><%= item.courier.airway_bill_number %></td>
-          <td><%= item.courier.delivery_date.present? ? item.courier.delivery_date.strftime("%d-%m-%Y") : ''%></td>
+          <td><%= delivery_date_display(item.courier)%></td>
           <td><%= item.description%></td>
-          <td><%= item.sample_type.name %></td>
+          <td><%= item.sample_type_name %></td>
           <td><%= item.number_of_samples %></td>
           <td><%= item.buyer_comments %></td>
           <td><%= text_field_tag "items[remarks][#{item.id}]", '', style: 'width: 100%'%></td>

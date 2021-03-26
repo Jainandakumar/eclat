@@ -12,20 +12,21 @@
     <% if @buyers_couriers.present? %>
       <% @buyers_couriers.each do |buyer, couriers| %>
         <tr>
-          <td rowspan="<%= couriers.length+1%>" style='text-align: center;vertical-align: middle'><%= link_to buyer.name, pending_buyer_comments_buyer_path(buyer) %></td>
+          <td rowspan="<%= couriers.length+1%>" style='text-align: center;vertical-align: middle'><%= link_to buyer.name, pending_buyer_comments_buyer_path(buyer) %>
+          </td>
           <% couriers.each do |courier| %>
             <tr>
             <td><%= courier.airway_bill_number %></td>
-            <td><%= courier.team.name %></td>
-            <td><%= courier.delivery_date.present? ? courier.delivery_date.strftime("%d-%m-%Y") : ''%></td>
-            <td><%= courier.items.where(buyer_comments: [nil, '']).length %></td>
+            <td><%= courier.team_name %></td>
+            <td><%= delivery_date_display(courier)%></td>
+            <td><%= courier.items.where(buyer_approved: '').length %></td>
           </tr>
           <% end %>
         </tr>
       <% end %>
     <% else %>
       <tr>
-        <td colspan="4" class="text-center">No pending comments</td>
+        <td colspan="5" class="text-center">No vendors with pending comments</td>
       </tr>
     <% end %>
   </tbody>

@@ -38,7 +38,11 @@ need approval and send mail to arjun and team
 1. add photo to airway bill in form
 
 NEW ECLAT:
-1. Move mails to background jobs
-2. Add scroll and datatable for all tables
-3. add sorting for team members
-4.
+1. Move mails to background jobs DONE
+2. Add scroll and datatable for all tables DONE
+3. add sorting for team members DONE
+
+NEW ECLAT:
+1. Upgrade the UI
+2. Add image modal
+3. Code refactoring

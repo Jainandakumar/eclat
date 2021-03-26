@@ -12,19 +12,19 @@
       </tr>
     </thead>
     <tbody>
-      <% if @courier.items.present? %>
+      <% if @has_items %>
         <% @courier.items.includes(:sample_type).each_with_index do |item, index| %>
           <tr>
             <td><%= index+1 %></td>
-            <td><%= item.sample_type.name %></td>
+            <td><%= item.sample_type_name %></td>
             <td><%= item.description %></td>
             <td><%= item.number_of_samples %></td>
             <td><%= image_tag item.item_image.variant(resize: "100x100") if item.item_image.attached? %></td>
             <td><%= item.buyer_comments.present? ? item.buyer_comments : 'NA' %></td>
             <% if @approved%>
               <td>
-                <button class="fa fa-edit" disabled></button>
-                <button class="fa fa-trash" disabled></button>
+                <i class="fa fa-edit text-danger" disabled></i>
+                <i class="fa fa-trash text-danger" disabled></i>
               </td>
             <% else%>
               <td>
