@@ -1,3 +1,5 @@
+<div id="message"></div>
+<button class='btn btn-black sm' id="send_reminder_mail">Send reminder mail</button>
 <%= form_tag update_pending_buyer_comments_buyer_path do %>
 <table class="table table-striped">
   <thead class="thead-dark">
@@ -10,7 +12,7 @@
       <th scope="col" style="width: 5%">No of items</th>
       <th scope="col" style="width: 10%">Photo</th>
       <th scope="col" style="width: 15%">Approval</th>
-      <th scope="col" style="width: 20%">Vendor Comments</th>
+      <th scope="col" style="width: 20%">Remarks</th>
     </tr>
   </thead>
   <tbody>
@@ -25,7 +27,7 @@
           <td><%= item.number_of_samples %></td>
           <td><%= image_tag item.item_image.variant(resize: "100x100") if item.item_image.attached? %></td>
           <td><%= select_tag "items[buyer_approved][#{item.id}]", options_for_select(['Select', 'Approved', 'Pending'])%></td>
-          <td><%= text_field_tag "items[buyer_comments][#{item.id}]", '', style: 'width: 100%'%></td>
+          <td><%= text_field_tag "remarks[#{item.id}]", '', style: 'width: 100%', class: 'remarks'%></td>
         </tr>
       <% end %>
     <% else %>
@@ -60,6 +62,38 @@
           e.preventDefault();
           return false;
         }
+    });
+  })
+
+  $('#send_reminder_mail').click(function(){
+    var remarks = []
+    $('.remarks').each(function(){
+      var remarks_hash = {}
+      remarks_hash[$(this).attr('id').split('_')[1]] = this.value;
+      remarks.push(remarks_hash)
+    })
+    $.ajax({
+      url: "/send_reminder_mail",
+      method: "GET",  
+      dataType: "json",
+      data: {id: <%= @buyer.id%>, from: 'pending_buyer_comments_buyer', remarks: remarks },
+      error: function (xhr, status, error) {
+        console.error('AJAX Error: ' + status + error);
+      },
+      success: function (response) {
+        $('#message').append(
+          '<div class="alert alert-success alert-dismissable">'+
+            '<button type="button" class="close" data-dismiss="alert">'+
+                '<span aria-hidden="true">&times;</span>'+
+                '<span class="sr-only">Close</span>'+
+            '</button>'+
+            response.notice+
+          '</div>'
+        );
+        $('.remarks').each(function(){
+          this.value = '';
+        })
+      }
     });
   })
 </script>

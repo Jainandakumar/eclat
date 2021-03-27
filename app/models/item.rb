@@ -23,4 +23,16 @@ class Item < ApplicationRecord
 	def self.pending
 		where(buyer_approved: 'Pending')
 	end
+
+	def self.pending_buyer_comments_with_buyer buyer
+		where(buyer_approved: '', courier_id: Courier.buyer_delivered(buyer).ids)
+	end
+
+	def self.approved_with_buyer buyer
+		where(buyer_approved: 'Approved', courier_id: Courier.buyer_delivered(buyer).ids)
+	end
+
+	def self.pending_with_buyer buyer
+		where(buyer_approved: 'Pending', courier_id: Courier.buyer_delivered(buyer).ids)
+	end
 end

@@ -19,6 +19,7 @@
           <th style="border: 1px solid black;">Description</th>
           <th style="border: 1px solid black;">Delivered On</th>
           <th style="border: 1px solid black;">No of samples</th>
+          <th style="border: 1px solid black;">Remarks</th>
           <th style="border: 1px solid black;">Awaiting from (days)</th>
         </tr>
       </thead>
@@ -31,6 +32,7 @@
             <td style="text-align: center;border: 1px solid black;"><%= item.description %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.courier.delivery_date.present? ? item.courier.delivery_date.strftime("%d-%m-%Y") : ''%></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.number_of_samples %></td>
+            <td style="text-align: center;border: 1px solid black;"><%= item.remarks %></td>
             <td style="text-align: center;border: 1px solid black;"><%= (Date.today - item.courier.delivery_date).to_i rescue 0%></td>
           </tr>
         <% end %>

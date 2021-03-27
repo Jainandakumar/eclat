@@ -73,35 +73,30 @@ class BuyersController < ApplicationController
   end
 
   def pending_buyer_comments
-    @items = Item.where(buyer_approved: '', courier_id: Courier.buyer_delivered(@buyer).ids).includes(:courier, :sample_type)
+    @items = Item.pending_buyer_comments_with_buyer(@buyer).includes(:courier, :sample_type)
   end
 
   def update_pending_buyer_comments
     ids = params[:items][:id].keys
     ids.each do |id|
       item = Item.find(id)
-      comment = params[:items][:buyer_comments][id].present? ? params[:items][:buyer_comments][id] : 'Comments given'
-      item.update(buyer_comments: comment, buyer_approved: params[:items][:buyer_approved][id])
+      item.update(buyer_approved: params[:items][:buyer_approved][id])
     end
     redirect_to pending_buyer_comments_buyer_path(@buyer.id), notice: 'Vendor Comments updated successfully.'
   end
 
   def pending_buyer_approval
-    @items = Item.where(buyer_approved: 'Pending', courier_id: Courier.buyer_delivered(@buyer).ids)
+    @items = Item.pending_with_buyer(@buyer).includes(:courier, :sample_type)
   end
 
   def update_pending_buyer_approval
     ids = params[:items][:id].keys
-    ids.each do |id|
-      item = Item.find(id)
-      remarks = params[:items][:remarks][id].present? ? params[:items][:remarks][id] : ''
-      item.update(remarks: remarks, buyer_approved: 'Approved')
-    end
+    Item.where(id: ids).update_all(buyer_approved: 'Approved')
     redirect_to pending_buyer_approval_buyer_path(@buyer.id), notice: 'Vendor Approval updated successfully.'
   end
 
   def buyer_approved_items
-    @items = Item.where(buyer_approved: 'Approved', courier_id: Courier.buyer_delivered(@buyer).ids)
+    @items = Item.approved_with_buyer(@buyer).includes(:courier, :sample_type)
   end
 
   def update_buyer_approved_items

@@ -97,23 +97,29 @@ class ItemsController < ApplicationController
 			send_all_items
 			return_path = pending_buyer_comments_path
 		else
-			send_all_items(params[:id])
+			send_all_items(params[:id], params[:remarks])
 			return_path = pending_buyer_comments_buyer_path(params[:id])
 		end	
-		redirect_to return_path, notice: 'Reminder mail successfully sent.'
+		respond_to do |format|
+			format.html {redirect_to return_path, notice: 'Reminder mail successfully sent.'}
+			format.json {render json: {status: 200, notice: 'Reminder mail successfully sent.'}}
+		end
 	end
 
-	def send_all_items(buyer_id = nil)
+	def send_all_items(buyer_id = nil, remarks = [])
     sent_couriers = if buyer_id.present? 
-      Courier.where.not(delivery_date: nil).where(buyer_id: buyer_id)
+    	params[:remarks].each do |remark|
+    		Item.find(remark[1].keys[0]).update(remarks: remark[1].values[0])
+    	end
+      Courier.buyer_delivered(Buyer.find(buyer_id))
     else
-      Courier.where.not(delivery_date: nil)
+      Courier.delivered
     end
     mail_hash = {}
-    sent_couriers.joins(:items).where(items: {buyer_comments: [nil, '']}).uniq.group_by(&:team). each do |team, couriers|
+    sent_couriers.joins(:items).where(items: {buyer_approved: ''}).uniq.group_by(&:team). each do |team, couriers|
       mail_hash[team] = []
       couriers.each do |courier|
-        mail_hash[courier.team] << courier.items.where(buyer_comments: [nil, ''])
+        mail_hash[courier.team] << courier.items.where(buyer_approved: '')
       end
     end
     mail_hash.each do |team, items|

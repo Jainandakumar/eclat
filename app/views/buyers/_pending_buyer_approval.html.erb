@@ -5,11 +5,11 @@
       <th scope="col" style="width: 5%">Select</th>
       <th scope="col" style="width: 10%">Airway Bill No</th>
       <th scope="col" style="width: 10%">Delivered On</th>
-      <th scope="col" style="width: 10%">Description</th>
+      <th scope="col" style="width: 15%">Description</th>
       <th scope="col" style="width: 10%">Sample Type</th>
       <th scope="col" style="width: 10%">No of items</th>
-      <th scope="col" style="width: 20%">Vendor Comments</th>
-      <th scope="col" style="width: 30%">Remarks</th>
+      <th scope="col" style="width: 15%">Photo</th>
+      <th scope="col" style="width: 25%">Vendor Comments</th>
     </tr>
   </thead>
   <tbody>
@@ -22,8 +22,8 @@
           <td><%= item.description%></td>
           <td><%= item.sample_type_name %></td>
           <td><%= item.number_of_samples %></td>
+          <td><%= image_tag item.item_image.variant(resize: "100x100") if item.item_image.attached? %></td>
           <td><%= item.buyer_comments %></td>
-          <td><%= text_field_tag "items[remarks][#{item.id}]", '', style: 'width: 100%'%></td>
         </tr>
       <% end %>
     <% else %>
