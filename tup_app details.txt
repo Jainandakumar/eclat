@@ -46,3 +46,8 @@ NEW ECLAT:
 1. Upgrade the UI
 2. Add image modal
 3. Code refactoring
+4. add single line border for mail table DONE
+5. remove vendor comments from pending clarification approval DONE
+6. change name from pending item approval to clarifiation approval DONE
+7. dear sir/mam DONE
+8. add company name and address header in each page in pdf DONE

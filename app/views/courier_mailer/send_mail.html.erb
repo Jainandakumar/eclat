@@ -5,7 +5,7 @@
   </head>
    
   <body>
-    <p>Dear Sir/Madam, </p>
+    <p>Dear Sir/Mam, </p>
     
     <p>
       Courier has been dispatched on <b><%= @courier.courier_date.strftime("%d-%m-%Y")%></b>.<br>
@@ -16,13 +16,13 @@
     </p>
       
     <p>AirwayBill Number: <%= @courier.airway_bill_number%></p>
-    <table style="border: 1px solid black;width: 100%;">
+    <table style="border: 1px solid black;width: 100%;border-collapse: collapse;">
       <thead>
         <tr>
-          <th style="border: 1px solid black;">S.no</th>
-          <th style="border: 1px solid black;">Sample Type</th>
-          <th style="border: 1px solid black;">Description</th>
-          <th style="border: 1px solid black;">No of samples</th>
+          <th style="text-align: center;border: 1px solid black;">S.no</th>
+          <th style="text-align: center;border: 1px solid black;">Sample Type</th>
+          <th style="text-align: center;border: 1px solid black;">Description</th>
+          <th style="text-align: center;border: 1px solid black;">No of samples</th>
         </tr>
       </thead>
       <tbody>
