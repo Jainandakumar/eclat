@@ -1,10 +1,12 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-lg-7">
-      <h1 style="display: inline-block;">Undelivered Couriers</h1>
+<div class="container-fluid mt-10 card shadow-sm" style="background-color: white;">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="h5">Undelivered Couriers</h2>
+      </div>
     </div>
   </div>
-  <div id="couriers_table">
+  <div id="couriers_table" class="mt-10">
     <%= render partial: 'undelivered_couriers'%>
   </div>
 </div>

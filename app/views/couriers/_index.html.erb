@@ -4,6 +4,7 @@
       <th scope="col">Courier Date</th>
       <th scope="col">Airway Bill No</th>
       <th scope="col">Team</th>
+      <th scope="col">Items</th>
       <th scope="col">Approved</th>
       <th scope="col">Delivered</th>
       <th scope="col">Actions</th>
@@ -16,6 +17,7 @@
           <td><%= courier_date_display(courier)%></td>
           <td><%= link_to courier.airway_bill_number, buyer_courier_path(@buyer, courier) %></td>
           <td><%= courier.team_name %></td>
+          <td><%= courier.items.count %></td>
           <td><%= approved_display(courier) %></td>
           <td><%= delivery_date_display(courier) %></td>
           <% if courier.approved%>

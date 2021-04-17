@@ -1,14 +1,16 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-lg-7">
-      <h1 style="display: inline-block;">Vendors</h1>
-    </div>
-    <div class="col-lg-5 text-right" style="margin-top: 7px;">
-      <%= link_to 'New Vendor', new_buyer_path, {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-black'} %>
+<div class="container-fluid mt-10 card shadow-sm" style="background-color: white;">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="h5">Vendors</h2>
+      </div>
+      <div class="col text-right">
+        <%= link_to 'New Vendor', new_buyer_path, {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-black btn-sm'} %>
+      </div>
     </div>
   </div>
-  <div id="buyers_table">
-  <%= render partial: 'index'%>
+  <div id="buyers_table" class="mt-10">
+    <%= render partial: 'index'%>
   </div>
 </div>
 

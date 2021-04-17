@@ -1,48 +1,63 @@
+<style type="text/css">
+
+table tbody {
+  display: block;
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+table thead, table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+</style>
 <%= form_tag update_courier_delivery_dates_path do %>
-<table class="table table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Select</th>
-      <th scope="col">Airway Bill No</th>
-      <th scope="col">Sent on</th>
-      <th scope="col">Team</th>
-      <th scope="col">No of items</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% if @undelivered_couriers.present? %>
-      <% @undelivered_couriers.each do |courier| %>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Select</th>
+        <th scope="col">Airway Bill No</th>
+        <th scope="col">Sent on</th>
+        <th scope="col">Team</th>
+        <th scope="col">No of items</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @undelivered_couriers.present? %>
+        <% @undelivered_couriers.each do |courier| %>
+          <tr>
+            <td><%= check_box_tag "courier_ids[#{courier.id}]", '', false, class: 'checkbox'%></td>
+            <td><%= courier.airway_bill_number %></td>
+            <td><%= courier.courier_date.present? ? courier.courier_date.strftime("%d-%m-%Y") : ''%></td>
+            <td><%= courier.team_name %></td>
+            <td><%= courier.items.length %></td>
+          </tr>
+        <% end %>
+      <% else %>
         <tr>
-          <td><%= check_box_tag "courier_ids[#{courier.id}]", '', false, class: 'checkbox'%></td>
-          <td><%= courier.airway_bill_number %></td>
-          <td><%= courier.courier_date.present? ? courier.courier_date.strftime("%d-%m-%Y") : ''%></td>
-          <td><%= courier.team_name %></td>
-          <td><%= courier.items.length %></td>
+          <td colspan="5" class="text-center">All couriers delivered</td>
         </tr>
       <% end %>
-    <% else %>
-      <tr>
-        <td colspan="5" class="text-center">All couriers delivered</td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<div id="date_div" style="display: none;">
-  
+    </tbody>
+  </table>
+  <div id="date_div" style="display: none;">
+    <p id="selected" style="display: hidden;"></p>
     <div class="form-group row">
       <label for="delivery_date" class="col-sm-2 col-form-label">Delivery Date</label>
       <%= date_select 'delivery_date', '', class: 'delivery_date'%>
     </div>
-
-    <%= submit_tag 'Save', id: 'submit', class: 'btn btn-success'%>
-  
-</div>
+    <%= submit_tag 'Save', id: 'submit', class: 'btn btn-success btn-sm'%>
+  </div>
 <% end %>
 <script type="text/javascript">
   $('.checkbox').click(function(){
     if ($("input:checkbox:checked").length > 0)
     {
+      $('#selected').html('Selected items - ');
       $('#date_div').show();
+      $('#selected').append($("input:checkbox:checked").length + ' of '+ $("input:checkbox").length);
+      $('#selected').show();
     }
     else
     {

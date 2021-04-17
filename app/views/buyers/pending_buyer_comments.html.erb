@@ -1,15 +1,15 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-lg-8">
-      <h2 style="display: inline-block;"><%= @buyer.name%> - Pending Item Comments</h2>
+<div class="container-fluid mt-10 card shadow-sm" style="background-color: white;">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="h5"><%= @buyer.name%> - Pending Item Comments</h2>
+      </div>
+      <div class="col text-right">
+        <%= link_to 'Back', pending_buyer_comments_path, class: 'btn btn-black btn-sm' %>
+      </div>
     </div>
-    <div class="col-lg-4" style="margin-top: 10px;">
-			<h5 class="text-right">
-        <%= link_to 'Back', pending_buyer_comments_path, class: 'btn btn-black sm' %>
-      </h5>
-		</div>
   </div>
-  <div id="couriers_table">
+  <div id="couriers_table" class="mt-10">
     <%= render partial: 'pending_buyer_comments'%>
   </div>
 </div>

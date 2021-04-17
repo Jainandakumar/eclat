@@ -1,16 +1,18 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-lg-7">
-      <h1 style="display: inline-block;">Staffs</h1>
-    </div>
-    <% if is_admin? %>
-      <div class="col-lg-5 text-right" style="margin-top: 7px;">
-        <%= link_to 'New Staff', new_user_path, {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-black'} %>
+<div class="container-fluid mt-10 card shadow-sm" style="background-color: white;">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="h5">Staffs</h2>
       </div>
-    <% end %>
+      <% if is_admin? %>
+        <div class="col text-right">
+          <%= link_to 'New Staff', new_user_path, {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-black btn-sm'} %>
+        </div>
+      <% end %>
+    </div>
   </div>
-  <div id="users_table">
-  <%= render partial: 'index'%>
+  <div id="users_table" class="mt-10">
+    <%= render partial: 'index'%>
   </div>
 </div>
 

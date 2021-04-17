@@ -1,20 +1,26 @@
-<div class="container-fluid">
-	<div class="row">
-		<h1 class="text-left"><b>Vendor -</b> <%= @buyer.name %></h1>
-	</div>
-	<div class="row">
-		<h5 class="text-left"><b>Address -</b> <%= @buyer.address %></h5>
-	</div>
-	<div class="row">
-		<h5><%= link_to 'Add Team', new_buyer_team_path(@buyer), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-black'} %></h5>
-		<% if @buyer.teams.present? %>
-			<h5 style="margin-left: 10px;"><%= link_to 'Couriers', buyer_couriers_path(@buyer), class: 'btn btn-black' %></h5>
-		<% end %>
-	</div>
-	<div style="overflow-y: scroll;max-height: 600px;">
-		<div id="teams_table">
-		  <%= render partial: 'teams/index'%>
-		</div>
+<div class="container-fluid mt-10 card shadow-sm" style="background-color: white;">
+	<div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="h5">Vendor - <%= @buyer.name %></h2>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div class="col">
+        <h6>Address - <%= @buyer.address %></h6>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div class="col">
+        <%= link_to 'Add Team', new_buyer_team_path(@buyer), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-black btn-sm'} %>
+        <% if @buyer.teams.present? %>
+	        <%= link_to 'Couriers', buyer_couriers_path(@buyer), class: 'btn btn-black btn-sm' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+	<div id="teams_table">
+	  <%= render partial: 'teams/index'%>
 	</div>
 </div>
 

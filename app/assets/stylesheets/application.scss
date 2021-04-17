@@ -92,3 +92,58 @@ body {
 .text-box-width{
     width: 60%;
 }
+
+.h5 {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: .0625rem solid rgba(46,54,80,.125);
+    border-radius: 1rem;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.card-header {
+    padding: 0.75rem 0.75rem;
+    margin-bottom: 0;
+    background-color: rgba(46,54,80,.03);
+    border-bottom: .0625rem solid rgba(46,54,80,.125);
+}
+
+.card .card-header {
+    background: 0 0;
+}
+
+.card-style {
+    width: 18rem;
+    height: 150px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.ml-15 {
+    margin-left: 15px;
+}

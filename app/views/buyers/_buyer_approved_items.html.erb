@@ -1,15 +1,30 @@
+<style type="text/css">
+
+table tbody {
+  display: block;
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+table thead, table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+</style>
+
 <%= form_tag update_buyer_approved_items_buyer_path do %>
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
-      <th scope="col" style="width: 5%">Select</th>
-      <th scope="col" style="width: 10%">Airway Bill No</th>
-      <th scope="col" style="width: 10%">Delivered On</th>
-      <th scope="col" style="width: 20%">Description</th>
-      <th scope="col" style="width: 15%">Sample Type</th>
-      <th scope="col" style="width: 10%">No of items</th>
-      <th scope="col" style="width: 10%">Photo</th>
-      <th scope="col" style="width: 30%">Vendor Comments</th>
+      <th>Select</th>
+      <th>Airway Bill No</th>
+      <th>Delivered On</th>
+      <th>Description</th>
+      <th>Sample Type</th>
+      <th>No of items</th>
+      <th>Photo</th>
+      <th>Vendor Comments</th>
     </tr>
   </thead>
   <tbody>
@@ -35,14 +50,18 @@
 </table>
 <%= hidden_field_tag 'buyer_id', @buyer.id%>
 <div id="submit_div" style="display: none;">
-  <%= submit_tag 'Reject', id: 'submit', class: 'btn btn-success'%>
+  <p id="selected" style="display: hidden;"></p>
+  <%= submit_tag 'Reject', id: 'submit', class: 'btn btn-success btn-sm'%>
 </div>
 <% end %>
 <script type="text/javascript">
   $('.checkbox').click(function(){
     if ($("input:checkbox:checked").length > 0)
     {
+      $('#selected').html('Selected items - ');
       $('#submit_div').show();
+      $('#selected').append($("input:checkbox:checked").length + ' of '+ $("input:checkbox").length);
+      $('#selected').show();
     }
     else
     {

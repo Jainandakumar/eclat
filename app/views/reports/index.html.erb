@@ -1,13 +1,15 @@
-<div class="container-fluid">
-  <div class="row" style="margin-top: 10px;">
-		<div class="col-lg-6">
-			<h1 class="text-left">Items Report</h1>
-		</div>
-		<div class="col-lg-6" style="margin-top: 10px;">
-			<h5 class="text-right"><%= link_to 'Send reminder mail', send_reminder_mail_path(from: 'reports'), class: 'btn btn-black' %></h5>
-		</div>
-	</div>
-  <div id="buyers_table">
+<div class="container-fluid mt-10 card shadow-sm" style="background-color: white;">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="h5">Items Report</h2>
+      </div>
+      <div class="col text-right">
+        <%= link_to 'Send reminder mail', send_reminder_mail_path(from: 'reports'), class: 'btn btn-black btn-sm' %>
+      </div>
+    </div>
+  </div>
+  <div id="buyers_table" class="mt-10">
     <%= render partial: 'items'%>
   </div>
 </div>

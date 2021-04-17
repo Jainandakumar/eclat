@@ -1,48 +1,55 @@
-<div class="form-border">
-  <h2>Enter Courier Details</h2>
-
-  <%= form_for(@courier, url: save_courier_path, method: :post, multipart: true) do |f| %>
-    <div>
-      <% if @courier.errors.any? %>
-        <% @courier.errors.full_messages.each do |message| %>
-          <div class='alert alert-danger alert-dismissible fade show' role='alert' style='margin-top: 10px;'>
-            <%= message %><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-          </div>
+<div class="container-fluid mt-10 card shadow-sm" style="background-color: white;">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="h5">Enter Courier Details</h2>
+      </div>
+    </div>
+  </div>
+  <div class="mt-10">
+    <%= form_for(@courier, url: save_courier_path, method: :post, multipart: true) do |f| %>
+      <div>
+        <% if @courier.errors.any? %>
+          <% @courier.errors.full_messages.each do |message| %>
+            <div class='alert alert-danger alert-dismissible fade show' role='alert' style='margin-top: 10px;'>
+              <%= message %><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+            </div>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
-    <div class="form-group row">
-      <label for="buyer" class="col-sm-4 col-form-label">Vendor</label>
-      <%= f.select(:buyer_id, @buyers.collect {|p| [p.name, p.id]}, {prompt: "Select a vendor"}, {class: 'text-box-width'}) %>
-    </div>
-    <div class="form-group row">
-      <label for="team" class="col-sm-4 col-form-label">Team</label>
-      <%= f.select(:team_id, Team.order(:name).collect {|p| [p.name, p.id]}, {}, {class: 'text-box-width'}) %>
-    </div>
-    <div class="form-group row">
-      <label for="airway_bill_number" class="col-sm-4 col-form-label">Airway Bill No</label>
-      <span style="display: inline-flex;">
-        <%= f.text_field :airway_bill_number %>
-        <%= f.file_field :airway_bill_image, class: 'form-control form-control-sm' %>
-      </span>
-    </div>
-    <div class="form-group row">
-      <label for="description" class="col-sm-4 col-form-label">Description</label>
-      <%= f.text_area :description, class: 'text-box-width' %>
-    </div>
-    <div class="form-group row">
-      <label for="courier_date" class="col-sm-4 col-form-label">Courier Date</label>
-      <%= f.date_select :courier_date %>
-    </div>
-    <div class="form-group row">
-      <label for="number_of_items" class="col-sm-4 col-form-label">No of items</label>
-      <%= f.text_field :number_of_items %>
-    </div>
-    <div class="actions">
-      <%= link_to 'Back to Couriers', all_couriers_path, class: 'btn btn-black' %>
-      <%= f.submit "Save and add Samples", class: "btn btn-success" %>
-    </div>
-  <% end %>
+      </div>
+      <div class="form-group row">
+        <label for="buyer" class="col-sm-4 col-form-label">Vendor</label>
+        <%= f.select(:buyer_id, @buyers.collect {|p| [p.name, p.id]}, {prompt: "Select a vendor"}, {class: 'text-box-width'}) %>
+      </div>
+      <div class="form-group row">
+        <label for="team" class="col-sm-4 col-form-label">Team</label>
+        <%= f.select(:team_id, Team.order(:name).collect {|p| [p.name, p.id]}, {}, {class: 'text-box-width'}) %>
+      </div>
+      <div class="form-group row">
+        <label for="airway_bill_number" class="col-sm-4 col-form-label">Airway Bill No</label>
+        <span style="display: inline-flex;">
+          <%= f.text_field :airway_bill_number %>
+          <%= f.file_field :airway_bill_image, class: 'form-control form-control-sm' %>
+        </span>
+      </div>
+      <div class="form-group row">
+        <label for="description" class="col-sm-4 col-form-label">Description</label>
+        <%= f.text_area :description, class: 'text-box-width' %>
+      </div>
+      <div class="form-group row">
+        <label for="courier_date" class="col-sm-4 col-form-label">Courier Date</label>
+        <%= f.date_select :courier_date %>
+      </div>
+      <div class="form-group row">
+        <label for="number_of_items" class="col-sm-4 col-form-label">No of items</label>
+        <%= f.text_field :number_of_items %>
+      </div>
+      <div class="actions">
+        <%= link_to 'Back to Couriers', all_couriers_path, class: 'btn btn-black btn-sm' %>
+        <%= f.submit "Save and add Samples", class: "btn btn-success btn-sm" %>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 <script type="text/javascript">

@@ -1,7 +1,13 @@
-<div class="form-border">
-  <h2>Enter Courier Details</h2>
-
-  <%= form_for([@buyer, @courier], multipart: true) do |f| %>
+<div class="container-fluid mt-10 card shadow-sm" style="background-color: white;">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="h5">Enter Courier Details</h2>
+      </div>
+    </div>
+  </div>
+  <div class="mt-10">
+    <%= form_for([@buyer, @courier], multipart: true) do |f| %>
     <div>
       <% if @courier.errors.any? %>
         <% @courier.errors.full_messages.each do |message| %>
@@ -36,9 +42,10 @@
     </div>
     <%= hidden_field_tag 'courier[buyer_id]', @buyer.id%>
     <div class="actions">
-      <%= link_to "Back to Vendor", buyer_path(@buyer), class: 'btn btn-black'%>
-      <%= link_to 'Back to Couriers', buyer_couriers_path(@buyer), class: 'btn btn-black' %>
-      <%= f.submit "Save and add Samples", class: "btn btn-success" %>
+      <%= link_to "Back to Vendor", buyer_path(@buyer), class: 'btn btn-black btn-sm'%>
+      <%= link_to 'Back to Couriers', buyer_couriers_path(@buyer), class: 'btn btn-black btn-sm' %>
+      <%= f.submit "Save and add Samples", class: "btn btn-success btn-sm" %>
     </div>
   <% end %>
+  </div>
 </div>

@@ -17,10 +17,10 @@
           <% couriers.each do |courier| %>
             <tr>
             <td><%= courier.airway_bill_number %></td>
-            <td><%= courier.team_name %></td>
-            <td><%= delivery_date_display(courier)%></td>
-            <td><%= courier.items.where(buyer_approved: '').length %></td>
-          </tr>
+              <td><%= courier.team_name %></td>
+              <td><%= delivery_date_display(courier)%></td>
+              <td><%= courier.items.where(buyer_approved: '').length %></td>
+            </tr>
           <% end %>
         </tr>
       <% end %>
