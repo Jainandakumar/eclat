@@ -1,6 +1,6 @@
 <% @items.group_by(&:courier).each do |courier, items| %>
 	<div class="new-page"></div>
-	<%= render partial: 'layouts/header.html.erb'%>
+	<%= render partial: 'layouts/header.html.erb', locals: {company: courier.buyer.company}%>
 	<h2>Airway Bill Number: <%= courier.airway_bill_number %></h2>
 	<h5>Delivered on: <%= courier.delivery_date.present? ? courier.delivery_date.strftime("%d-%m-%Y") : ''%></h5>
 	<br/>

@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
-
   
-	devise_for :users, controllers: {registrations: "registrations"}
-	root to: "home#index"
+	devise_for :users, controllers: { registrations: 'registrations' }
+	root to: 'home#index'
 	resources :buyers do 
 		member do
 			get :pending_buyer_comments

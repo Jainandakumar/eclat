@@ -15,6 +15,10 @@
       <label for="address" class="col-sm-4 col-form-label">Address</label>
       <%= f.text_area :address, class: 'text-box-width' %>
     </div>
+    <div class="form-group row">
+      <label for="company" class="col-sm-4 col-form-label">Company</label>
+      <%= f.select(:company, Buyer::COMPANY, {class: 'text-box-width'}) %>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>

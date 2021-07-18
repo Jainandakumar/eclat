@@ -42,10 +42,12 @@
     <p>Please open the attached PDF for details of the approvals needed.</p>
     <br/>
     <p><b>Thanks & regards,</b></p>
-    <p>
-      <%= image_tag attachments['logo.png'].url, width:"75", height:"75" %>
-    </p>
-    <h4><b>ECLAT INTERNATIONAL</b></h4>
+    <% if @buyer.company == 'Eclat International' %>
+      <p>
+        <%= image_tag attachments['logo.png'].url, width:"75", height:"75" %>
+      </p>
+    <% end %>
+    <h4><b><%= @buyer.company_upcase %></b></h4>
     <h5>*** This is an auto generated reminder mail ***</h5>
    </body>
 </html>

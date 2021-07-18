@@ -42,10 +42,12 @@
     </p>
     <br/>
     <p><b>Thanks & regards,</b></p>
-    <p>
-      <%= image_tag attachments['logo.png'].url, width:"75", height:"75" %>
-    </p>
-    <h4><b>ECLAT INTERNATIONAL</b></h4>
+    <% if @courier.buyer.company == 'Eclat International' %>
+      <p>
+        <%= image_tag attachments['logo.png'].url, width:"75", height:"75" %>
+      </p>
+    <% end %>
+    <h4><b><%= @courier.buyer.company_upcase %></b></h4>
     <h5>*** This is an auto generated mail ***</h5>
   </body>
 </html>
