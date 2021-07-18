@@ -1,4 +1,5 @@
-<%= render partial: 'layouts/header.html.erb', locals: {company: @courier.buyer.company} %>
+<%= @company = @courier.buyer.company%>
+<%= render partial: 'layouts/header.html.erb', locals: {company: @company} %>
 <h2 style="text-align: center;">ITEMS LIST</h2>
 <br/>
 <br/>
@@ -11,12 +12,12 @@
 <p><%= image_tag url_for(@courier.airway_bill_image.variant(resize: "400x400")) if @courier.airway_bill_image.attached?%></p>
 <br/>
 <div class="new-page"></div>
-<%= render partial: 'layouts/header.html.erb'%>
+<%= render partial: 'layouts/header.html.erb', locals: {company: @company} %>
 <h3><u>Items</u></h3>
 <% @items.order(:serial_number).each_with_index do |item, index| %>
 	<div class="<%= index != 0 ? 'new-page' : ''%>">
         <% if index != 0%>
-        <%= render partial: 'layouts/header.html.erb'%>
+            <%= render partial: 'layouts/header.html.erb', locals: {company: @company} %>
         <% end %>
     <table class="table table-striped">
 		<thead class="thead-dark">
