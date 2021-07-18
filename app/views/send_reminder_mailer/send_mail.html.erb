@@ -42,7 +42,7 @@
     <p>Please open the attached PDF for details of the approvals needed.</p>
     <br/>
     <p><b>Thanks & regards,</b></p>
-    <% if @buyer.company == 'Eclat International' %>
+    <% if @buyer.is_eclat %>
       <p>
         <%= image_tag attachments['logo.png'].url, width:"75", height:"75" %>
       </p>

@@ -1,5 +1,5 @@
 <% @items.group_by(&:courier).each do |courier, items| %>
-	<%= @company = courier.buyer.company%>
+	<% @company = courier.buyer.company%>
 	<div class="new-page"></div>
 	<%= render partial: 'layouts/header.html.erb', locals: {company: @company}%>
 	<h2>Airway Bill Number: <%= courier.airway_bill_number %></h2>

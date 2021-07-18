@@ -6,7 +6,7 @@ class SendReminderMailer < ApplicationMailer
   	mail_ids = team.team_members.pluck(:email)
  		@items = items
  		@buyer = team.buyer
- 		attachments.inline['logo.png'] = File.read("#{Rails.root}/app/assets/images/ei_logo.jpg")
+ 		attachments.inline['logo.png'] = File.read("#{Rails.root}/app/assets/images/ei_logo.jpg") if @buyer.is_eclat
     attachments['Pending items.pdf'] = WickedPdf.new.pdf_from_string(
     render_to_string(pdf: 'pending_items', template: 'items/pending_items.pdf.erb', locals: {items: @items}))
    	mail(to: mail_ids.flatten, subject: "Awaiting comments as on #{Date.today.strftime('%d-%m-%Y')} - #{team.name}")

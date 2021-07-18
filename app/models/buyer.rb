@@ -12,4 +12,8 @@ class Buyer < ApplicationRecord
 		company.upcase
 	end
 
+	def is_eclat
+		company == COMPANY[0]
+	end
+
 end

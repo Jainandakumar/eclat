@@ -42,7 +42,7 @@
     </p>
     <br/>
     <p><b>Thanks & regards,</b></p>
-    <% if @courier.buyer.company == 'Eclat International' %>
+    <% if @courier.buyer.is_eclat %>
       <p>
         <%= image_tag attachments['logo.png'].url, width:"75", height:"75" %>
       </p>
