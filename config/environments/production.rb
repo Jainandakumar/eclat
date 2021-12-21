@@ -101,7 +101,7 @@ Rails.application.configure do
    port:                 '587',
    domain:               'gmail.com',
    user_name:            'merch@the-eclat.com',
-   password:             'mer@1002',
+   password:             'dik18888',
    authentication:       'plain',
    enable_starttls_auto: true  
 }
