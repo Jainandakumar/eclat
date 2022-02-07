@@ -51,3 +51,10 @@ NEW ECLAT:
 6. change name from pending item approval to clarifiation approval DONE
 7. dear sir/mam DONE
 8. add company name and address header in each page in pdf DONE
+
+
+
+
+
+NEW::::::
+1. add date picker for search in table
