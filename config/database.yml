@@ -18,7 +18,11 @@ development:
 
 production:
   <<: *default
-  database: heroku_023cf4645dff501
+  host: eclat-couriers-0d01
+  username: root
+  password: password
+  port: 3306
+  database: eclat-couriers
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
