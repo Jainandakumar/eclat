@@ -86,6 +86,8 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.require_master_key = true
+
   config.action_mailer.default_url_options = { host: 'https://eclat-couriers.herokuapp.com/'}
 
   # Do not dump schema after migrations.

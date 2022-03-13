@@ -1,0 +1,47 @@
+services:
+  - type: web
+    name: eclat-couriers
+    env: ruby
+    region: oregon
+    plan: free
+    numInstances: 1
+    buildCommand: ./bin/render-build.sh
+    startCommand: REDIS_URL="redis://${REDIS_HOST}" bundle exec puma -C config/puma.rb
+    envVars:
+      - key: REDIS_HOST
+        fromService:
+          name: redis
+          type: pserv
+          property: hostport
+      - key: RAILS_MASTER_KEY
+        value: f1901c573e43261157f5025dea3f7c26
+        # sync: false
+      - key: SECRET_KEY_BASE
+        value: b356afb0a988b87f529c13b03846f45d034f6cb1b749b17bc5f06bdb6176370be378f6af741196ee01cdc436a6a59cd5e3a4489eee6f63fd9b897a53e9edd79d
+
+  - type: worker
+    name: eclat-couriers-sidekiq
+    env: ruby
+    region: oregon
+    plan: starter
+    buildCommand: bundle install
+    startCommand: REDIS_URL="redis://${REDIS_HOST}" bundle exec sidekiq -e production
+    envVars:
+      - key: REDIS_HOST
+        fromService:
+          name: redis
+          type: pserv
+          property: hostport
+      - key: RAILS_MASTER_KEY
+        value: f1901c573e43261157f5025dea3f7c26
+
+  - type: pserv
+    name: redis
+    env: docker
+    region: oregon
+    repo: https://github.com/render-examples/redis.git
+    numInstances: 1
+    disk:
+      name: data
+      mountPath: /var/lib/redis
+      sizeGB: 10
