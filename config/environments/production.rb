@@ -88,7 +88,7 @@ Rails.application.configure do
 
   config.require_master_key = true
 
-  config.action_mailer.default_url_options = { host: 'https://eclat-couriers.herokuapp.com/'}
+  config.action_mailer.default_url_options = { host: 'https://eclat-couriers.onrender.com/'}
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
