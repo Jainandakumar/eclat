@@ -28,9 +28,9 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  # config.action_controller.asset_host = 'http://localhost:3000'
+  config.action_controller.asset_host = 'http://localhost:3000'
   
-  # config.action_mailer.asset_host = config.action_controller.asset_host
+  config.action_mailer.asset_host = config.action_controller.asset_host
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
@@ -46,7 +46,7 @@ Rails.application.configure do
    port:                 '587',
    domain:               'gmail.com',
    user_name:            'merch@the-eclat.com',
-   password:             'mer@1002',
+   password:             'Mer@2022#',
    authentication:       'plain',
    enable_starttls_auto: true  
 }
