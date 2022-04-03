@@ -23,15 +23,17 @@
           <th style="text-align: center;border: 1px solid black;background-color: #76abff;">Sample Type</th>
           <th style="text-align: center;border: 1px solid black;background-color: #76abff;">Description</th>
           <th style="text-align: center;border: 1px solid black;background-color: #76abff;">No of samples</th>
+          <th style="text-align: center;border: 1px solid black;background-color: #76abff;">Photo</th>
         </tr>
       </thead>
       <tbody>
-        <% @items.order(:serial_number).each do |item|%>
+        <% @items.order(:serial_number).each_with_index do |item, index|%>
           <tr>
             <td style="text-align: center;border: 1px solid black;"><%= item.serial_number %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.sample_type.name %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.description %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.number_of_samples %></td>
+            <td style="text-align: center;border: 1px solid black;"><%= image_tag attachments[index.to_s+item.item_image.blob.filename.to_s].url , width: "100", height: "100"%></td>
           </tr>
         <% end %>
       </tbody>
@@ -44,7 +46,7 @@
     <p><b>Thanks & regards,</b></p>
     <% if @courier.buyer.is_eclat %>
       <p>
-        <%= image_tag attachments['logo.png'].url, width:"75", height:"75" %>
+        <%= image_tag attachments['logo.png'].url, width: "75", height: "75" %>
       </p>
     <% end %>
     <h4><b><%= @courier.buyer.company_upcase %></b></h4>
