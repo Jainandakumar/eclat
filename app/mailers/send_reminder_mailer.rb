@@ -4,7 +4,7 @@ class SendReminderMailer < ApplicationMailer
    
   def send_mail team, items
   	mail_ids = team.team_members.pluck(:email)
- 		@items = items.order(:serial_number)
+ 		@items = items
  		@buyer = team.buyer
     @items.each_with_index do |item, index|
       blob = item.item_image.blob

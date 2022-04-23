@@ -6,7 +6,7 @@ services:
     plan: free
     numInstances: 1
     buildCommand: ./bin/render-build.sh
-    startCommand: REDIS_URL="redis://${REDIS_HOST}" bundle exec puma -C config/puma.rb
+    startCommand: bundle exec puma -C config/puma.rb
     envVars:
       - key: REDIS_HOST
         fromService:
@@ -25,7 +25,7 @@ services:
     region: oregon
     plan: starter
     buildCommand: bundle install
-    startCommand: REDIS_URL="redis://${REDIS_HOST}" bundle exec sidekiq -e production
+    startCommand: bundle exec sidekiq -e production -q default -q mailers
     envVars:
       - key: REDIS_HOST
         fromService:
