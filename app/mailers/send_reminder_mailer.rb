@@ -13,7 +13,7 @@ class SendReminderMailer < ApplicationMailer
  		attachments.inline['logo.png'] = File.read("#{Rails.root}/app/assets/images/ei_logo.jpg") if @buyer.is_eclat
     attachments['Pending items.pdf'] = WickedPdf.new.pdf_from_string(
     render_to_string(pdf: 'pending_items', template: 'items/pending_items.pdf.erb', locals: {items: @items}))
-   	mail(to: mail_ids.flatten, subject: "Awaiting comments as on #{Date.today.strftime('%d-%m-%Y')} - #{team.name}")
+   	mail(to: mail_ids.flatten, subject: "PENDING APPROVALS as on #{Date.today.strftime('%d-%m-%Y')} - #{team.name}")
   	items.map{|i| i.update(remarks: '')}
   end
 
