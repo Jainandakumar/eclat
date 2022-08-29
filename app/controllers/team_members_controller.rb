@@ -12,13 +12,13 @@ class TeamMembersController < ApplicationController
   def new
     @team_member = TeamMember.new
     respond_to do |format|
-      format.js {render file: "team_members/form.js.erb"}
+      format.js
     end
   end
 
   def edit
     respond_to do |format|
-      format.js {render file: "team_members/form.js.erb"}
+      format.js
     end
   end
 
@@ -48,7 +48,7 @@ class TeamMembersController < ApplicationController
   def destroy
     @team_member.destroy
     respond_to do |format|
-      format.html { redirect_to @buyer, notice: "Team member was successfully destroyed." }
+      format.html { redirect_to @buyer, notice: "Team member was successfully deleted." }
       format.json { head :no_content }
     end
   end

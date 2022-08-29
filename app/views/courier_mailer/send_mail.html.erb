@@ -33,7 +33,7 @@
             <td style="text-align: center;border: 1px solid black;"><%= item.sample_type.name %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.description %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.number_of_samples %></td>
-            <td style="text-align: center;border: 1px solid black;"><%= image_tag attachments[index.to_s+item.item_image.blob.filename.to_s].url , width: "100", height: "100"%></td>
+            <td style="text-align: center;border: 1px solid black;"><%= image_tag attachments[index.to_s+item.item_image.blob&.filename.to_s].url , width: "100", height: "100"%></td>
           </tr>
         <% end %>
       </tbody>

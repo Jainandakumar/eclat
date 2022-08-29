@@ -30,7 +30,7 @@ class ItemsController < ApplicationController
 		@sample_type_id = params[:sample_type_id]
 		@courier_show_page = params[:courier_show_page]
 		respond_to do |format|
-	      format.js {render file: "items/form.js.erb"}
+	      format.js
 	    end
 	end
 
@@ -49,7 +49,7 @@ class ItemsController < ApplicationController
 	def destroy
 		sample_type_id = @item.sample_type_id
 		@item.destroy
-		redirect_to buyer_courier_path(@buyer, @courier), notice: "Item was successfully destroyed."
+		redirect_to buyer_courier_path(@buyer, @courier), notice: "Item was successfully deleted."
 		@courier.items.where(sample_type_id: sample_type_id).order(:id).each_with_index do |item, index|
 			item.update(serial_number: index+1)
 		end

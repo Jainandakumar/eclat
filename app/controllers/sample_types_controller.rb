@@ -12,13 +12,13 @@ class SampleTypesController < ApplicationController
   def new
     @sample_type = SampleType.new
     respond_to do |format|
-      format.js {render file: "sample_types/form.js.erb"}
+      format.js
     end 
   end
 
   def edit
     respond_to do |format|
-      format.js {render file: "sample_types/form.js.erb"}
+      format.js
     end
   end
 

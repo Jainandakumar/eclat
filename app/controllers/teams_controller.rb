@@ -12,13 +12,13 @@ class TeamsController < ApplicationController
   def new
     @team = Team.new
     respond_to do |format|
-      format.js {render file: "teams/form.js.erb"}
+      format.js
     end
   end
 
   def edit
     respond_to do |format|
-      format.js {render file: "teams/form.js.erb"}
+      format.js
     end
   end
 
@@ -48,7 +48,7 @@ class TeamsController < ApplicationController
   def destroy
     @team.destroy
     respond_to do |format|
-      format.html { redirect_to @buyer, notice: "Team was successfully destroyed." }
+      format.html { redirect_to @buyer, notice: "Team was successfully deleted." }
     end
   end
 

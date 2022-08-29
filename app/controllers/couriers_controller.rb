@@ -29,7 +29,7 @@ class CouriersController < ApplicationController
 
 	def edit
     respond_to do |format|
-      format.js {render file: "couriers/form.js.erb"}
+      format.js
     end
   end
 
@@ -64,14 +64,14 @@ class CouriersController < ApplicationController
 	end
 
 	def approve_status
-		@courier.update_attributes(approved: true)
+		@courier.update(approved: true)
 		redirect_to buyer_courier_path(@buyer, @courier), notice: "Courier was successfully approved and mail was sent to the team members."
 		CourierMailer.send_mail(@courier).deliver_later
 	end
 
 	def destroy
 		@courier.destroy
-		redirect_to buyer_couriers_path(@buyer), notice: "Courier was successfully destroyed."
+		redirect_to buyer_couriers_path(@buyer), notice: "Courier was successfully deleted."
 	end
 
 	def all_couriers

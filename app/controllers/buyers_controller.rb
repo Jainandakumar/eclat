@@ -19,13 +19,13 @@ class BuyersController < ApplicationController
   def new
     @buyer = Buyer.new
     respond_to do |format|
-      format.js {render file: "buyers/form.js.erb"}
+      format.js
     end 
   end
 
   def edit
     respond_to do |format|
-      format.js {render file: "buyers/form.js.erb"}
+      format.js
     end
   end
 
@@ -56,7 +56,7 @@ class BuyersController < ApplicationController
   def destroy
     @buyer.destroy
     respond_to do |format|
-      format.html { redirect_to buyers_url, notice: "Vendor was successfully destroyed." }
+      format.html { redirect_to buyers_url, notice: "Vendor was successfully deleted." }
       format.json { head :no_content }
     end
   end

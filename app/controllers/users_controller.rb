@@ -12,13 +12,13 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     respond_to do |format|
-      format.js {render file: "teams/form.js.erb"}
+      format.js
     end
   end
 
   def edit
     respond_to do |format|
-      format.js {render file: "teams/form.js.erb"}
+      format.js
     end
   end
 
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to users_path, notice: "User was successfully created." }
+        format.html { redirect_to users_path, notice: "Staff was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.js
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to users_path, notice: "User was successfully updated." }
+        format.html { redirect_to users_path, notice: "Staff was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.js
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: "User was successfully destroyed." }
+      format.html { redirect_to users_url, notice: "Staff was successfully removed." }
       format.json { head :no_content }
     end
   end

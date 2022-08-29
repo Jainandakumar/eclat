@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  
-	devise_for :users, controllers: { registrations: 'registrations' }
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  devise_for :users, controllers: { registrations: 'registrations' }
 	root to: 'home#index'
 	resources :buyers do 
 		member do
@@ -44,5 +44,4 @@ Rails.application.routes.draw do
 	get 'pending_buyer_comments', to: 'items#pending_buyer_comments'
 	get 'pending_buyer_approval', to: 'items#pending_buyer_approval'
 	get 'buyer_approved_items', to: 'items#buyer_approved_items'
-  	
 end

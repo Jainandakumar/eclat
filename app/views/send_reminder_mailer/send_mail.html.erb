@@ -35,7 +35,7 @@
             <td style="text-align: center;border: 1px solid black;"><%= item.number_of_samples %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.remarks %></td>
             <td style="text-align: center;border: 1px solid black;"><%= (Date.today - item.courier.delivery_date).to_i rescue 0%></td>
-            <td style="text-align: center;border: 1px solid black;"><%= image_tag attachments[index.to_s+item.item_image.blob.filename.to_s].url , width: "50", height: "50"%></td>
+            <td style="text-align: center;border: 1px solid black;"><%= image_tag attachments[index.to_s+item.item_image.blob&.filename.to_s].url , width: "50", height: "50"%></td>
           </tr>
         <% end %>
       </tbody>
