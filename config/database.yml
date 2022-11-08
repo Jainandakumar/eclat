@@ -18,7 +18,7 @@ development:
 
 production:
   <<: *default
-  host: eclat-couriers-mysql1
+  host: eclat-couriers-0d01
   username: root
   password: password
   port: 3306
