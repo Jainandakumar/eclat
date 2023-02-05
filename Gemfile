@@ -31,6 +31,9 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 # Use bootstrap for styling
 gem 'bootstrap', '~> 4.0.0'
+
+gem 'bootstrap-multiselect-rails'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password

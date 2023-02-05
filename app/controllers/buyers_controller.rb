@@ -2,6 +2,9 @@ class BuyersController < ApplicationController
   before_action :set_buyer, only: %i[ show edit update destroy get_teams pending_buyer_comments update_pending_buyer_comments pending_buyer_approval update_pending_buyer_approval buyer_approved_items update_buyer_approved_items]
 
   def index
+    unless current_user.is_admin
+      redirect_to root_path
+    end
     @buyers = Buyer.all.includes(:teams, :couriers)
     respond_to do |format|
       format.js {render file: "buyers/index.js.erb"}
@@ -73,7 +76,7 @@ class BuyersController < ApplicationController
   end
 
   def pending_buyer_comments
-    @items = Item.pending_buyer_comments_with_buyer(@buyer).includes(:courier, :sample_type)
+    @items = Item.pending_buyer_comments_with_buyer(@buyer, current_user).includes(:courier, :sample_type)
   end
 
   def update_pending_buyer_comments
@@ -86,7 +89,7 @@ class BuyersController < ApplicationController
   end
 
   def pending_buyer_approval
-    @items = Item.pending_with_buyer(@buyer).includes(:courier, :sample_type)
+    @items = Item.pending_with_buyer(@buyer, current_user).includes(:courier, :sample_type)
   end
 
   def update_pending_buyer_approval
@@ -96,7 +99,7 @@ class BuyersController < ApplicationController
   end
 
   def buyer_approved_items
-    @items = Item.approved_with_buyer(@buyer).includes(:courier, :sample_type)
+    @items = Item.approved_with_buyer(@buyer, current_user).includes(:courier, :sample_type)
   end
 
   def update_buyer_approved_items

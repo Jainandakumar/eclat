@@ -14,7 +14,7 @@ class CouriersController < ApplicationController
 	def new
 		@courier = Courier.new
 		@buyer_id = params[:buyer_id]
-		@buyers = Buyer.order(:name)
+		@buyers = current_user.buyers
 	end
 
 	def create
@@ -75,16 +75,17 @@ class CouriersController < ApplicationController
 	end
 
 	def all_couriers
-		@couriers = Courier.order(:courier_date).includes(:buyer, :team, :items)
+		buyers_ids = current_user.buyer_ids
+		@couriers = Courier.where(buyer_id: buyers_ids).order(:courier_date).includes(:buyer, :team, :items)
 	end
 
 	def new_courier
-		@buyers = Buyer.order(:name)
+		@buyers = current_user.buyers
 		@courier = Courier.new
 	end
 
 	def save_courier
-		@buyers = Buyer.order(:name)
+		@buyers = current_user.buyers
 		@courier = Courier.new(courier_params)
 		if @courier.save
 			redirect_to sample_type_items_buyer_courier_path(@courier.buyer, @courier), notice: "Courier was successfully created."
@@ -94,7 +95,7 @@ class CouriersController < ApplicationController
 	end
 
 	def undelivered_couriers
-		@undelivered_couriers = Courier.pending_delivery.includes(:team)
+		@undelivered_couriers = Courier.pending_delivery(current_user).includes(:team)
 	end
 
 	def update_courier_delivery_dates

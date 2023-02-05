@@ -4,7 +4,7 @@
 			<div class="card custom-card shadow-sm card-style">
 			  <div class="card-body">
 			    <h5 class="card-title text-center">Total couriers sent</h5>
-			    <h1 class="card-text text-center"><%= Courier.sent.count%></h1>
+			    <h1 class="card-text text-center"><%= Courier.sent(current_user).count%></h1>
 			  </div>
 			</div>
 		<% end %>
@@ -14,7 +14,7 @@
 			<div class="card custom-card shadow-sm card-style">
 			  <div class="card-body">
 			    <h5 class="card-title text-center">Total pending delivery</h5>
-			    <h1 class="card-text text-center"><%= Courier.pending_delivery.count%></h1>
+			    <h1 class="card-text text-center"><%= Courier.pending_delivery(current_user).count%></h1>
 			  </div>
 			</div>
 		<% end %>
@@ -23,7 +23,7 @@
 		<div class="card custom-card shadow-sm card-style">
 		  <div class="card-body">
 		    <h5 class="card-title text-center">Total couriers delivered</h5>
-		    <h1 class="card-text text-center"><%= Courier.delivered.count%></h1>
+		    <h1 class="card-text text-center"><%= Courier.delivered(current_user).count%></h1>
 		  </div>
 		</div>
 	</div>
@@ -33,7 +33,7 @@
 		<div class="card custom-card shadow-sm card-style">
 		  <div class="card-body">
 		    <h5 class="card-title text-center">Total items sent</h5>
-		    <h1 class="card-text text-center"><%= Item.count%></h1>
+		    <h1 class="card-text text-center"><%= Item.sent(current_user).count%></h1>
 		  </div>
 		</div>
 	</div>
@@ -41,7 +41,7 @@
 		<div class="card custom-card shadow-sm card-style">
 		  <div class="card-body">
 		    <h5 class="card-title text-center">Total items delivered</h5>
-		    <h1 class="card-text text-center"><%= Item.delivered.count%></h1>
+		    <h1 class="card-text text-center"><%= Item.delivered(current_user).count%></h1>
 		  </div>
 		</div>
 	</div>
@@ -50,7 +50,7 @@
 			<div class="card custom-card shadow-sm card-style">
 			  <div class="card-body">
 			    <h5 class="card-title text-center">Pending vendor comments</h5>
-			    <h1 class="card-text text-center"><%= Item.pending_buyer_comments.count%></h1>
+			    <h1 class="card-text text-center"><%= Item.pending_buyer_comments(current_user).count%></h1>
 			  </div>
 			</div>
 		<% end %>
@@ -62,7 +62,7 @@
 			<div class="card custom-card shadow-sm card-style">
 			  <div class="card-body">
 			    <h5 class="card-title text-center">Total items approved</h5>
-			    <h1 class="card-text text-center"><%= Item.approved.count%></h1>
+			    <h1 class="card-text text-center"><%= Item.approved(current_user).count%></h1>
 			  </div>
 			</div>
 		<% end %>
@@ -72,7 +72,7 @@
 			<div class="card custom-card shadow-sm card-style">
 			  <div class="card-body">
 			    <h5 class="card-title text-center">Total approval clarification pending</h5>
-			    <h1 class="card-text text-center"><%= Item.pending.count%></h1>
+			    <h1 class="card-text text-center"><%= Item.pending(current_user).count%></h1>
 			  </div>
 			</div>
 		<% end %>

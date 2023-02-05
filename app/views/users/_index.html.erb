@@ -5,6 +5,7 @@
       <th scope="col">Email</th>
       <th scope="col">Phone</th>
       <th scope="col">Role</th>
+      <th scope="col">Buyers</th>
       <th scope="col">Status</th>
       <th scope="col">Actions</th>
     </tr>
@@ -16,6 +17,7 @@
         <td><%= user.email %></td>
         <td><%= user.phone %></td>
         <td><%= role_display(user) %></td>
+        <td><%= user.buyer_names %></td>
         <td><%= status(user) %></td>
         <% if is_admin? %>
           <td>

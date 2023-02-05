@@ -128,17 +128,17 @@ class ItemsController < ApplicationController
 	end
 
 	def pending_buyer_comments
-		courier_ids = Item.pending_buyer_comments.pluck(:courier_id)
+		courier_ids = Item.pending_buyer_comments(current_user).pluck(:courier_id)
 		@buyers_couriers = Courier.where(id: courier_ids).includes(:team, :items).group_by(&:buyer)
 	end
 
 	def pending_buyer_approval
-		courier_ids = Item.pending.pluck(:courier_id)
+		courier_ids = Item.pending(current_user).pluck(:courier_id)
 		@buyers_couriers = Courier.where(id: courier_ids).includes(:team, :items).group_by(&:buyer)
 	end
 
 	def buyer_approved_items
-		courier_ids = Item.approved.pluck(:courier_id)
+		courier_ids = Item.approved(current_user).pluck(:courier_id)
 		@buyers_couriers = Courier.where(id: courier_ids).includes(:team, :items).group_by(&:buyer)
 	end
 

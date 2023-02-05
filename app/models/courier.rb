@@ -12,20 +12,20 @@ class Courier < ApplicationRecord
 		team.present? ? team.name : '-'
 	end
 
-	def self.sent
-		where.not(courier_date: nil)
+	def self.sent user
+		where.not(courier_date: nil).where(buyer_id: user.buyer_ids)
 	end
 
-	def self.pending_delivery
-		where(approved: true, delivery_date: nil)
+	def self.pending_delivery user
+		where(approved: true, delivery_date: nil, buyer_id: user.buyer_ids)
 	end
 
-	def self.delivered
-		where.not(delivery_date: nil)
+	def self.delivered user
+		where.not(delivery_date: nil).where(buyer_id: user.buyer_ids)
 	end
 
-	def self.buyer_delivered buyer
-		delivered.where(buyer_id: buyer.id)
+	def self.buyer_delivered buyer, user
+		delivered(user).where(buyer_id: buyer.id)
 	end
 
 end

@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :get_buyers, only: %i[ new edit update create ]
+  before_action :check_if_admin
 
   def index
     @users = User.order(:name)
@@ -24,7 +26,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     respond_to do |format|
       if @user.save
         format.html { redirect_to users_path, notice: "Staff was successfully created." }
@@ -36,6 +37,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    params[:user][:buyer_ids] = params[:user][:buyer_ids].reject{|c| c.empty?}
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to users_path, notice: "Staff was successfully updated." }
@@ -60,6 +62,16 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:name, :phone, :is_active, :role)
+      params.require(:user).permit(:name, :phone, :is_active, :role, :email, buyer_ids: [])
+    end
+
+    def get_buyers
+      @buyers = Buyer.order(:name)
+    end
+
+    def check_if_admin
+      unless current_user.is_admin
+        redirect_to root_path
+      end
     end
 end

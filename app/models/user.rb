@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   attr_writer :login
 
+  serialize :buyer_ids, Array
+
   validates :name, {presence: true, uniqueness: {case_sensitive: true}, length: {minimum: 3, maximum: 75}}
   validates :email, {presence: true, uniqueness: true, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ } }
   validates :phone, {length: {maximum: 10}, uniqueness: true, numericality: true}
@@ -29,6 +31,14 @@ class User < ApplicationRecord
 
   def inactive_message
     "Sorry, this account has been deactivated."
+  end
+
+  def buyers
+    Buyer.where(id: buyer_ids).order(:name)
+  end
+
+  def buyer_names
+    buyers.pluck(:name).join(', ')
   end
 
 end

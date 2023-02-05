@@ -19,7 +19,11 @@
       <label for="phone" class="col-sm-4 col-form-label">Phone</label>
       <%= f.text_field :phone, class: 'text-box-width' %>
     </div>
-    <% unless @user.try(:is_admin)%>
+    <% if !@user.try(:is_admin) && is_admin? %>
+      <div class="form-group row">
+        <label for="role" class="col-sm-4 col-form-label">Buyers</label>
+        <%= f.select :buyer_ids, options_from_collection_for_select(@buyers, :id, :name, @user.buyer_ids), { include_blank: false}, multiple: true %>
+      </div>
       <div class="form-group row">
         <label for="role" class="col-sm-4 col-form-label">Role</label>
         <%= f.select :role, options_for_select([["Select One", ""], "Manager", "Staff"], selected: @user.role), class: 'text-box-width' %>
@@ -37,3 +41,13 @@
     <%= f.submit 'Save', class: "btn btn-success btn-sm"%>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  
+$(document).ready(function(){
+ $('#user_buyer_ids').multiselect({
+  nonSelectedText: 'Select Buyers'
+ });
+ 
+});
+</script>
