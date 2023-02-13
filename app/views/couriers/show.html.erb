@@ -54,12 +54,11 @@
 				<% end %>
 			</div>
     </div>
-		<% if @courier.airway_bill_image.attached?%>
+		<% if @courier.airway_bill_image.attached? && @courier.airway_bill_image.content_type != "application/pdf" %>
 			<div class="row align-items-center mt-10">
 				<div class="col ml-15">
 					<%= image_tag @courier.airway_bill_image.variant(resize: "100x100")%>
 				</div>
-				
 			</div>
 		<% end %>
   </div>

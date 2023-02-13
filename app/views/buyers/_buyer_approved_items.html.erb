@@ -37,7 +37,11 @@ table thead, table tbody tr {
           <td><%= item.description%></td>
           <td><%= item.sample_type_name %></td>
           <td><%= item.number_of_samples %></td>
-          <td><%= image_tag item.item_image.variant(resize: "100x100") if item.item_image.attached? %></td>
+          <% if item.item_image.attached? && item.item_image.content_type != "application/pdf" %>
+            <td><%= image_tag item.item_image.variant(resize: "100x100")%></td>
+          <% else %>
+            <td>No Preview available</td>
+          <% end %>
           <td><%= item.buyer_comments %></td>
         </tr>
       <% end %>
