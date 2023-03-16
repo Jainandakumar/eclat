@@ -215,7 +215,7 @@ GEM
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    redis (4.8.0)
+    redis (4.7.1)
     reek (6.1.1)
       kwalify (~> 0.7.0)
       parser (~> 3.1.0)
@@ -323,6 +323,7 @@ DEPENDENCIES
   mysql2
   puma (~> 3.0)
   rails (~> 6.0)
+  redis (= 4.7.1)
   rubycritic
   sass-rails (~> 5.0)
   sidekiq
