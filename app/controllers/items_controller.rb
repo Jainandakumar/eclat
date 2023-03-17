@@ -111,7 +111,7 @@ class ItemsController < ApplicationController
     	params[:remarks].each do |remark|
     		Item.find(remark[1].keys[0]).update(remarks: remark[1].values[0])
     	end
-      Courier.buyer_delivered(Buyer.find(buyer_id))
+      Courier.buyer_delivered(Buyer.find(buyer_id), current_user)
     else
       Courier.delivered
     end
