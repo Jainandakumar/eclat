@@ -6,7 +6,7 @@
 	<h5>Delivered on: <%= courier.delivery_date.present? ? courier.delivery_date.strftime("%d-%m-%Y") : ''%></h5>
 	<br/>
 	<h2><u>Items</u></h2>
-	<% items.sort_by(&:serial_number).each_with_index do |item, index|%>
+	<% items.sort_by{|c| c.serial_number.to_i}.each_with_index do |item, index|%>
 		<% if index > 0%>
 			<div class="new-page"></div>
 			<%= render partial: 'layouts/header', locals: {company: @company}%>

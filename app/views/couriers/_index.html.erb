@@ -24,12 +24,16 @@
             <td>
               <% unless courier.delivery_date.present?%>
                 <%= link_to 'Add vendor comments', edit_delivery_items_buyer_courier_items_path(@buyer, courier) %>
-                <% end %>
-              <i class="fa fa-edit text-danger" disabled></i>
+              <% end %>
+              <i class="fa fa-edit text-danger" disabled data-toggle='tooltip' data-placement='top' title='Cannot edit approved courier' ></i>
+              <% if is_admin? %>
+                <%= link_to '', buyer_courier_path(@buyer, courier), method: :delete, data: { confirm: 'Are you sure?' }, class: 'fa fa-trash' %>
+              <% end %>
             </td>
           <% else %>
             <td>
-              <%= link_to '', edit_buyer_courier_path(@buyer, courier), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fa fa-edit'} %><%= link_to '', buyer_courier_path(@buyer, courier), method: :delete, data: { confirm: 'Are you sure?' }, class: 'fa fa-trash' %>
+              <%= link_to '', edit_buyer_courier_path(@buyer, courier), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fa fa-edit'} %>
+              <%= link_to '', buyer_courier_path(@buyer, courier), method: :delete, data: { confirm: 'Are you sure?' }, class: 'fa fa-trash' %>
             </td>
           <% end %>
         </tr>

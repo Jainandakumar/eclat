@@ -7,6 +7,7 @@ class Courier < ApplicationRecord
 
 	validates :airway_bill_number, {presence: true, uniqueness: {case_sensitive: true}, length: {minimum: 3, maximum: 75}}
 	validates :courier_date, presence: true
+	validates :number_of_items, numericality: { greater_than_or_equal_to: 1 }
 
 	def team_name
 		team.present? ? team.name : '-'

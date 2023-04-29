@@ -10,6 +10,7 @@
       </div>
       <div class="col text-right">
       	<% if is_admin? %>
+      	<%= link_to 'Delete', buyer_courier_path(@buyer, @courier), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
 					<%= link_to 'Couriers', buyer_couriers_path(@buyer), class: 'btn btn-black btn-sm' %>
 				<% else %>
 					<%= link_to 'Couriers', all_couriers_path, class: 'btn btn-black btn-sm' %>

@@ -55,7 +55,7 @@ class CouriersController < ApplicationController
 
 	def sample_type_items
 		@sample_types = SampleType.order(:name)
-		@items = @courier.items.where(sample_type_id: params[:sample_type_id]).order(:serial_number)
+		@items = @courier.items.where(sample_type_id: params[:sample_type_id]).sort_by{|c| c.serial_number.to_i}
 		respond_to do |format|
       format.js {render file: "couriers/sample_type_items.js.erb"}
       format.html {}

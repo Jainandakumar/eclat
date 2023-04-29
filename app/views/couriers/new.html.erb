@@ -38,7 +38,7 @@
     </div>
     <div class="form-group row">
       <label for="number_of_items" class="col-sm-4 col-form-label">No of items</label>
-      <%= f.text_field :number_of_items %>
+      <%= f.number_field :number_of_items %>
     </div>
     <%= hidden_field_tag 'courier[buyer_id]', @buyer.id%>
     <div class="actions">

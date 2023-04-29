@@ -18,7 +18,7 @@
 <div class="new-page"></div>
 <%= render partial: 'layouts/header', locals: {company: @company} %>
 <h3><u>Items</u></h3>
-<% @items.order(:serial_number).each_with_index do |item, index| %>
+<% @items.each_with_index do |item, index| %>
 	<div class="<%= index != 0 ? 'new-page' : ''%>">
         <% if index != 0%>
             <%= render partial: 'layouts/header', locals: {company: @company} %>

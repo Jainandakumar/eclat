@@ -5,7 +5,7 @@ class CourierMailer < ApplicationMailer
    def send_mail(courier)
    	@courier = courier
    	mail_ids = @courier.team.team_members.pluck(:email)
-   	@items = @courier.items.order(:serial_number)
+   	@items = @courier.items.sort_by{|c| c.serial_number.to_i}
       @items.each_with_index do |item, index|
          blob = item.item_image.blob
          attachments[index.to_s+blob&.filename.to_s] = item.item_image.download

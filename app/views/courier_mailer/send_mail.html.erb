@@ -27,7 +27,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @items.order(:serial_number).each_with_index do |item, index|%>
+        <% @items.each_with_index do |item, index|%>
           <tr>
             <td style="text-align: center;border: 1px solid black;"><%= item.serial_number %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.sample_type.name %></td>

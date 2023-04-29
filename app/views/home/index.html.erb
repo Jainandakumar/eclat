@@ -13,7 +13,7 @@
 		<%= link_to undelivered_couriers_path do %>	
 			<div class="card custom-card shadow-sm card-style">
 			  <div class="card-body">
-			    <h5 class="card-title text-center">Total pending delivery</h5>
+			    <h5 class="card-title text-center">In Transit</h5>
 			    <h1 class="card-text text-center"><%= Courier.pending_delivery(current_user).count%></h1>
 			  </div>
 			</div>

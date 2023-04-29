@@ -69,7 +69,7 @@ class ItemsController < ApplicationController
 	end
 
 	def edit_delivery_items
-		@items = @courier.items.order(:serial_number)
+		@items = @courier.items.sort_by{|c| c.serial_number.to_i}
 	end
 
 	def update_delivery_items
@@ -119,7 +119,7 @@ class ItemsController < ApplicationController
     sent_couriers.joins(:items).where(items: {buyer_approved: ''}).uniq.group_by(&:team). each do |team, couriers|
       mail_hash[team] = []
       couriers.each do |courier|
-        mail_hash[courier.team] << courier.items.where(buyer_approved: '')
+        mail_hash[courier.team] << courier.items.where(buyer_approved: '').sort_by{|c| c.serial_number.to_i}
       end
     end
     mail_hash.each do |team, items|
