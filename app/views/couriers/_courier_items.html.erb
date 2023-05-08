@@ -13,9 +13,9 @@
     </thead>
     <tbody>
       <% if @has_items %>
-        <% @courier.items.includes(:sample_type).each_with_index do |item, index| %>
+        <% @courier.items.includes(:sample_type).sort_by{|c| c.serial_number.to_i}.each do |item| %>
           <tr>
-            <td><%= index+1 %></td>
+            <td><%= item.serial_number %></td>
             <td><%= item.sample_type_name %></td>
             <td><%= item.description %></td>
             <td><%= item.number_of_samples %></td>
