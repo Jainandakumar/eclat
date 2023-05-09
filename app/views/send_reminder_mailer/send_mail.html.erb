@@ -10,6 +10,9 @@
     <p>
       Kindly advice us with comments for the following items,<br>
     </p>
+    <p>
+      Items pending for more than 5 days are highlighted<br>
+    </p>
     <table style="border: 1px solid black;width: 100%;border-collapse: collapse;">
       <thead>
         <tr>
@@ -26,7 +29,8 @@
       </thead>
       <tbody>
         <% @items.each_with_index do |item, index|%>
-          <tr style="<%= ((Date.today - item.courier.delivery_date).to_i rescue 0) > 5 ? 'background-color: #ffc107 !important;' : '' %>">
+          <% pending_days = (Date.today - item.courier.delivery_date).to_i rescue 0%>
+          <tr>
             <td style="text-align: center;border: 1px solid black;"><%= index+1%></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.courier.airway_bill_number %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.sample_type.name %></td>
@@ -34,7 +38,7 @@
             <td style="text-align: center;border: 1px solid black;"><%= item.courier.delivery_date.present? ? item.courier.delivery_date.strftime("%d-%m-%Y") : ''%></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.number_of_samples %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.remarks %></td>
-            <td style="text-align: center;border: 1px solid black;"><%= (Date.today - item.courier.delivery_date).to_i rescue 0%></td>
+            <td style="text-align: center;border: 1px solid black; <%= pending_days > 5 ? 'background-color: #fcff60 !important;' : '' %>"><%= pending_days %></td>
             <td style="text-align: center;border: 1px solid black;"><%= image_tag attachments[index.to_s+item.item_image.blob&.filename.to_s].url , width: "50", height: "50"%></td>
           </tr>
         <% end %>
