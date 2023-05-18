@@ -78,7 +78,7 @@ Rails.application.configure do
    address:              'smtp.gmail.com',
    port:                 '587',
    domain:               'gmail.com',
-   user_name:            'merch@the-eclat.com',
+   user_name:            'merch@banumathiexports.com',
    password:             'MER@ECLAT#',
    authentication:       'plain',
    enable_starttls_auto: true
