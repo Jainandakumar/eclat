@@ -1,6 +1,7 @@
 class Buyer < ApplicationRecord
 
 	COMPANY = ['Eclat International', 'Banumathi Exports']
+	EMAILS = ['merch@banumathiexports.com']
 
 	has_many :couriers, dependent: :destroy
 	has_many :teams, dependent: :destroy

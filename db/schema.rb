@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_04_095040) do
+ActiveRecord::Schema.define(version: 2023_05_28_105558) do
 
   create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2023_02_04_095040) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "company", default: "Eclat International"
+    t.string "email", default: "merch@banumathiexports.com"
   end
 
   create_table "couriers", id: :integer, charset: "utf8mb3", force: :cascade do |t|

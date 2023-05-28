@@ -1,6 +1,4 @@
 class SendReminderMailer < ApplicationMailer
-
-	default from: 'jainandatest@gmail.com'
    
   def send_mail team, items
   	mail_ids = team.team_members.pluck(:email)
@@ -15,6 +13,7 @@ class SendReminderMailer < ApplicationMailer
     render_to_string(pdf: 'pending_items', template: 'items/pending_items.pdf.erb', locals: {items: @items}))
    	mail(to: mail_ids.flatten, subject: "PENDING APPROVALS as on #{Date.today.strftime('%d-%m-%Y')} - #{team.name}")
   	items.map{|i| i.update(remarks: '')}
+    mail.delivery_method.settings.merge!(DynamicSmtpSettings.smtp_settings(@buyer.email))
   end
 
 end
