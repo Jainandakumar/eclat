@@ -35,6 +35,7 @@ Rails.application.routes.draw do
 	resources :users
 	resources :sample_types
 	get 'reports', to: 'reports#index'
+	get 'download_report', to: 'reports#download_report'
 	get 'send_reminder_mail', to: 'items#send_reminder_mail'
 	get 'all_couriers', to: 'couriers#all_couriers'
 	get 'new_courier', to: 'couriers#new_courier'

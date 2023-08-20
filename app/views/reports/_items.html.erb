@@ -12,11 +12,12 @@
 	</thead>
 	<tbody>
     <% @items.each do |item| %>
+      <% item_courier = item.courier %>
       <tr>
-        <td><%= item.courier.buyer.name %></td>
-        <td><%= item.courier.team.name %></td>
-        <td><%= item.courier.airway_bill_number %></td>
-        <td><%= item.courier.delivery_date.present? ? item.courier.delivery_date.strftime("%d-%m-%Y") : 'Not delivered' %></td>
+        <td><%= item_courier&.buyer&.name %></td>
+        <td><%= item_courier&.team&.name %></td>
+        <td><%= item_courier.airway_bill_number %></td>
+        <td><%= item_courier.delivery_date.present? ? item_courier.delivery_date.strftime("%d-%m-%Y") : 'Not delivered' %></td>
         <td><%= item.description %></td>
         <td><%= item.number_of_samples %></td>
         <td><%= item.buyer_comments.present? ? item.buyer_comments : 'Not commented' %></td>
