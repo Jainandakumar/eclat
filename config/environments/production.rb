@@ -79,7 +79,7 @@ Rails.application.configure do
    port:                 '587',
    domain:               'gmail.com',
    user_name:            'merch@banumathiexports.com',
-   password:             'MER@ECLAT#',
+   password:             'MERCH@2023#',
    authentication:       'plain',
    enable_starttls_auto: true
   }
