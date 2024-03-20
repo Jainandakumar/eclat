@@ -76,11 +76,12 @@ Rails.application.configure do
 
   config.action_mailer.smtp_settings = {
    address:              'smtp.gmail.com',
-   port:                 '465',
+   port:                 '587',
    domain:               'gmail.com',
    user_name:            'merch@banumathiexports.com',
    password:             'MERCH@2023#',
-   authentication:       'plain'
+   authentication:       'login',
+   enable_starttls_auto: true
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
