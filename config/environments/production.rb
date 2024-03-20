@@ -80,7 +80,7 @@ Rails.application.configure do
    domain:               'gmail.com',
    user_name:            'merch@banumathiexports.com',
    password:             'MERCH@2023#',
-   authentication:       'login',
+   authentication:       'plain',
    enable_starttls_auto: true
   }
 
