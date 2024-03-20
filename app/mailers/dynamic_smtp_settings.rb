@@ -2,7 +2,7 @@ class DynamicSmtpSettings
 
 	EMAILS = {
 		'merch@banumathiexports.com' => {
-			password: 'MER@ECLAT#'
+			password: 'MERCH@2023#'
 		}
 	}
 
