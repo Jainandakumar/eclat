@@ -21,6 +21,7 @@
     <thead class="thead-dark">
       <tr>
         <th scope="col">Courier Date</th>
+        <th scope="col">Vendor</th>
         <th scope="col">Airway bill</th>
         <th scope="col">Team</th>
         <th scope="col">Approved</th>
@@ -32,6 +33,7 @@
       <% @couriers.each do |courier| %>
         <tr>
           <td><%= courier_date_display(courier) %></td>
+          <td><%= courier.buyer.name %></td>
           <td><%= link_to courier.airway_bill_number, buyer_courier_path(courier.buyer, courier) %></td>
           <td><%= courier.team_name %></td>
           <td><%= courier.approved ? fa_approved : (is_staff? ? fa_pending : (link_to 'Approve', buyer_courier_path(courier.buyer, courier))) %></td>

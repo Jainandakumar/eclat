@@ -80,6 +80,7 @@
         </table>
       </div>
       <%= hidden_field_tag 'buyer_id', @buyer.id %>
+      <%= hidden_field_tag 'courier_id', @presenter.courier_id %>
       <div class="text-right mt-3">
         <%= submit_tag 'Save', class: 'btn btn-success btn-sm px-4' %>
       </div>
@@ -98,7 +99,7 @@
             url: "/send_reminder_mail",
             method: "GET",
             dataType: "json",
-            data: { id: <%= @buyer.id %>, from: 'pending_buyer_comments_buyer', remarks },
+            data: { id: <%= @buyer.id %>, courier_id: <%= @presenter.courier_id %>, from: 'pending_buyer_comments_buyer', remarks },
             error: function(xhr, status, error) {
                 console.error(`AJAX Error: ${status} ${error}`);
             },

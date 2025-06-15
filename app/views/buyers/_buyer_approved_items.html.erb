@@ -75,6 +75,7 @@
         </table>
       </div>
       <%= hidden_field_tag 'buyer_id', @buyer.id %>
+      <%= hidden_field_tag 'courier_id', @presenter.courier_id %>
       <div id="submit_div" style="display: none;" class="text-left mt-3">
         <p id="selected" style="display: none;float: right"></p>
         <%= submit_tag 'Reject', id: 'submit', class: 'btn btn-success btn-sm'%>

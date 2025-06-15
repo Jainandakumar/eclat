@@ -97,7 +97,7 @@ class ItemsController < ApplicationController
 			send_all_items
 			return_path = pending_comments_path
 		else
-			send_all_items(params[:id], params[:remarks])
+			send_all_items(params[:id], params[:courier_id], params[:remarks])
 			return_path = pending_buyer_comments_buyer_path(params[:id])
 		end	
 		respond_to do |format|
@@ -106,12 +106,12 @@ class ItemsController < ApplicationController
 		end
 	end
 
-	def send_all_items(buyer_id = nil, remarks = [])
-    sent_couriers = if buyer_id.present? 
+	def send_all_items(buyer_id = nil, courier_id = nil, remarks = [])
+    sent_couriers = if courier_id.present?
     	remarks.each do |remark|
     		Item.find(remark[1].keys[0]).update(remarks: remark[1].values[0])
     	end
-      Courier.buyer_delivered(Buyer.find(buyer_id), current_user)
+      Courier.where(id: courier_id)
     else
       Courier.delivered(current_user)
     end

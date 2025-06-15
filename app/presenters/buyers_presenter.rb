@@ -1,5 +1,5 @@
 class BuyersPresenter
-  attr_reader :buyers, :return_pbc, :return_pba, :return_bai
+  attr_reader :buyers, :return_pbc, :return_pba, :return_bai, :courier_id
 
   def initialize(buyer = nil, current_user = nil)
     @buyer = buyer
@@ -11,18 +11,21 @@ class BuyersPresenter
     self
   end
 
-  def pending_buyer_comments
-    @return_pbc = group_and_format_items(Item.pending_buyer_comments_with_buyer(@buyer, @current_user))
+  def pending_buyer_comments(courier_id = nil)
+    @return_pbc = group_and_format_items(Item.pending_buyer_comments_with_buyer(courier_id))
+    @courier_id = courier_id
     self
   end
 
-  def pending_buyer_approval
-    @return_pba = group_and_format_items(Item.pending_with_buyer(@buyer, @current_user))
+  def pending_buyer_approval(courier_id = nil)
+    @return_pba = group_and_format_items(Item.pending_with_buyer(courier_id))
+    @courier_id = courier_id
     self
   end
 
-  def buyer_approved_items
-    @return_bai = group_and_format_items(Item.approved_with_buyer(@buyer, @current_user))
+  def buyer_approved_items(courier_id = nil)
+    @return_bai = group_and_format_items(Item.approved_with_buyer(courier_id))
+    @courier_id = courier_id
     self
   end
 
