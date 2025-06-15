@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
 
-	before_action :set_courier, except: [:send_reminder_mail, :pending_buyer_comments, :pending_buyer_approval, :buyer_approved_items]
-	before_action :set_item, except: [:new, :create, :save_items, :delete_multiple_items, :edit_delivery_items, :update_delivery_items, :send_reminder_mail, :pending_buyer_comments, :pending_buyer_approval, :buyer_approved_items]
+	before_action :set_courier, except: [:send_reminder_mail]
+	before_action :set_item, except: [:new, :create, :save_items, :delete_multiple_items, :edit_delivery_items, :update_delivery_items, :send_reminder_mail]
 
 	def new
 		@item = Item.new
@@ -95,7 +95,7 @@ class ItemsController < ApplicationController
 			return_path = reports_path
 		elsif params[:from] == 'pending_buyer_comments'
 			send_all_items
-			return_path = pending_buyer_comments_path
+			return_path = pending_comments_path
 		else
 			send_all_items(params[:id], params[:remarks])
 			return_path = pending_buyer_comments_buyer_path(params[:id])
@@ -108,15 +108,15 @@ class ItemsController < ApplicationController
 
 	def send_all_items(buyer_id = nil, remarks = [])
     sent_couriers = if buyer_id.present? 
-    	params[:remarks].each do |remark|
+    	remarks.each do |remark|
     		Item.find(remark[1].keys[0]).update(remarks: remark[1].values[0])
     	end
       Courier.buyer_delivered(Buyer.find(buyer_id), current_user)
     else
-      Courier.delivered
+      Courier.delivered(current_user)
     end
     mail_hash = {}
-    sent_couriers.joins(:items).where(items: {buyer_approved: ''}).uniq.group_by(&:team). each do |team, couriers|
+    sent_couriers.joins(:items).where(items: {buyer_approved: ''}).uniq.group_by(&:team).each do |team, couriers|
       mail_hash[team] = []
       couriers.each do |courier|
         mail_hash[courier.team] << courier.items.where(buyer_approved: '').sort_by{|c| c.serial_number.to_i}
@@ -125,21 +125,6 @@ class ItemsController < ApplicationController
     mail_hash.each do |team, items|
       SendReminderMailer.send_mail(team, items.flatten).deliver_later
     end
-	end
-
-	def pending_buyer_comments
-		courier_ids = Item.pending_buyer_comments(current_user).pluck(:courier_id)
-		@buyers_couriers = Courier.where(id: courier_ids).includes(:team, :items).group_by(&:buyer)
-	end
-
-	def pending_buyer_approval
-		courier_ids = Item.pending(current_user).pluck(:courier_id)
-		@buyers_couriers = Courier.where(id: courier_ids).includes(:team, :items).group_by(&:buyer)
-	end
-
-	def buyer_approved_items
-		courier_ids = Item.approved(current_user).pluck(:courier_id)
-		@buyers_couriers = Courier.where(id: courier_ids).includes(:team, :items).group_by(&:buyer)
 	end
 
 	private

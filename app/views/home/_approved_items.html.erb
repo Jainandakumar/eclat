@@ -1,0 +1,31 @@
+<% if @presenter.return_bai.present? %>
+  <div class="container mt-4">
+    <div class="row">
+      <% @presenter.return_bai.each do |courier| %>
+        <div class="col-md-4 mb-4">
+          <%= link_to buyer_approved_items_buyer_path(courier[:buyer]), class: "text-decoration-none", style: "color: inherit;" do %>
+            <div class="card shadow-sm h-100">
+              <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">
+                  <%= courier[:buyer_name] %>
+                </h5>
+              </div>
+              <div class="card-body p-2">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <strong>No of Couriers:</strong> <%= courier[:no_of_couriers] %><br>
+                    <strong>No of Samples:</strong> <%= courier[:no_of_samples] %><br>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <div class="col-12">
+    <div class="alert alert-info text-center"><b>No approved items</b></div>
+  </div>
+<% end %>

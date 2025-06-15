@@ -1,4 +1,4 @@
-<div class="container-fluid mt-10 card shadow-sm" style="background-color: white;">
+<div class="container-fluid mt-10 card shadow-sm bg-white">
 	<div class="card-header">
     <div class="row align-items-center">
       <div class="col">
@@ -28,9 +28,9 @@
     		<span class='col-lg-3'><b>Team </b></span> : <%= @courier.team_name%>
     	</div>
     	<div class="col-lg-6">
-    		<% if @has_items %>
+    		<% if @presenter.has_items %>
 					<span class='col-lg-3'><b>Approval Status </b></span>
-					<% if @approved %> 
+					<% if @presenter.approved %>
 						: <%= fa_approved %>
 					<% elsif is_staff?%>
 						: <%= fa_pending %> 
@@ -45,9 +45,9 @@
 				<span class='col-lg-3'><b> Airway Bill No </b></span> : <%= @courier.airway_bill_number%>
 			</div>
 			<div class="col-lg-6">
-				<% if @has_items %>
+				<% if @presenter.has_items %>
 					<span class='col-lg-3'><b>Delivery Status </b></span> 
-					<% if @courier.delivery_date.present? %> 
+					<% if @courier.delivery_date.present? %>
 						: <span style="color: green;"> Delivered on <%= delivery_date_display(@courier)%></span> 
 					<% else %>
 						: <%= fa_pending%>
@@ -55,15 +55,15 @@
 				<% end %>
 			</div>
     </div>
-		<% if @courier.airway_bill_image.attached? && @courier.airway_bill_image.content_type != "application/pdf" %>
+		<% if @presenter.airway_bill_image %>
 			<div class="row align-items-center mt-10">
 				<div class="col ml-15">
-					<%= image_tag @courier.airway_bill_image.variant(resize: "100x100")%>
+					<%= image_tag @presenter.airway_bill_image%>
 				</div>
 			</div>
 		<% end %>
   </div>
-	<% if @has_items%>
+	<% if @presenter.has_items%>
 		<div id="courier_items_table">
 		  <%= render partial: 'courier_items'%>
 		</div>
@@ -72,5 +72,4 @@
 	<% end %>
 </div>
 
-
-<%= render partial: 'layouts/modal'%>
+<%= render 'layouts/modal'%>

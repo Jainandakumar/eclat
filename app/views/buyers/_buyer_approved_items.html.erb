@@ -1,75 +1,100 @@
 <style type="text/css">
-
-table tbody {
-  display: block;
-  max-height: 400px;
-  overflow-y: scroll;
-}
-
-table thead, table tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-}
+    .full-height {
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+    }
+    table tbody {
+        display: block;
+        max-height: 70vh;
+        overflow-y: scroll;
+    }
+    table thead, table tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+    .card-body {
+        max-height: 300px;
+        overflow-y: auto;
+    }
 </style>
 
-<%= form_tag update_buyer_approved_items_buyer_path do %>
-<table class="table table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th>Select</th>
-      <th>Airway Bill No</th>
-      <th>Delivered On</th>
-      <th>Description</th>
-      <th>Sample Type</th>
-      <th>No of items</th>
-      <th>Photo</th>
-      <th>Vendor Comments</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% if @items.present? %>
-      <% @items.each do |item| %>
-        <tr>
-          <td><%= check_box_tag "items[id][#{item.id}", '', false, class: 'checkbox'%></td>
-          <td><%= item.courier.airway_bill_number %></td>
-          <td><%= delivery_date_display(item.courier)%></td>
-          <td><%= item.description%></td>
-          <td><%= item.sample_type_name %></td>
-          <td><%= item.number_of_samples %></td>
-          <% if item.item_image.attached? && item.item_image.content_type != "application/pdf" %>
-            <td><%= image_tag item.item_image.variant(resize: "100x100")%></td>
-          <% else %>
-            <td>No Preview available</td>
+<div class="full-height">
+  <%= form_tag update_buyer_approved_items_buyer_path do %>
+    <div class="container my-4">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle bg-white shadow-sm">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col" class="text-center align-middle" style="width: 5%;"></th>
+            <th scope="col" class="text-center align-middle" style="width: 23%;">Description</th>
+            <th scope="col" class="text-center align-middle" style="width: 12%;">Sample Type</th>
+            <th scope="col" class="text-center align-middle" style="width: 10%;">Samples</th>
+            <th scope="col" class="text-center align-middle" style="width: 10%;">Image</th>
+            <th scope="col" class="text-center align-middle" style="width: 20%;">Remarks</th>
+            <th scope="col" class="text-center align-middle" style="width: 20%;">Vendor comments</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @presenter.return_bai.each do |item_hash| %>
+            <tr class="table-secondary">
+              <td colspan="6" class="p-2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Airway Bill:</strong> <%= item_hash[:courier].airway_bill_number %>
+                  </div>
+                  <div>
+                    <strong>No of items:</strong> <%= item_hash[:items].size %>
+                  </div>
+                  <div>
+                    <strong>Delivered:</strong> <%= delivery_date_display(item_hash[:courier]) %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <% item_hash[:items].each do |item| %>
+              <tr>
+                <td class="align-middle" style="width: 5%;"><%= check_box_tag "items[id][#{item[:id]}", '', false, class: 'checkbox'%></td>
+                <td class="align-middle" style="width: 23%;"><strong><%= item[:description] %></strong></td>
+                <td class="align-middle" style="width: 12%;"><%= item[:sample_type_name] %></td>
+                <td class="align-middle text-center" style="width: 10%;"><%= item[:number_of_samples] %></td>
+                <td class="align-middle text-center" style="width: 10%;">
+                  <% if item[:item_image] %>
+                    <%= image_tag item[:item_image], class: "img-thumbnail", style: "max-width: 70px; max-height: 70px;" %>
+                  <% else %>
+                    <span class="text-muted">No Preview</span>
+                  <% end %>
+                </td>
+                <td class="align-middle" style="width: 20%;"><%= item[:remarks] %></td>
+                <td class="align-middle" style="width: 20%;"><%= item[:buyer_comments] %></td>
+              </tr>
+            <% end %>
           <% end %>
-          <td><%= item.buyer_comments %></td>
-        </tr>
-      <% end %>
-    <% else %>
-      <tr>
-        <td colspan="8" class="text-center">No approved items</td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= hidden_field_tag 'buyer_id', @buyer.id%>
-<div id="submit_div" style="display: none;">
-  <p id="selected" style="display: hidden;"></p>
-  <%= submit_tag 'Reject', id: 'submit', class: 'btn btn-success btn-sm'%>
+          </tbody>
+        </table>
+      </div>
+      <%= hidden_field_tag 'buyer_id', @buyer.id %>
+      <div id="submit_div" style="display: none;" class="text-left mt-3">
+        <p id="selected" style="display: none;float: right"></p>
+        <%= submit_tag 'Reject', id: 'submit', class: 'btn btn-success btn-sm'%>
+      </div>
+    </div>
+  <% end %>
 </div>
-<% end %>
+
 <script type="text/javascript">
-  $('.checkbox').click(function(){
-    if ($("input:checkbox:checked").length > 0)
-    {
-      $('#selected').html('Selected items - ');
-      $('#submit_div').show();
-      $('#selected').append($("input:checkbox:checked").length + ' of '+ $("input:checkbox").length);
-      $('#selected').show();
-    }
-    else
-    {
-      $('#submit_div').hide();
-    }
-  })
+    $('.checkbox').click(function(){
+        if ($("input:checkbox:checked").length > 0)
+        {
+            $('#selected').html('Selected items - ');
+            $('#submit_div').show();
+            $('#selected').append($("input:checkbox:checked").length + ' of '+ $("input:checkbox").length);
+            $('#selected').show();
+        }
+        else
+        {
+            $('#submit_div').hide();
+        }
+    })
 </script>

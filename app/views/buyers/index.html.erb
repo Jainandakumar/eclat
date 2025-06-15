@@ -1,17 +1,17 @@
-<div class="container-fluid mt-10 card shadow-sm" style="background-color: white;">
+<div class="container-fluid mt-10 card shadow-sm bg-white">
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
         <h2 class="h5">Vendors</h2>
       </div>
       <div class="col text-right">
-        <%= link_to 'New Vendor', new_buyer_path, {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-black btn-sm'} %>
+        <%= link_to 'New Vendor', new_buyer_path, {remote: true, data: { toggle: "modal", target: "#modal-window" }, class: 'btn btn-black btn-sm'} %>
       </div>
     </div>
   </div>
   <div id="buyers_table" class="mt-10">
-    <%= render partial: 'index'%>
+    <%= render 'index'%>
   </div>
 </div>
 
-<%= render partial: 'layouts/modal'%>
+<%= render 'layouts/modal'%>

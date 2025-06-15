@@ -1,15 +1,15 @@
-<div class="container-fluid mt-10 card shadow-sm" style="background-color: white;">
+<div class="container-fluid mt-10 card shadow-sm bg-white">
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <h2 class="h5"><%= @buyer.name%> - Approved items</h2>
+        <h2 class="h5"><%= @buyer.name %> - Approved items</h2>
       </div>
       <div class="col text-right">
-        <%= link_to 'Back', buyer_approved_items_path, class: 'btn btn-black btn-sm' %>
+        <%= link_to 'Back', approved_items_path, class: 'btn btn-black btn-sm' %>
       </div>
     </div>
   </div>
   <div id="couriers_table" class="mt-10">
-    <%= render partial: 'buyer_approved_items'%>
+    <%= render 'buyer_approved_items' %>
   </div>
 </div>

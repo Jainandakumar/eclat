@@ -1,121 +1,119 @@
 <style type="text/css">
-
-table tbody {
-  display: block;
-  max-height: 400px;
-  overflow-y: scroll;
-}
-
-table thead, table tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-}
+    .full-height {
+        min-height: 60vh;
+        display: flex;
+        flex-direction: column;
+    }
+    table tbody {
+        display: block;
+        max-height: 60vh;
+        overflow-y: scroll;
+    }
+    table thead, table tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+    .card-body {
+        max-height: 300px;
+        overflow-y: auto;
+    }
 </style>
+
 <div id="message"></div>
+
 <button class='btn btn-black btn-sm mb-10' id="send_reminder_mail">Send reminder mail</button>
-<%= form_tag update_pending_buyer_comments_buyer_path do %>
-<table class="table table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th>Select</th>
-      <th>Airway Bill No</th>
-      <th>Delivered On</th>
-      <th>Description</th>
-      <th>Sample Type</th>
-      <th>Items</th>
-      <th>Photo</th>
-      <th>Approval</th>
-      <th>Remarks</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% if @items.present? %>
-      <% @items.each do |item| %>
-        <tr>
-          <td><%= check_box_tag "items[id][#{item.id}]", '', false, class: 'checkbox'%></td>
-          <td><%= item.courier.airway_bill_number %></td>
-          <td><%= delivery_date_display(item.courier) %></td>
-          <td><%= item.description%></td>
-          <td><%= item.sample_type_name %></td>
-          <td><%= item.number_of_samples %></td>
-          <% if item.item_image.attached? && item.item_image.content_type != "application/pdf" %>
-            <td><%= image_tag item.item_image.variant(resize: "100x100")%></td>
-          <% else %>
-            <td>No Preview available</td>
+<div class="full-height">
+  <%= form_tag update_pending_buyer_comments_buyer_path do %>
+    <div class="container my-4">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle bg-white shadow-sm">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col" class="text-center align-middle" style="width: 18%;">Description</th>
+            <th scope="col" class="text-center align-middle" style="width: 15%;">Sample Type</th>
+            <th scope="col" class="text-center align-middle" style="width: 10%;">Samples</th>
+            <th scope="col" class="text-center align-middle" style="width: 15%;">Image</th>
+            <th scope="col" class="text-center align-middle" style="width: 15%;">Status</th>
+            <th scope="col" class="text-center align-middle" style="width: 27%;">Remarks</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @presenter.return_pbc.each do |item_hash| %>
+            <tr class="table-secondary">
+              <td colspan="6" class="p-2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Airway Bill:</strong> <%= item_hash[:courier].airway_bill_number %>
+                  </div>
+                  <div>
+                    <strong>No of items:</strong> <%= item_hash[:items].size %>
+                  </div>
+                  <div>
+                    <strong>Delivered:</strong> <%= delivery_date_display(item_hash[:courier]) %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <% item_hash[:items].each do |item| %>
+              <tr>
+                <td class="align-middle" style="width: 18%;"><strong><%= item[:description] %></strong></td>
+                <td class="align-middle" style="width: 15%;"><%= item[:sample_type_name] %></td>
+                <td class="align-middle text-center" style="width: 10%;"><%= item[:number_of_samples] %></td>
+                <td class="align-middle text-center" style="width: 15%;">
+                  <% if item[:item_image] %>
+                    <%= image_tag item[:item_image], class: "img-thumbnail", style: "max-width: 70px; max-height: 70px;" %>
+                  <% else %>
+                    <span class="text-muted">No Preview</span>
+                  <% end %>
+                </td>
+                <td class="align-middle" style="width: 15%;">
+                  <%= select_tag "items[#{item[:id]}][buyer_approved]", options_for_select(['Select', 'Approved', 'Pending']), class: "form-control" %>
+                </td>
+                <td class="align-middle" style="width: 27%;">
+                  <%= text_field_tag "items[#{item[:id]}][remarks]", '', class: "form-control remarks", placeholder: "Remarks" %>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
-          <td><%= select_tag "items[buyer_approved][#{item.id}]", options_for_select(['Select', 'Approved', 'Pending'])%></td>
-          <td><%= text_field_tag "remarks[#{item.id}]", '', style: 'width: 100%', class: 'remarks'%></td>
-        </tr>
-      <% end %>
-    <% else %>
-      <tr>
-        <td colspan="9" class="text-center">No items with pending comments</td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= hidden_field_tag 'buyer_id', @buyer.id%>
-<div id="submit_div" style="display: none;">
-  <p id="selected" style="display: hidden;"></p>
-  <%= submit_tag 'Save', id: 'submit', class: 'btn btn-success btn-sm'%>
+          </tbody>
+        </table>
+      </div>
+      <%= hidden_field_tag 'buyer_id', @buyer.id %>
+      <div class="text-right mt-3">
+        <%= submit_tag 'Save', class: 'btn btn-success btn-sm px-4' %>
+      </div>
+    </div>
+  <% end %>
 </div>
-<% end %>
+
 <script type="text/javascript">
-  $('.checkbox').click(function(){
-    if ($("input:checkbox:checked").length > 0)
-    {
-      $('#selected').html('Selected items - ');
-      $('#submit_div').show();
-      $('#selected').append($("input:checkbox:checked").length + ' of '+ $("input:checkbox").length);
-      $('#selected').show();
-    }
-    else
-    {
-      $('#submit_div').hide();
-    }
-  })
 
-  $('#submit').on('click', function (e) {
-    $("input:checked").each(function () {
-        var id = $(this).attr("id").split('_')[2];
-        if($('#items_buyer_approved_'+id).val() == 'Select'){
-          alert('Select the approval status for all checked items');
-          e.preventDefault();
-          return false;
-        }
-    });
-  })
+    $('#send_reminder_mail').click(function() {
+        const remarks = $('.remarks').map(function() {
+            return { [$(this).attr('id').split('_')[1]]: this.value };
+        }).get();
 
-  $('#send_reminder_mail').click(function(){
-    var remarks = []
-    $('.remarks').each(function(){
-      var remarks_hash = {}
-      remarks_hash[$(this).attr('id').split('_')[1]] = this.value;
-      remarks.push(remarks_hash)
-    })
-    $.ajax({
-      url: "/send_reminder_mail",
-      method: "GET",  
-      dataType: "json",
-      data: {id: <%= @buyer.id%>, from: 'pending_buyer_comments_buyer', remarks: remarks },
-      error: function (xhr, status, error) {
-        console.error('AJAX Error: ' + status + error);
-      },
-      success: function (response) {
-        $('#message').append(
-          '<div class="alert alert-success alert-dismissable">'+
-            '<button type="button" class="close" data-dismiss="alert">'+
-                '<span aria-hidden="true">&times;</span>'+
-                '<span class="sr-only">Close</span>'+
-            '</button>'+
-            response.notice+
-          '</div>'
-        );
-        $('.remarks').each(function(){
-          this.value = '';
-        })
-      }
-    });
-  })
+        $.ajax({
+            url: "/send_reminder_mail",
+            method: "GET",
+            dataType: "json",
+            data: { id: <%= @buyer.id %>, from: 'pending_buyer_comments_buyer', remarks },
+            error: function(xhr, status, error) {
+                console.error(`AJAX Error: ${status} ${error}`);
+            },
+            success: function(response) {
+                $('#message').append(
+                    `<div class="alert alert-success alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          ${response.notice}
+        </div>`
+                );
+                $('.remarks').val('');
+            }
+        });
+  });
 </script>

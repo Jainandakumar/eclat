@@ -45,11 +45,10 @@ class CouriersController < ApplicationController
   end
 
 	def show
-		@approved = @courier.approved
-		@has_items = @courier.items.present?
+		@presenter = CourierPresenter.new(@courier).gather_data
 		respond_to do |format|
 	      format.js {render file: "items/index.js.erb"}
-	      format.html { }
+	      format.html
 	    end
 	end
 
