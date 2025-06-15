@@ -1,80 +1,102 @@
-<div class="row mt-20">
-	<div class="col-lg-4">
-		<%= link_to all_couriers_path do %>	
-			<div class="card custom-card shadow-sm card-style">
-			  <div class="card-body">
-			    <h5 class="card-title text-center">Total couriers sent</h5>
-			    <h1 class="card-text text-center"><%= Courier.sent(current_user).count%></h1>
-			  </div>
+<div class="container mt-5">
+	<div class="row mb-4">
+		<div class="col-lg-4 mb-3">
+			<%= link_to all_couriers_path, class: "text-decoration-none" do %>
+				<div class="card custom-card shadow-sm card-style h-100 border-primary border-2">
+					<div class="card-body">
+						<h5 class="card-title text-center text-primary">Couriers Sent</h5>
+						<h1 class="card-text text-center display-4"><%= Courier.sent(current_user).count %></h1>
+					</div>
+				</div>
+			<% end %>
+		</div>
+		<div class="col-lg-4 mb-3">
+			<%= link_to undelivered_couriers_path, class: "text-decoration-none" do %>
+				<div class="card custom-card shadow-sm card-style h-100 border-warning border-2">
+					<div class="card-body">
+						<h5 class="card-title text-center text-warning">In Transit</h5>
+						<h1 class="card-text text-center display-4"><%= Courier.pending_delivery(current_user).count %></h1>
+					</div>
+				</div>
+			<% end %>
+		</div>
+		<div class="col-lg-4 mb-3">
+			<div class="card custom-card shadow-sm card-style h-100 border-success border-2">
+				<div class="card-body">
+					<h5 class="card-title text-center text-success">Couriers Delivered</h5>
+					<h1 class="card-text text-center display-4"><%= Courier.delivered(current_user).count %></h1>
+				</div>
 			</div>
-		<% end %>
+		</div>
 	</div>
-	<div class="col-lg-4">
-		<%= link_to undelivered_couriers_path do %>	
-			<div class="card custom-card shadow-sm card-style">
-			  <div class="card-body">
-			    <h5 class="card-title text-center">In Transit</h5>
-			    <h1 class="card-text text-center"><%= Courier.pending_delivery(current_user).count%></h1>
-			  </div>
+
+	<div class="row mb-4">
+		<div class="col-lg-4 mb-3">
+			<div class="card custom-card shadow-sm card-style h-100 border-info border-2">
+				<div class="card-body">
+					<h5 class="card-title text-center text-info">Items Sent</h5>
+					<h1 class="card-text text-center display-4"><%= Item.sent(current_user).count %></h1>
+				</div>
 			</div>
-		<% end %>
+		</div>
+		<div class="col-lg-4 mb-3">
+			<div class="card custom-card shadow-sm card-style h-100 border-success border-2">
+				<div class="card-body">
+					<h5 class="card-title text-center text-success">Items Delivered</h5>
+					<h1 class="card-text text-center display-4"><%= Item.delivered(current_user).count %></h1>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4 mb-3">
+			<%= link_to pending_comments_path, class: "text-decoration-none" do %>
+				<div class="card custom-card shadow-sm card-style h-100 border-danger border-2">
+					<div class="card-body">
+						<h5 class="card-title text-center text-danger">Pending Vendor Comments</h5>
+						<h1 class="card-text text-center display-4"><%= Item.pending_buyer_comments(current_user).count %></h1>
+					</div>
+				</div>
+			<% end %>
+		</div>
 	</div>
-	<div class="col-lg-4">
-		<div class="card custom-card shadow-sm card-style">
-		  <div class="card-body">
-		    <h5 class="card-title text-center">Total couriers delivered</h5>
-		    <h1 class="card-text text-center"><%= Courier.delivered(current_user).count%></h1>
-		  </div>
+
+	<div class="row mb-4">
+		<div class="col-lg-4 mb-3">
+			<%= link_to pending_approval_path, class: "text-decoration-none" do %>
+				<div class="card custom-card shadow-sm card-style h-100 border-warning border-2">
+					<div class="card-body">
+						<h5 class="card-title text-center text-warning">Approval Clarification Pending</h5>
+						<h1 class="card-text text-center display-4"><%= Item.pending(current_user).count %></h1>
+					</div>
+				</div>
+			<% end %>
+		</div>
+		<div class="col-lg-4 mb-3">
+			<%= link_to approved_items_path, class: "text-decoration-none" do %>
+				<div class="card custom-card shadow-sm card-style h-100 border-success border-2">
+					<div class="card-body">
+						<h5 class="card-title text-center text-success">Items Approved</h5>
+						<h1 class="card-text text-center display-4"><%= Item.approved(current_user).count %></h1>
+					</div>
+				</div>
+			<% end %>
+		</div>
+		<div class="col-lg-4 mb-3 d-flex align-items-center justify-content-center">
+			<!-- Optionally add a summary or a call-to-action here -->
 		</div>
 	</div>
 </div>
-<div class="row mt-20">
-	<div class="col-lg-4">
-		<div class="card custom-card shadow-sm card-style">
-		  <div class="card-body">
-		    <h5 class="card-title text-center">Total items sent</h5>
-		    <h1 class="card-text text-center"><%= Item.sent(current_user).count%></h1>
-		  </div>
-		</div>
-	</div>
-	<div class="col-lg-4">
-		<div class="card custom-card shadow-sm card-style">
-		  <div class="card-body">
-		    <h5 class="card-title text-center">Total items delivered</h5>
-		    <h1 class="card-text text-center"><%= Item.delivered(current_user).count%></h1>
-		  </div>
-		</div>
-	</div>
-	<div class="col-lg-4">
-		<%= link_to pending_buyer_comments_path do %>		
-			<div class="card custom-card shadow-sm card-style">
-			  <div class="card-body">
-			    <h5 class="card-title text-center">Pending vendor comments</h5>
-			    <h1 class="card-text text-center"><%= Item.pending_buyer_comments(current_user).count%></h1>
-			  </div>
-			</div>
-		<% end %>
-	</div>
-</div>
-<div class="row mt-20">
-	<div class="col-lg-4">
-		<%= link_to buyer_approved_items_path do %>	
-			<div class="card custom-card shadow-sm card-style">
-			  <div class="card-body">
-			    <h5 class="card-title text-center">Total items approved</h5>
-			    <h1 class="card-text text-center"><%= Item.approved(current_user).count%></h1>
-			  </div>
-			</div>
-		<% end %>
-	</div>
-	<div class="col-lg-4">
-		<%= link_to pending_buyer_approval_path do %>		
-			<div class="card custom-card shadow-sm card-style">
-			  <div class="card-body">
-			    <h5 class="card-title text-center">Total approval clarification pending</h5>
-			    <h1 class="card-text text-center"><%= Item.pending(current_user).count%></h1>
-			  </div>
-			</div>
-		<% end %>
-	</div>
-</div>
+
+<style>
+	.card.custom-card {
+		transition: transform 0.2s, box-shadow 0.2s;
+		cursor: pointer;
+	}
+	.card.custom-card:hover {
+		transform: translateY(-5px) scale(1.03);
+		box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+	}
+	.display-4 {
+		font-size: 2.5rem;
+		font-weight: 700;
+	}
+</style>

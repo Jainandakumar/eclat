@@ -2,20 +2,18 @@ class BuyersController < ApplicationController
   before_action :set_buyer, only: %i[ show edit update destroy get_teams pending_buyer_comments update_pending_buyer_comments pending_buyer_approval update_pending_buyer_approval buyer_approved_items update_buyer_approved_items]
 
   def index
-    unless current_user.is_admin
-      redirect_to root_path
-    end
-    @buyers = Buyer.all.includes(:teams, :couriers)
+    redirect_to root_path unless current_user.is_admin
+    @presenter = BuyersPresenter.new.gather_data
     respond_to do |format|
       format.js {render file: "buyers/index.js.erb"}
-      format.html { }
+      format.html
     end
   end
 
   def show
     respond_to do |format|
       format.js {render file: "teams/index.js.erb"}
-      format.html { }
+      format.html
     end
   end
 
@@ -76,39 +74,27 @@ class BuyersController < ApplicationController
   end
 
   def pending_buyer_comments
-    @items = Item.pending_buyer_comments_with_buyer(@buyer, current_user).includes(:courier, :sample_type)
+    @presenter = BuyersPresenter.new(@buyer, current_user).pending_buyer_comments
   end
 
   def update_pending_buyer_comments
-    ids = params[:items][:id].keys
-    ids.each do |id|
-      item = Item.find(id)
-      item.update(buyer_approved: params[:items][:buyer_approved][id])
-    end
-    redirect_to pending_buyer_comments_buyer_path(@buyer.id), notice: 'Vendor Comments updated successfully.'
+    handle_update(:update_pending_buyer_comments, pending_buyer_comments_buyer_path(@buyer.id))
   end
 
   def pending_buyer_approval
-    @items = Item.pending_with_buyer(@buyer, current_user).includes(:courier, :sample_type)
+    @presenter = BuyersPresenter.new(@buyer, current_user).pending_buyer_approval
   end
 
   def update_pending_buyer_approval
-    ids = params[:items][:id].keys
-    Item.where(id: ids).update_all(buyer_approved: 'Approved')
-    redirect_to pending_buyer_approval_buyer_path(@buyer.id), notice: 'Vendor Approval updated successfully.'
+    handle_update(:update_pending_buyer_approval, pending_buyer_approval_buyer_path(@buyer.id), 'Vendor Approval updated successfully.')
   end
 
   def buyer_approved_items
-    @items = Item.approved_with_buyer(@buyer, current_user).includes(:courier, :sample_type)
+    @presenter = BuyersPresenter.new(@buyer, current_user).buyer_approved_items
   end
 
   def update_buyer_approved_items
-    ids = params[:items][:id].keys
-    ids.each do |id|
-      item = Item.find(id)
-      item.update(buyer_approved: 'Pending')
-    end
-    redirect_to buyer_approved_items_buyer_path(@buyer.id), notice: 'Items made to Pending successfully.'
+    handle_update(:update_buyer_approved_items, buyer_approved_items_buyer_path(@buyer.id), 'Items made to Pending successfully.')
   end
 
   private
@@ -119,4 +105,15 @@ class BuyersController < ApplicationController
     def buyer_params
       params.require(:buyer).permit(:name, :address, :company, :email)
     end
+
+  def handle_update(adapter_method, redirect_path, success_message = nil)
+    permitted_items = params.require(:items).permit!.to_h
+    begin
+      message = DataAdapters::ItemAdapter.new.public_send(adapter_method, permitted_items)
+      redirect_to redirect_path, notice: success_message || message
+    rescue StandardError => e
+      redirect_to redirect_path, alert: "Failed to update items: #{e.message}"
+    end
+  end
+
 end

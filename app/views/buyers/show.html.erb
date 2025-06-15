@@ -17,16 +17,16 @@
     </div>
     <div class="row align-items-center">
       <div class="col">
-        <%= link_to 'Add Team', new_buyer_team_path(@buyer), {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-black btn-sm'} %>
-        <% if @buyer.teams.present? %>
+        <%= link_to 'Add Team', new_buyer_team_path(@buyer), remote: true, data: { toggle: "modal", target: "#modal-window" }, class: 'btn btn-black btn-sm' %>
+        <% if @buyer.teams.any? %>
 	        <%= link_to 'Couriers', buyer_couriers_path(@buyer), class: 'btn btn-black btn-sm' %>
         <% end %>
       </div>
     </div>
   </div>
 	<div id="teams_table">
-	  <%= render partial: 'teams/index'%>
+	  <%= render 'teams/index'%>
 	</div>
 </div>
 
-<%= render partial: 'layouts/modal'%>
+<%= render 'layouts/modal'%>

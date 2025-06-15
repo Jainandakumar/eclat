@@ -1,19 +1,19 @@
-<div class="container-fluid mt-10 card shadow-sm" style="background-color: white;">
-  <div class="card-header">
+<div class="container-fluid mt-10 card shadow-sm bg-white">
+<div class="card-header">
     <div class="row align-items-center">
       <div class="col">
         <h2 class="h5">Staffs</h2>
       </div>
       <% if is_admin? %>
         <div class="col text-right">
-          <%= link_to 'New Staff', new_user_path, {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-black btn-sm'} %>
+          <%= link_to 'New Staff', new_user_path, remote: true, data: { toggle: "modal", target: "#modal-window" }, class: 'btn btn-black btn-sm' %>
         </div>
       <% end %>
     </div>
   </div>
   <div id="users_table" class="mt-10">
-    <%= render partial: 'index'%>
+    <%= render 'index'%>
   </div>
 </div>
 
-<%= render partial: 'layouts/modal'%>
+<%= render 'layouts/modal'%>

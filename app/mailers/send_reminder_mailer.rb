@@ -12,7 +12,6 @@ class SendReminderMailer < ApplicationMailer
     attachments['Pending items.pdf'] = WickedPdf.new.pdf_from_string(
     render_to_string(pdf: 'pending_items', template: 'items/pending_items.pdf.erb', locals: {items: @items}))
    	mail(to: mail_ids.flatten, subject: "PENDING APPROVALS as on #{Date.today.strftime('%d-%m-%Y')} - #{team.name}")
-  	items.map{|i| i.update(remarks: '')}
     mail.delivery_method.settings.merge!(DynamicSmtpSettings.smtp_settings(@buyer.email))
   end
 

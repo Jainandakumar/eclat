@@ -1,10 +1,10 @@
-<div class="container-fluid mt-10 card shadow-sm" style="background-color: white;">
+<div class="container-fluid mt-10 card shadow-sm bg-white">
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
         <h2 class="h5">Couriers</h2>
       </div>
-      <% if current_user.buyer_ids.length > 0 %>
+      <% if current_user.buyer_ids.any? %>
         <div class="col text-right">
           <%= link_to 'New Courier', new_courier_path, class: 'btn btn-black btn-sm' %>
         </div>
@@ -12,6 +12,6 @@
     </div>
   </div>
   <div id="all_couriers_table" class="mt-10">
-    <%= render partial: 'all_couriers'%>
+    <%= render 'all_couriers'%>
   </div>
 </div>
