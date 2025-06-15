@@ -74,27 +74,27 @@ class BuyersController < ApplicationController
   end
 
   def pending_buyer_comments
-    @presenter = BuyersPresenter.new(@buyer, current_user).pending_buyer_comments
+    @presenter = BuyersPresenter.new(@buyer, current_user).pending_buyer_comments(params[:courier_id])
   end
 
   def update_pending_buyer_comments
-    handle_update(:update_pending_buyer_comments, pending_buyer_comments_buyer_path(@buyer.id))
+    handle_update(:update_pending_buyer_comments, pending_buyer_comments_buyer_path(@buyer.id, courier_id: params[:courier_id]))
   end
 
   def pending_buyer_approval
-    @presenter = BuyersPresenter.new(@buyer, current_user).pending_buyer_approval
+    @presenter = BuyersPresenter.new(@buyer, current_user).pending_buyer_approval(params[:courier_id])
   end
 
   def update_pending_buyer_approval
-    handle_update(:update_pending_buyer_approval, pending_buyer_approval_buyer_path(@buyer.id), 'Vendor Approval updated successfully.')
+    handle_update(:update_pending_buyer_approval, pending_buyer_approval_buyer_path(@buyer.id, courier_id: params[:courier_id]), 'Vendor Approval updated successfully.')
   end
 
   def buyer_approved_items
-    @presenter = BuyersPresenter.new(@buyer, current_user).buyer_approved_items
+    @presenter = BuyersPresenter.new(@buyer, current_user).buyer_approved_items(params[:courier_id])
   end
 
   def update_buyer_approved_items
-    handle_update(:update_buyer_approved_items, buyer_approved_items_buyer_path(@buyer.id), 'Items made to Pending successfully.')
+    handle_update(:update_buyer_approved_items, buyer_approved_items_buyer_path(@buyer.id, courier_id: params[:courier_id]), 'Items made to Pending successfully.')
   end
 
   private

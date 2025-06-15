@@ -28,15 +28,15 @@ class Item < ApplicationRecord
 		where(buyer_approved: 'Pending', courier_id: Courier.where(buyer_id: user.buyer_ids).ids)
 	end
 
-	def self.pending_buyer_comments_with_buyer buyer, user
-		where(buyer_approved: '', courier_id: Courier.buyer_delivered(buyer, user).ids)
+	def self.pending_buyer_comments_with_buyer courier_id
+		where(buyer_approved: '', courier_id: courier_id)
 	end
 
-	def self.approved_with_buyer buyer, user
-		where(buyer_approved: 'Approved', courier_id: Courier.buyer_delivered(buyer, user).ids)
+	def self.approved_with_buyer courier_id
+		where(buyer_approved: 'Approved', courier_id: courier_id)
 	end
 
-	def self.pending_with_buyer buyer, user
-		where(buyer_approved: 'Pending', courier_id: Courier.buyer_delivered(buyer, user).ids)
+	def self.pending_with_buyer courier_id
+		where(buyer_approved: 'Pending', courier_id: courier_id)
 	end
 end
