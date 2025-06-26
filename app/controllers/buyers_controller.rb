@@ -1,5 +1,5 @@
 class BuyersController < ApplicationController
-  before_action :set_buyer, only: %i[ show edit update destroy get_teams pending_buyer_comments update_pending_buyer_comments pending_buyer_approval update_pending_buyer_approval buyer_approved_items update_buyer_approved_items]
+  before_action :set_buyer, only: %i[ show edit update destroy get_teams pending_buyer_comments update_pending_buyer_comments pending_buyer_approval update_pending_buyer_approval buyer_approved_items update_buyer_approved_items reminder_mail ]
 
   def index
     redirect_to root_path unless current_user.is_admin
@@ -95,6 +95,10 @@ class BuyersController < ApplicationController
 
   def update_buyer_approved_items
     handle_update(:update_buyer_approved_items, buyer_approved_items_buyer_path(@buyer.id, courier_id: params[:courier_id]), 'Items made to Pending successfully.')
+  end
+
+  def reminder_mail
+    @presenter = BuyersPresenter.new(@buyer, current_user).pending_buyer_comments_reminder_mail
   end
 
   private

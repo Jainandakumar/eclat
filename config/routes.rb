@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 	resources :buyers do
 
 		member do
-			get :pending_buyer_comments, :pending_buyer_approval, :buyer_approved_items
+			get :pending_buyer_comments, :pending_buyer_approval, :buyer_approved_items, :reminder_mail
 			post :update_pending_buyer_comments, :update_pending_buyer_approval, :update_buyer_approved_items
 		end
 

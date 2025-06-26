@@ -21,8 +21,8 @@
 </style>
 
 <div id="message"></div>
+<button class='btn btn-black btn-sm mb-10 send-reminder-mail' id="send_reminder_mail">Send reminder mail</button>
 <div class="full-height">
-  <%= form_tag update_pending_buyer_comments_buyer_path do %>
     <div class="container my-4">
       <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle bg-white shadow-sm">
@@ -30,14 +30,13 @@
           <tr>
             <th scope="col" class="text-center align-middle" style="width: 18%;">Description</th>
             <th scope="col" class="text-center align-middle" style="width: 15%;">Sample Type</th>
-            <th scope="col" class="text-center align-middle" style="width: 10%;">Samples</th>
+            <th scope="col" class="text-center align-middle" style="width: 15%;">Samples</th>
             <th scope="col" class="text-center align-middle" style="width: 15%;">Image</th>
-            <th scope="col" class="text-center align-middle" style="width: 15%;">Status</th>
-            <th scope="col" class="text-center align-middle" style="width: 27%;">Remarks</th>
+            <th scope="col" class="text-center align-middle" style="width: 37%;">Remarks</th>
           </tr>
           </thead>
           <tbody>
-          <% @presenter.return_pbc.each do |item_hash| %>
+          <% @presenter.return_pbc_rm.each do |item_hash| %>
             <tr class="table-secondary">
               <td colspan="6" class="p-2">
                 <div class="d-flex justify-content-between align-items-center">
@@ -57,7 +56,7 @@
               <tr>
                 <td class="align-middle" style="width: 18%;"><strong><%= item[:description] %></strong></td>
                 <td class="align-middle" style="width: 15%;"><%= item[:sample_type_name] %></td>
-                <td class="align-middle text-center" style="width: 10%;"><%= item[:number_of_samples] %></td>
+                <td class="align-middle text-center" style="width: 15%;"><%= item[:number_of_samples] %></td>
                 <td class="align-middle text-center" style="width: 15%;">
                   <% if item[:item_image] %>
                     <%= image_tag item[:item_image], class: "img-thumbnail", style: "max-width: 70px; max-height: 70px;" %>
@@ -65,10 +64,7 @@
                     <span class="text-muted">No Preview</span>
                   <% end %>
                 </td>
-                <td class="align-middle" style="width: 15%;">
-                  <%= select_tag "items[#{item[:id]}][buyer_approved]", options_for_select(['Select', 'Approved', 'Pending']), class: "form-control" %>
-                </td>
-                <td class="align-middle" style="width: 27%;">
+                <td class="align-middle" style="width: 37%;">
                   <%= text_field_tag "items[#{item[:id]}][remarks]", ((item[:remarks].nil? || item[:remarks] == 'NA') ? '' : item[:remarks]), class: "form-control remarks", placeholder: "Remarks" %>
                 </td>
               </tr>
@@ -78,10 +74,62 @@
         </table>
       </div>
       <%= hidden_field_tag 'buyer_id', @buyer.id %>
-      <%= hidden_field_tag 'courier_id', @presenter.courier_id %>
-      <div class="text-right mt-3">
-        <%= submit_tag 'Save', class: 'btn btn-success btn-sm px-4' %>
-      </div>
     </div>
-  <% end %>
 </div>
+
+<script type="text/javascript">
+
+    $('#pending_comments_table_id thead tr').clone(true).appendTo( '#pending_comments_table_id thead' );
+    $('#pending_comments_table_id thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+    var table = $('#pending_comments_table_id').DataTable( {
+        scrollY: 450,
+        orderCellsTop: true,
+        fixedColumns: true,
+        fixedHeader: true,
+        scrollX: true,
+        width: 100,
+        columnDefs : [{"targets":4, "type":"date-eu"}],
+        order: [4, 'desc']
+    } );
+
+    $('#send_reminder_mail').click(function() {
+        const remarks = $('.remarks').map(function() {
+            return { [$(this).attr('id').split('_')[1]]: this.value };
+        }).get();
+
+        $.ajax({
+            url: "/send_reminder_mail",
+            method: "GET",
+            dataType: "json",
+            data: { id: <%= @buyer.id %>, from: 'pending_buyer_comments_buyer', remarks },
+            error: function(xhr, status, error) {
+                console.error(`AJAX Error: ${status} ${error}`);
+            },
+            success: function(response) {
+                $('#message').append(
+                    `<div class="alert alert-success alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          ${response.notice}
+        </div>`
+                );
+                $('.remarks').val('');
+            }
+        });
+    });
+
+</script>

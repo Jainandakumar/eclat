@@ -1,0 +1,21 @@
+<div class="container-fluid mt-10 card shadow-sm bg-white">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="h5"><%= @buyer.name%> - Pending Item - Reminder mail</h2>
+      </div>
+      <div class="col text-right">
+        <%= link_to 'Back', pending_comments_path, class: 'btn btn-black btn-sm' %>
+      </div>
+    </div>
+  </div>
+  <% if @presenter.return_pbc_rm.any? %>
+    <div id="couriers_table" class="mt-10">
+      <%= render 'pending_buyer_comments_rm' %>
+    </div>
+  <% else %>
+    <div class="alert alert-info mt-4" role="alert">
+      <strong>No more pending items for this Vendor and Courier.</strong>
+    </div>
+  <% end %>
+</div>
