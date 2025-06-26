@@ -97,8 +97,8 @@ class ItemsController < ApplicationController
 			send_all_items
 			return_path = pending_comments_path
 		else
-			send_all_items(params[:id], params[:courier_id], params[:remarks])
-			return_path = pending_buyer_comments_buyer_path(params[:id])
+			send_all_items(params[:id], params[:remarks])
+			return_path = reminder_mail_buyer_path(params[:id])
 		end	
 		respond_to do |format|
 			format.html {redirect_to return_path, notice: 'Reminder mail successfully sent.'}
@@ -106,14 +106,14 @@ class ItemsController < ApplicationController
 		end
 	end
 
-	def send_all_items(buyer_id = nil, courier_id = nil, remarks = [])
-    sent_couriers = if courier_id.present?
+	def send_all_items(buyer_id = nil, remarks = [])
+		sent_couriers = if buyer_id.present?
     	remarks.each do |remark|
-    		Item.find(remark[1].keys[0]).update(remarks: remark[1].values[0])
-    	end
-      Courier.where(id: courier_id)
+				Item.find(remark[1].keys[0]).update(remarks: remark[1].values[0])
+			end
+			Courier.where.not(delivery_date: nil).where(buyer_id: buyer_id)
     else
-      Courier.delivered(current_user)
+			Courier.delivered(current_user)
     end
     mail_hash = {}
     sent_couriers.joins(:items).where(items: {buyer_approved: ''}).uniq.group_by(&:team).each do |team, couriers|

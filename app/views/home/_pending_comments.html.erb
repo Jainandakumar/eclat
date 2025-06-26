@@ -21,21 +21,30 @@
       <table class="table table-striped" id="pending_comments_table_id" style="font-size: 13px;">
         <thead class="thead-dark">
         <tr>
-        <th scope="col">Vendor</th>
-        <th scope="col">Airway bill</th>
-        <th scope="col">Team</th>
-        <th scope="col">No of items</th>
-        <th scope="col">Delivery On</th>
-      </tr>
+            <th scope="col">Vendor</th>
+            <th scope="col">Airway bill</th>
+            <th scope="col">Team</th>
+            <th scope="col">No of items</th>
+            <th scope="col">Delivery On</th>
+            <th scope="col">Action</th>
+        </tr>
       </thead>
       <tbody>
         <% @presenter.return_pbc.each do |courier| %>
           <tr>
             <td><%= courier[:buyer_name] %></td>
-            <td><%= link_to courier[:airway_bill_number], pending_buyer_comments_buyer_path(courier[:buyer_id], courier_id: courier[:id]) %></td>
+            <td><%= courier[:airway_bill_number] %></td>
             <td><%= courier[:team] %></td>
             <td><%= courier[:no_of_items] %></td>
             <td><%= date_display(courier[:delivery_date]) %></td>
+            <td>
+              <%= link_to pending_buyer_comments_buyer_path(courier[:buyer_id], courier_id: courier[:id]), class: 'btn btn-black btn-sm mb-10', title: 'Update Status' do %>
+                &#x21bb;
+              <% end %>
+              <%= link_to reminder_mail_buyer_path(courier[:buyer_id]), class: 'btn btn-black btn-sm mb-10', title: 'Reminder Mail' do %>
+                &#x1F4E7;
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -73,4 +82,5 @@
         columnDefs : [{"targets":4, "type":"date-eu"}],
         order: [4, 'desc']
     } );
+
 </script>
