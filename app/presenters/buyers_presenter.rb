@@ -18,7 +18,7 @@ class BuyersPresenter
   end
 
   def pending_buyer_comments_reminder_mail
-    @return_pbc_rm = group_and_format_items(Item.pending_buyer_comments_with_buyer(@buyer.couriers.pluck(:id)))
+    @return_pbc_rm = group_and_format_items(Item.pending_buyer_comments_with_buyer(@buyer.couriers.where.not(delivery_date: nil).pluck(:id)))
     self
   end
 
