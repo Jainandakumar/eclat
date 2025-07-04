@@ -57,13 +57,12 @@ class ItemsController < ApplicationController
 
 	def save_items
 		params[:items].values.each do |item_param|
-			Item.find_or_create_by(serial_number: item_param['serial_number'], courier_id: params['courier_id']) do |item|
-				item.description = item_param['description']
-				item.sample_type_id = item_param['sample_type_id']
-				item.number_of_samples = item_param['number_of_samples']
-				item.item_image = item_param['item_image']
-				item.save
-			end
+			item = Item.find_or_create_by(serial_number: item_param['serial_number'], courier_id: params['courier_id'])
+			item.description = item_param['description']
+			item.sample_type_id = item_param['sample_type_id']
+			item.number_of_samples = item_param['number_of_samples']
+			item.item_image = item_param['item_image'] if item_param['item_image'].present?
+			item.save
 		end
 		redirect_to buyer_courier_path(@buyer, @courier), notice: "Items were created successfully."
 	end
@@ -98,7 +97,7 @@ class ItemsController < ApplicationController
 			return_path = pending_comments_path
 		else
 			send_all_items(params[:id], params[:remarks])
-			return_path = reminder_mail_buyer_path(params[:id])
+			return_path = pending_buyer_comments_buyer_path(params[:id])
 		end	
 		respond_to do |format|
 			format.html {redirect_to return_path, notice: 'Reminder mail successfully sent.'}

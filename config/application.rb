@@ -9,7 +9,12 @@ Bundler.require(*Rails.groups)
 module TupApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.0
+    config.load_defaults 7.0
+
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[assets tasks])
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -18,6 +23,9 @@ module TupApp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    
     config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.deliver_later_queue_name = :default
+    config.active_job.use_big_decimal_serializer = true
   end
 end

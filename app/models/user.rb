@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   attr_writer :login
 
-  serialize :buyer_ids, Array
+  serialize :buyer_ids
 
   validates :name, {presence: true, uniqueness: {case_sensitive: true}, length: {minimum: 3, maximum: 75}}
   validates :email, {presence: true, uniqueness: true, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ } }

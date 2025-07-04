@@ -39,7 +39,12 @@
             <td style="text-align: center;border: 1px solid black;"><%= item.number_of_samples %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.remarks %></td>
             <td style="text-align: center;border: 1px solid black; <%= pending_days > 5 ? 'background-color: #fcff60 !important;' : '' %>"><%= pending_days %></td>
-            <td style="text-align: center;border: 1px solid black;"><%= image_tag attachments[index.to_s+item.item_image.blob&.filename.to_s].url , width: "50", height: "50"%></td>
+            <td style="text-align: center;border: 1px solid black;">
+              <% if item.item_image.attached? && attachments[index.to_s+(item.item_image.blob&.filename&.to_s || "item_#{index}")] %>
+                <%= image_tag attachments[index.to_s+(item.item_image.blob&.filename&.to_s || "item_#{index}")].url, width: "50", height: "50" %>
+              <% else %>
+                No image
+              <% end %>
           </tr>
         <% end %>
       </tbody>

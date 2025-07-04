@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '3.2.2'
+
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
@@ -7,11 +9,11 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0'
+gem 'rails', '~> 7.0'
 # Use mysql2 as the database for Active Record
-gem 'mysql2'
+gem 'mysql2', '~> 0.5'
 # Use Puma as the app server
-gem 'puma', '~> 3.0'
+gem 'puma', '~> 6.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -35,16 +37,16 @@ gem 'bootstrap', '~> 4.0.0'
 gem 'bootstrap-multiselect-rails'
 
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '4.7.1'
+gem 'redis', '~> 5.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.12'
 gem "aws-sdk-s3", require: false
-gem 'mini_magick', '~> 4.8'
+gem 'mini_magick', '~> 4.12'
 
 gem 'wicked_pdf'
 # we need the new binary here, so that we can be OS independent
@@ -52,7 +54,7 @@ gem 'wkhtmltopdf-binary'
 
 gem "font-awesome-rails"
 
-gem 'sidekiq'
+gem 'sidekiq', '~> 7.0'
 
 gem 'rubyzip', '>= 1.2.1'
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'

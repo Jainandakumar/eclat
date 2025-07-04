@@ -21,6 +21,8 @@
 </style>
 
 <div id="message"></div>
+
+<button class='btn btn-black btn-sm mb-10' id="send_reminder_mail">Send reminder mail</button>
 <div class="full-height">
   <%= form_tag update_pending_buyer_comments_buyer_path do %>
     <div class="container my-4">
@@ -78,10 +80,20 @@
         </table>
       </div>
       <%= hidden_field_tag 'buyer_id', @buyer.id %>
-      <%= hidden_field_tag 'courier_id', @presenter.courier_id %>
       <div class="text-right mt-3">
         <%= submit_tag 'Save', class: 'btn btn-success btn-sm px-4' %>
       </div>
     </div>
   <% end %>
 </div>
+
+<script type="text/javascript">
+
+    $('#send_reminder_mail').click(function() {
+        const remarks = $('.remarks').map(function() {
+            return { [$(this).attr('id').split('_')[1]]: this.value };
+        }).get();
+
+        window.location.href = `/send_reminder_mail?id=<%= @buyer.id %>&from=pending_buyer_comments_buyer&${$.param({remarks: remarks})}`;
+    });
+</script>
