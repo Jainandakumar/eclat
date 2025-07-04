@@ -6,9 +6,13 @@ class CourierMailer < ApplicationMailer
    	@items = @courier.items.sort_by{|c| c.serial_number.to_i}
       @items.each_with_index do |item, index|
          if item.item_image.attached?
-            blob = item.item_image.blob
-            filename = blob&.filename&.to_s || "item_#{index}"
-            attachments[index.to_s + filename] = item.item_image.download
+            begin
+               blob = item.item_image.blob
+               filename = blob&.filename&.to_s || "item_#{index}"
+               attachments[index.to_s + filename] = item.item_image.download
+            rescue ActiveStorage::FileNotFoundError
+               Rails.logger.warn "File not found for item #{item.id}, skipping attachment"
+            end
          end
       end
    	attachments.inline['logo.png'] = File.read("#{Rails.root}/app/assets/images/ei_logo.jpg") if @courier.buyer.is_eclat
