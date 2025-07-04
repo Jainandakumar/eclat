@@ -27,5 +27,6 @@ module TupApp
     config.active_job.queue_adapter = :sidekiq
     config.action_mailer.deliver_later_queue_name = :default
     config.active_job.use_big_decimal_serializer = true
+    config.action_mailer.default_url_options = { host: 'localhost:3000' }
   end
 end
