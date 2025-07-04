@@ -1,5 +1,5 @@
 class BuyersPresenter
-  attr_reader :buyers, :return_pbc, :return_pba, :return_bai, :courier_id, :return_pbc_rm
+  attr_reader :buyers, :return_pbc, :return_pba, :return_bai, :courier_id
 
   def initialize(buyer = nil, current_user = nil)
     @buyer = buyer
@@ -11,14 +11,8 @@ class BuyersPresenter
     self
   end
 
-  def pending_buyer_comments(courier_id = nil)
-    @return_pbc = group_and_format_items(Item.pending_buyer_comments_with_buyer(courier_id))
-    @courier_id = courier_id
-    self
-  end
-
-  def pending_buyer_comments_reminder_mail
-    @return_pbc_rm = group_and_format_items(Item.pending_buyer_comments_with_buyer(@buyer.couriers.where.not(delivery_date: nil).pluck(:id)))
+  def pending_buyer_comments
+    @return_pbc = group_and_format_items(Item.pending_buyer_comments_with_buyer(@buyer.couriers.where.not(delivery_date: nil).pluck(:id)))
     self
   end
 

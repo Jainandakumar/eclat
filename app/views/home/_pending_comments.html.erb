@@ -1,86 +1,123 @@
-<style type="text/css">
-    .full-height {
-        min-height: 70vh;
-        display: flex;
-        flex-direction: column;
-    }
-    table tbody {
-        display: block;
-        max-height: 70vh;
-        overflow-y: scroll;
-    }
-    table thead, table tbody tr {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-    }
-</style>
-
-<div class="full-height">
-  <% if @presenter.return_pbc.present? %>
-      <table class="table table-striped" id="pending_comments_table_id" style="font-size: 13px;">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">Vendor</th>
-            <th scope="col">Airway bill</th>
-            <th scope="col">Team</th>
-            <th scope="col">No of items</th>
-            <th scope="col">Delivery On</th>
-            <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @presenter.return_pbc.each do |courier| %>
-          <tr>
-            <td><%= courier[:buyer_name] %></td>
-            <td><%= courier[:airway_bill_number] %></td>
-            <td><%= courier[:team] %></td>
-            <td><%= courier[:no_of_items] %></td>
-            <td><%= date_display(courier[:delivery_date]) %></td>
-            <td>
-              <%= link_to pending_buyer_comments_buyer_path(courier[:buyer_id], courier_id: courier[:id]), class: 'btn btn-black btn-sm mb-10', title: 'Update Status' do %>
-                &#x21bb;
-              <% end %>
-              <%= link_to reminder_mail_buyer_path(courier[:buyer_id]), class: 'btn btn-black btn-sm mb-10', title: 'Reminder Mail' do %>
-                &#x1F4E7;
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% else %>
-    <div class="col-12">
-      <div class="alert alert-info text-center"><b>No vendors with pending comments</b></div>
+<% if @presenter.return_pbc.present? %>
+  <div class="container mt-4">
+    <div class="row">
+      <% @presenter.return_pbc.each do |courier| %>
+        <div class="col-md-4 mb-4">
+          <%= link_to pending_buyer_comments_buyer_path(courier[:buyer]), class: "text-decoration-none", style: "color: inherit;" do %>
+            <div class="card shadow-sm h-100">
+              <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">
+                  <%= courier[:buyer_name] %>
+                </h5>
+              </div>
+              <div class="card-body p-2">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <strong>No of Couriers:</strong> <%= courier[:no_of_couriers] %><br>
+                    <strong>No of Samples:</strong> <%= courier[:no_of_samples] %><br>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-</div>
+  </div>
+<% else %>
+  <div class="col-12">
+    <div class="alert alert-info text-center"><b>No vendors with pending comments</b></div>
+  </div>
+<% end %>
 
-<script type="text/javascript">
 
-    $('#pending_comments_table_id thead tr').clone(true).appendTo( '#pending_comments_table_id thead' );
-    $('#pending_comments_table_id thead tr:eq(1) th').each( function (i) {
-        var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
 
-        $( 'input', this ).on( 'keyup change', function () {
-            if ( table.column(i).search() !== this.value ) {
-                table
-                  .column(i)
-                  .search( this.value )
-                  .draw();
-            }
-        } );
-    } );
-    var table = $('#pending_comments_table_id').DataTable( {
-        scrollY: 450,
-        orderCellsTop: true,
-        fixedColumns: true,
-        fixedHeader: true,
-        scrollX: true,
-        width: 100,
-        columnDefs : [{"targets":4, "type":"date-eu"}],
-        order: [4, 'desc']
-    } );
 
-</script>
+
+
+<!--<style type="text/css">-->
+<!--    .full-height {-->
+<!--        min-height: 70vh;-->
+<!--        display: flex;-->
+<!--        flex-direction: column;-->
+<!--    }-->
+<!--    table tbody {-->
+<!--        display: block;-->
+<!--        max-height: 70vh;-->
+<!--        overflow-y: scroll;-->
+<!--    }-->
+<!--    table thead, table tbody tr {-->
+<!--        display: table;-->
+<!--        width: 100%;-->
+<!--        table-layout: fixed;-->
+<!--    }-->
+<!--</style>-->
+
+<!--<div class="full-height">-->
+  <%# if @presenter.return_pbc.present? %>
+<!--      <table class="table table-striped" id="pending_comments_table_id" style="font-size: 13px;">-->
+<!--        <thead class="thead-dark">-->
+<!--        <tr>-->
+<!--            <th scope="col">Vendor</th>-->
+<!--            <th scope="col">Airway bill</th>-->
+<!--            <th scope="col">Team</th>-->
+<!--            <th scope="col">No of items</th>-->
+<!--            <th scope="col">Delivery On</th>-->
+<!--            <th scope="col">Action</th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+        <%# @presenter.return_pbc.each do |courier| %>
+<!--          <tr>-->
+<!--            <td><%#= courier[:buyer_name] %></td>-->
+<!--            <td><%#= courier[:airway_bill_number] %></td>-->
+<!--            <td><%#= courier[:team] %></td>-->
+<!--            <td><%#= courier[:no_of_items] %></td>-->
+<!--            <td><%#= date_display(courier[:delivery_date]) %></td>-->
+<!--            <td>-->
+              <%#= link_to pending_buyer_comments_buyer_path(courier[:buyer_id], courier_id: courier[:id]), class: 'btn btn-black btn-sm mb-10', title: 'Update Status' do %>
+<!--                &#x21bb;-->
+              <%# end %>
+              <%#= link_to reminder_mail_buyer_path(courier[:buyer_id]), class: 'btn btn-black btn-sm mb-10', title: 'Reminder Mail' do %>
+<!--                &#x1F4E7;-->
+              <%# end %>
+<!--            </td>-->
+<!--          </tr>-->
+        <%# end %>
+<!--      </tbody>-->
+<!--    </table>-->
+  <%# else %>
+<!--    <div class="col-12">-->
+<!--      <div class="alert alert-info text-center"><b>No vendors with pending comments</b></div>-->
+<!--    </div>-->
+  <%# end %>
+<!--</div>-->
+
+<!--<script type="text/javascript">-->
+
+<!--    $('#pending_comments_table_id thead tr').clone(true).appendTo( '#pending_comments_table_id thead' );-->
+<!--    $('#pending_comments_table_id thead tr:eq(1) th').each( function (i) {-->
+<!--        var title = $(this).text();-->
+<!--        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );-->
+
+<!--        $( 'input', this ).on( 'keyup change', function () {-->
+<!--            if ( table.column(i).search() !== this.value ) {-->
+<!--                table-->
+<!--                  .column(i)-->
+<!--                  .search( this.value )-->
+<!--                  .draw();-->
+<!--            }-->
+<!--        } );-->
+<!--    } );-->
+<!--    var table = $('#pending_comments_table_id').DataTable( {-->
+<!--        scrollY: 450,-->
+<!--        orderCellsTop: true,-->
+<!--        fixedColumns: true,-->
+<!--        fixedHeader: true,-->
+<!--        scrollX: true,-->
+<!--        width: 100,-->
+<!--        columnDefs : [{"targets":4, "type":"date-eu"}],-->
+<!--        order: [4, 'desc']-->
+<!--    } );-->
+
+<!--</script>-->

@@ -6,7 +6,7 @@ class HomePresenter
   end
 
   def pending_comments
-    @return_pbc = build_courier_data(Item.pending_buyer_comments(@current_user), '')
+    @return_pbc = build_courier_wise_data(Item.pending_buyer_comments(@current_user), '')
     self
   end
 
@@ -33,6 +33,18 @@ class HomePresenter
         team: courier.team_name,
         no_of_items: items.size,
         delivery_date: courier.delivery_date
+      }
+    end
+  end
+
+  def build_courier_wise_data(items_scope, approval_status)
+    courier_ids = items_scope.pluck(:courier_id)
+    Courier.where(id: courier_ids).includes(:items).group_by(&:buyer).map do |buyer, couriers|
+      {
+        buyer: buyer,
+        buyer_name: buyer.name,
+        no_of_couriers: couriers.count,
+        no_of_samples: couriers.sum { |c| c.items.where(buyer_approved: approval_status).count }
       }
     end
   end

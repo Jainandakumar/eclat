@@ -33,7 +33,13 @@
             <td style="text-align: center;border: 1px solid black;"><%= item.sample_type.name %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.description %></td>
             <td style="text-align: center;border: 1px solid black;"><%= item.number_of_samples %></td>
-            <td style="text-align: center;border: 1px solid black;"><%= image_tag attachments[index.to_s+item.item_image.blob&.filename.to_s].url , width: "100", height: "100"%></td>
+            <td style="text-align: center;border: 1px solid black;">
+              <% if item.item_image.attached? && attachments[index.to_s+(item.item_image.blob&.filename&.to_s || "item_#{index}")] %>
+                <%= image_tag attachments[index.to_s+(item.item_image.blob&.filename&.to_s || "item_#{index}")].url, width: "100", height: "100" %>
+              <% else %>
+                No image
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -44,7 +50,7 @@
     </p>
     <br/>
     <p><b>Thanks & regards,</b></p>
-    <% if @courier.buyer.is_eclat %>
+    <% if @courier.buyer.is_eclat && attachments['logo.png'] %>
       <p>
         <%= image_tag attachments['logo.png'].url, width: "75", height: "75" %>
       </p>

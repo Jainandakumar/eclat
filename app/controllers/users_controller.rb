@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[edit update destroy]
   before_action :load_buyers, only: %i[new edit update create]
   before_action :ensure_admin
 
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    params[:user][:buyer_ids].reject!(&:empty?)
+    params[:user][:buyer_ids].reject!(&:empty?) if params[:user][:buyer_ids].present?
     if @user.update(user_params)
       redirect_to users_path, notice: "Staff was successfully updated."
     else

@@ -1,5 +1,5 @@
 class SampleTypesController < ApplicationController
-  before_action :set_sample_type, only: %i[ show edit update destroy ]
+  before_action :set_sample_type, only: %i[ edit update destroy ]
 
   def index
     @sample_types = SampleType.order(:name)
