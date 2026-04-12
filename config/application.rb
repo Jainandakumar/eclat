@@ -24,7 +24,7 @@ module TupApp
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     
-    config.active_job.queue_adapter = :sidekiq
+    config.active_job.queue_adapter = :async
     config.action_mailer.deliver_later_queue_name = :default
     config.active_job.use_big_decimal_serializer = true
     config.action_mailer.default_url_options = { host: 'localhost:3000' }
